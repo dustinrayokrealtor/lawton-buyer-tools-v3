@@ -565,6 +565,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   el.grade.innerHTML = opts;
 
   function money(n){
+    if (!isFinite(n)) return "\u2014";
     return "$" + Math.round(n).toLocaleString("en-US");
   }
   function money2(n){
@@ -609,6 +610,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 
     var rate = parseFloat(el.rate.value);
     if (!isFinite(rate) || rate <= 0) rate = 6.5;
+    if (rate > 25) rate = 25;   // beyond this the amortisation overflows to NaN
 
     // A service connected rating of 10% or higher waives the VA funding fee.
     var feeWaived = disRating >= 10;
@@ -708,5 +710,6 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 </script>
 <script src="../assets/leadgate.js" defer></script>
 
+<script src="../assets/track.js" defer></script>
 </body>
 </html>
