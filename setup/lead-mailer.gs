@@ -81,7 +81,7 @@ function doPost(e) {
           "<p>I appreciate you,</p>" +
           "<p><b>Dustin Ray</b><br>Buyer Specialist, Pam &amp; Barry's Team, RE/MAX Professionals<br>" +
           "580-351-4683 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
-          "<a href='https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/'>Lawton Buyer Tools</a></p>" +
+          "<a href='https://movingtoftsill.com/'>movingtoftsill.com</a></p>" +
           "<p style='font-size:12px;color:#595959'>Each Office Independently Owned and Operated. These figures are estimates for planning and are not a loan estimate, a pre-approval, or a commitment to lend.</p>" +
           "</div>",
         attachments: atts
@@ -103,7 +103,7 @@ function doGet() {
 function sendTest() {
   var fake = { postData: { contents: JSON.stringify({
     name: "Test Buyer", email: TO, phone: "580-555-0100",
-    page: "Buyer Payment Toolkit | test", url: "https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/payment-toolkit.html",
+    page: "Buyer Payment Toolkit | test", url: "https://movingtoftsill.com/payment-toolkit.html",
     summary: "Purchase price: 199500\nRate: 6.76\nTotal monthly payment: $1,828", pdf: ""
   }) } };
   Logger.log(doPost(fake).getContent());
