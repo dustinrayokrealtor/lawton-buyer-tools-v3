@@ -1,6 +1,7 @@
 # Lawton Buyer Tools (v3)
 
-Client-facing buyer tools for Lawton and Southwest Oklahoma, published with GitHub Pages.
+Client-facing buyer tools for Lawton and Southwest Oklahoma, published with GitHub
+Pages at **[movingtoftsill.com](https://movingtoftsill.com/)**.
 
 v3 carries every page and every tool over from v2 unchanged. The only thing
 that changed is the look: a warm cream ground in place of white, and the
@@ -10,13 +11,18 @@ language" below for what's new and what deliberately didn't move.
 
 | Page | Path |
 | --- | --- |
-| Landing page | `/` |
+| Moving to Fort Sill (homepage) | `/` |
+| Tools landing page | `/tools/` |
 | Buyer Payment Toolkit | `/payment-toolkit.html` |
 | VA Loan Calculator (household income & residual income) | `/va-loan-calculator.html` |
 | Rate Buydown vs Price Cut | `/buydown.html` |
 | Buying a Home in Lawton (consult packet) | `/buying-guide.html` |
 | What Your BAH Buys at Fort Sill | `/bah/` |
-| Moving to Fort Sill | `/fort-sill/` |
+| `/fort-sill/` | redirect stub &rarr; `/` (the old URL, kept alive) |
+
+The Fort Sill relocation guide sits at the site root because the domain is
+`movingtoftsill.com` and that is what people search for. The calculators live one
+click away at `/tools/`.
 
 Plain static HTML. No build step. Edit a page and push to `main`, and Pages redeploys in a minute or two.
 
@@ -36,6 +42,23 @@ Pages that use it: the payment toolkit, the VA loan calculator, the buydown
 tool, the BAH calculator, and the buying guide. A page opts in by including the
 script and having a `#btn-print` button; an optional `window.LEAD_SUMMARY`
 function or `data-lead="Label"` attributes improve the email summary.
+
+## Search / SEO
+
+Every page carries a unique `<title>` and meta description, a `rel=canonical` on
+its `https://movingtoftsill.com` URL, Open Graph and Twitter card tags pointing at
+`/og-image.png` (1200x630), and JSON-LD. The homepage declares `RealEstateAgent`,
+`WebSite` and `Article`; the rest declare `BreadcrumbList`.
+
+`sitemap.xml` lists all seven real pages and is referenced from `robots.txt`.
+The `/fort-sill/` stub is `noindex, follow` and canonicalises to `/`, so the old
+URL keeps working without competing in search.
+
+**If you add a page,** add it to `sitemap.xml` and give it a canonical tag, or
+Google will treat it as an orphan.
+
+Regenerate the share image by editing the source and re-rendering it at 1200x630;
+it is a screenshot of the site's own horizon graphic, so it stays on-brand.
 
 ## Design language
 
