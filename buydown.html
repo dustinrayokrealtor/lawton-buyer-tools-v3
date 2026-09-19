@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rate Buydown vs Price Cut | Lawton Buyer Tools</title>
+<meta name="description" content="How seller concessions work in Lawton: compare a lower price against a permanent rate buydown and a 2-1 temporary buydown, and see which one actually saves you more for as long as you keep the loan.">
+<link rel="canonical" href="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/buydown.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rate Buydown vs Price Cut">
+<meta property="og:description" content="Same seller help, three ways to spend it. See which one wins on your numbers and how long you plan to keep the loan.">
+<meta property="og:url" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/buydown.html">
+<meta property="og:image" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/team-logo.png">
+<link rel="icon" type="image/png" href="team-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+:root{ --s-1:12.5px; --s0:15px; --s1:17px; --s2:23px; --s3:32px; --s4:44px; }
+
+body{font-size:var(--s0);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 60px}
+.sitehdr{max-width:1080px;margin:0 auto;padding-inline:16px}
+
+h1{font-size:var(--s3)}
+h2{font-size:var(--s2)}
+h3{font-size:var(--s1)}
+p{margin:0;max-width:64ch}
+.muted{color:var(--ink-2);font-size:var(--s-1);line-height:1.6}
+
+/* ---------- page hero band ---------- */
+.pagehero{background:var(--navy);color:#fff}
+.phin{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:64px 48px}
+.pagehero h1{color:#fff}
+.pagehero h1::after{margin-bottom:14px}
+.pagehero .intro{font-size:clamp(15px,1.9vw,18px);color:var(--on-dark);margin:0 0 26px;max-width:44em;line-height:1.65}
+.phstats{border-top:1px solid rgba(255,255,255,.18);margin-top:32px;padding-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px}
+.phstats b{display:block;font-size:21px;font-weight:600;color:#fff}
+.phstats span{display:block;font-size:12px;color:var(--on-dark-dim);margin-top:4px;line-height:1.45}
+
+/* ---------- inputs ---------- */
+.controls{
+  border:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;
+  background-color:var(--line);margin-bottom:1px;
+}
+.ctl{background:var(--paper);padding:13px 15px 15px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ctl input[type="number"],.ctl select{
+  font-family:var(--font-ui);font-size:var(--s1);font-weight:600;line-height:1.2;
+  font-variant-numeric:tabular-nums;
+  background:var(--paper);color:var(--ink);border:2px solid var(--pale);
+  padding:9px 10px;width:100%;min-width:0;
+}
+.ctl select{font-size:var(--s0)}
+.ctl input:focus,.ctl select:focus{outline:none;border-color:var(--blue)}
+.ctl .hint{font-size:11.5px;color:var(--muted);line-height:1.45}
+
+/* ---------- section rhythm ---------- */
+.sec{margin-top:34px;display:flex;flex-direction:column;gap:18px}
+.sec > h2::after{content:"";display:block;width:var(--rule-w);max-width:100%;height:0;border-bottom:1.6px solid var(--red);margin:14px 0 4px}
+.sec .lede{color:var(--ink-2);font-size:var(--s0);max-width:66ch}
+
+/* ---------- option cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--paper);padding:18px 16px 16px;display:flex;flex-direction:column;gap:6px;border-top:4px solid transparent}
+.card.best{border-top-color:var(--red);background:var(--wash)}
+.card .lab.win{color:var(--red-dark)}
+.card .nm{font-family:var(--font-display);text-transform:uppercase;font-size:19px;line-height:1.2;color:var(--blue)}
+.card .v{font-size:var(--s3);font-weight:600;line-height:1.05;color:var(--ink);margin-top:6px}
+.card .per{font-size:var(--s-1);color:var(--muted)}
+.card p{font-size:var(--s-1);color:var(--ink-2);line-height:1.55;margin-top:6px}
+.card .line{display:flex;justify-content:space-between;gap:10px;font-size:var(--s-1);border-top:1px solid var(--line-2);padding-top:8px;margin-top:8px;color:var(--ink-2)}
+.card .line b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:480px;font-variant-numeric:tabular-nums}
+caption{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line)}
+th,td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--line-2);font-size:var(--s0)}
+th:first-child,td:first-child{text-align:left;font-weight:600}
+thead th{color:var(--muted);font-weight:600;border-bottom:2px solid var(--blue)}
+tbody tr:last-child td{border-bottom:0}
+tr.best td{background:var(--wash);font-weight:600}
+
+/* ---------- explainer blocks ---------- */
+.how{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:680px){.how{grid-template-columns:minmax(0,1fr)}}
+.how > div{background:var(--paper);padding:20px 18px}
+.how .lab{display:block;margin-bottom:6px}
+.how h3{margin:0 0 8px}
+.how p{font-size:var(--s-1);color:var(--ink-2);line-height:1.6;margin:0 0 8px}
+.how ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.how li{font-size:var(--s-1);color:var(--ink-2);line-height:1.55}
+.how li b{color:var(--ink)}
+
+/* ---------- disclosure ---------- */
+details{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--pale)}
+summary{padding:13px 16px;cursor:pointer;font-weight:600;font-size:var(--s0);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--font-ui);color:var(--red);font-size:var(--s2);line-height:1}
+details[open] summary::after{content:"\2212"}
+.dbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line-2)}
+.dbody .controls{margin:0}
+
+.sendhint{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5;max-width:62ch}
+
+/* ---------- cta ---------- */
+.ctawrap{padding:40px 0 0}
+.cta{background:var(--navy);color:#fff;padding:48px 28px;text-align:center}
+.cta h2{color:#fff}
+.cta p.ctalede{margin:0 auto 24px;max-width:36em;color:var(--on-dark)}
+.cta .ctafoot{font-size:13.5px;color:var(--on-dark-dim);margin:22px auto 0;max-width:36em}
+.cta .ctafoot a{color:#fff}
+
+.printonly{display:none}
+
+@media print{
+  @page{margin:0.5in}
+  body{background:#fff;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  details,.ctawrap,.sendhint{display:none!important}
+  .pagehero{background:#fff;color:#000;border-bottom:2px solid #000}
+  .pagehero h1,.pagehero .intro,.phstats b,.phstats span{color:#000}
+  .card.best{background:#fff;border-top-color:#000}
+  .ctl input,.ctl select{border:0;padding-left:0;background:#fff}
+  .printonly{display:block}
+  h1{font-size:20pt}
+  .pb-logo{height:46px}
+  .rx-chip{border-color:#999}
+}
+</style>
+<link rel="stylesheet" href="assets/palette-v3.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="sitehdr">
+    <div class="hdrleft">
+      <a href="./" class="backlink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Tools</a>
+      <span class="brandline">Pam &amp; Barry's Team <span><a href="tel:+15802488800" class="hdrlink">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/" class="hdrlink">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com" class="hdrlink">info@homes-lawton.com</a></span><span>Dustin Ray, Buyer Specialist &middot; <a href="tel:5803514683" class="hdrlink">580-351-4683</a> &middot; <a href="mailto:dustin@homes-lawton.com?subject=Rate%20buydown%20question" class="hdrlink">dustin@homes-lawton.com</a></span></span>
+    </div>
+    <span class="logo-wrap"><img src="team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></span>
+  </div>
+</header>
+
+<div class="pagehero">
+  <div class="phin">
+    <span class="eyebrow">Seller concessions</span>
+    <h1>A lower price or a lower rate?</h1>
+    <p class="intro">When a seller agrees to help with your costs, you get to choose how that money works for you. It can knock down the price, or it can buy down your interest rate. They are not worth the same amount, and which one wins depends on how long you keep the loan. Run your numbers below.</p>
+    <div class="hero-cta">
+      <a class="hbtn" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call or text</a>
+      <a class="hbtn alt" href="mailto:dustin@homes-lawton.com?subject=Rate%20buydown%20question&body=Hi%20Dustin%2C%0A%0AI%20was%20using%20the%20buydown%20calculator.%20What%20I%20am%20trying%20to%20figure%20out%3A%0A%0A%0A%0AThanks%2C%0A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="m22 6-10 7L2 6"></path></svg>Email me</a>
+    </div>
+    <div class="phstats">
+      <div><b>3 ways</b><span>Price cut, permanent points, 2-1 buydown</span></div>
+      <div><b>98.5%</b><span>Of list is where Lawton sellers close</span></div>
+      <div><b>4% / 6% / 3%</b><span>VA, FHA and conventional concession caps</span></div>
+      <div><b>Local numbers</b><span>Comanche County tax and insurance built in</span></div>
+    </div>
+  </div>
+  <svg class="horizon horizon--short" viewBox="0 0 1600 410" preserveAspectRatio="none" aria-hidden="true">
+  <defs><linearGradient id="sky-bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#272D3E"/><stop offset="0.28" stop-color="#4F5866"/><stop offset="0.62" stop-color="#B7BFBE"/><stop offset="0.8" stop-color="#C9CFC9"/></linearGradient></defs>
+  <rect width="1600" height="410" fill="url(#sky-bd)"/>
+  <g transform="translate(0,150)">
+  <path fill="#56707E" d="M0 170 L134 165 Q250 130 368 80 Q430 58 480 50 L535 44 L636 44 Q690 62 714 80 Q780 118 814 135 L870 143 L948 135 L1004 147 L1070 150 L1150 138 L1215 112 L1250 108 L1285 128 L1310 138 L1340 130 L1400 98 L1445 86 L1490 100 L1561 143 L1600 155 L1600 260 L0 260Z"/>
+  <path fill="#7C8F97" d="M0 200 C80 196 140 186 200 184 C270 182 320 192 390 190 C460 188 520 176 600 176 C680 176 740 188 820 190 C900 192 960 180 1040 178 C1120 176 1180 188 1260 186 C1340 184 1400 176 1470 178 C1530 180 1570 190 1600 192 L1600 260 L0 260Z"/>
+  <path fill="#B9948A" d="M0 224 C120 220 220 212 340 214 C460 216 560 226 700 224 C840 222 940 212 1080 214 C1220 216 1320 226 1440 224 C1520 222 1570 220 1600 220 L1600 260 L0 260Z"/>
+  <path fill="#D9B893" d="M0 244 L1600 244 L1600 260 L0 260Z"/>
+  <g fill="#56707E">
+    <path d="M1180 244 L1180 232 M1180 236 L1174 230 M1180 234 L1186 229" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1230 244 L1230 228 M1230 234 L1223 227 M1230 232 L1238 225 M1230 238 L1236 234" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1290 244 L1290 233 M1290 237 L1284 231 M1290 236 L1296 230" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M420 244 L420 230 M420 236 L413 229 M420 234 L427 227" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M470 244 L470 234 M470 238 L465 233 M470 237 L476 232" stroke="#4E4A45" stroke-width="2" fill="none"/>
+  </g>
+  </g>
+</svg>
+</div>
+
+<div class="wrap">
+<nav class="sitenav" aria-label="Site"><a href="./">&larr; All Lawton buyer tools</a><a href="payment-toolkit.html">Full payment toolkit &rarr;</a></nav>
+
+<!-- ============ INPUTS ============ -->
+<section class="controls" aria-label="Deal inputs">
+  <div class="ctl">
+    <label for="price">Purchase price</label>
+    <input id="price" type="number" min="20000" step="500" value="199500" inputmode="numeric">
+    <span class="hint">Lawton median is $199,500</span>
+  </div>
+  <div class="ctl">
+    <label for="prog">Loan program</label>
+    <select id="prog">
+      <option value="VA">VA</option>
+      <option value="FHA">FHA</option>
+      <option value="CONV" selected>Conventional</option>
+      <option value="USDA">USDA</option>
+    </select>
+    <span class="hint" id="capHint">Concession cap applies</span>
+  </div>
+  <div class="ctl">
+    <label for="down">Down payment %</label>
+    <input id="down" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal">
+    <span class="hint">Percent of price</span>
+  </div>
+  <div class="ctl">
+    <label for="rate">Quoted rate %</label>
+    <input id="rate" type="number" min="1" max="15" step="0.005" value="6.76" inputmode="decimal">
+    <span class="hint">Before any buydown</span>
+  </div>
+  <div class="ctl">
+    <label for="conc">Seller help available</label>
+    <input id="conc" type="number" min="0" step="250" value="5985" inputmode="numeric">
+    <span class="hint" id="concHint">Dollars</span>
+  </div>
+  <div class="ctl">
+    <label for="stay">You keep this loan</label>
+    <select id="stay">
+      <option value="2">2 years</option>
+      <option value="3">3 years</option>
+      <option value="5" selected>5 years</option>
+      <option value="7">7 years</option>
+      <option value="10">10 years</option>
+      <option value="30">The whole 30 years</option>
+    </select>
+    <span class="hint">Until you sell or refinance</span>
+  </div>
+</section>
+
+<details style="margin-top:1px">
+  <summary>Adjust the assumptions</summary>
+  <div class="dbody">
+    <div class="controls">
+      <div class="ctl">
+        <label for="term">Loan term</label>
+        <select id="term"><option value="30" selected>30 years</option><option value="15">15 years</option></select>
+      </div>
+      <div class="ctl">
+        <label for="ppp">Rate drop per point %</label>
+        <input id="ppp" type="number" min="0.05" max="1" step="0.025" value="0.25" inputmode="decimal">
+        <span class="hint">Varies daily, ask your lender</span>
+      </div>
+      <div class="ctl">
+        <label for="tax">Property tax rate %</label>
+        <input id="tax" type="number" min="0" max="5" step="0.01" value="1.11" inputmode="decimal">
+        <span class="hint">Lawton median effective rate</span>
+      </div>
+      <div class="ctl">
+        <label for="ins">Insurance $ per $1,000</label>
+        <input id="ins" type="number" min="0" max="60" step="0.01" value="19.28" inputmode="decimal">
+        <span class="hint">Per year of coverage</span>
+      </div>
+    </div>
+    <p class="muted">These defaults come from Lawton and Comanche County figures, not state averages. Oklahoma state insurance numbers blend in the Oklahoma City metro and assume more coverage than a house here usually carries, which overstates a Lawton payment by roughly $110 a month.</p>
+  </div>
+</details>
+
+<div class="note warn" id="capWarn" hidden style="margin-top:18px"><p></p></div>
+
+<!-- ============ RESULTS ============ -->
+<section class="sec">
+  <div>
+    <h2>What that money buys you</h2>
+    <p class="lede" style="margin-top:8px">Three ways to spend the same seller help. The payment shown is the full monthly payment, including taxes, insurance and any mortgage insurance your program carries.</p>
+  </div>
+  <div class="cards" id="cards" aria-live="polite"></div>
+  <div class="note" id="verdictWrap">
+    <span class="k">The verdict</span>
+    <p id="verdict" data-lead="Verdict"></p>
+  </div>
+  <div class="actions" style="margin-top:4px">
+    <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
+    <button type="button" id="btn-reset">Reset to Lawton median</button>
+  </div>
+  <p class="sendhint">Print or save this as a PDF and I'll email you a copy of the exact scenario on screen, then follow up on what your seller is likely to agree to.</p>
+  <div class="printonly muted"><b>Prepared by Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></div>
+</section>
+
+<section class="sec">
+  <div>
+    <h2>Payment year by year</h2>
+    <p class="lede" style="margin-top:8px">A temporary buydown does not hold your payment down forever. It steps up on the anniversary each year until it reaches the real payment. Here is what that looks like against the other two options.</p>
+  </div>
+  <div class="tw"><table id="yearTable"></table></div>
+  <p class="muted" id="tempAlt"></p>
+</section>
+
+<!-- ============ HOW EACH WORKS ============ -->
+<section class="sec">
+  <div>
+    <h2>How each one works</h2>
+  </div>
+  <div class="how">
+    <div>
+      <span class="lab">Temporary buydown</span>
+      <h3>The 2-1 buydown</h3>
+      <p>The seller puts money into an escrow account at closing. That account covers part of your payment for the first two years. You pay as if your rate were 2% lower in year one and 1% lower in year two. In year three the account is empty and you pay the real rate for the rest of the loan.</p>
+      <p>Your actual loan never changes. The rate on your note is the rate you were quoted. The escrow account is just prepaid help, spread out.</p>
+      <ul>
+        <li>Year one costs the least, which helps if you are furnishing a house or expect your income to climb.</li>
+        <li>You still have to qualify at the full note rate. Lenders do not count the discount toward what you can afford.</li>
+        <li>If you refinance or sell before the account runs out, the money left in it goes toward your loan balance. It is not lost.</li>
+        <li>A 1-0 buydown does the same thing for one year. A 3-2-1 does it for three and costs considerably more.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="lab">Permanent buydown</span>
+      <h3>Discount points</h3>
+      <p>You pay money up front and the lender lowers your rate for the life of the loan. One point costs 1% of your loan amount. What that buys moves with the market, so treat any number here as a starting estimate and get the real quote from your lender.</p>
+      <p>The math is a break-even. Divide the cost by what you save each month, and that is how many months it takes to get your money back. Stay past that point and the rest is profit.</p>
+      <ul>
+        <li>Best when you plan to stay a long time and rates are not obviously headed down.</li>
+        <li>The savings are permanent, which no other option here can say.</li>
+        <li>If you refinance before you break even, you paid for a rate you did not keep.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="lab">Price reduction</span>
+      <h3>Just pay less for the house</h3>
+      <p>The simplest option and the easiest to underrate. A lower price means a smaller loan, a smaller payment, less property tax, and less insurance, all of it permanent. It also means you start with more equity on day one.</p>
+      <ul>
+        <li>The savings are smaller each month than a buydown, because you are spreading the help across 360 payments instead of front-loading it.</li>
+        <li>It is the only option that lowers your taxes and insurance too.</li>
+        <li>The house still has to appraise. A price cut that brings the contract under appraised value strengthens your position.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="lab">Worth knowing</span>
+      <h3>Other moves in this market</h3>
+      <ul>
+        <li><b>Ask for closing costs instead.</b> If cash to close is the thing standing between you and the house, seller-paid closing costs solve the real problem. A better rate does you no good if you cannot get to the table.</li>
+        <li><b>Look at houses that have been sitting.</b> A listing past 45 days has a seller who is already thinking about what it will take. That is where concessions actually get agreed to.</li>
+        <li><b>Refinancing later is real, but it is not free.</b> Plan on closing costs again, and on rates being whatever they are that year. Do not buy a payment you can only afford if you refinance.</li>
+        <li><b>Combine them.</b> There is no rule that says the help has to go all one place. Part to the rate and part to closing costs is common.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPS ============ -->
+<section class="sec">
+  <div>
+    <h2>How much help you can ask for</h2>
+    <p class="lede" style="margin-top:8px">Every loan program caps what a seller is allowed to contribute. Going over the cap does not get you a bigger credit, it just gets the extra thrown out.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption id="capCap">Seller concession caps on a $199,500 house</caption>
+      <thead><tr><th scope="col">Program</th><th scope="col">Cap</th><th scope="col">Dollars</th></tr></thead>
+      <tbody id="capBody"></tbody>
+    </table>
+  </div>
+  <p class="muted">The cap is what the program allows. What a seller agrees to is a separate conversation, and it usually depends on how long the house has been on the market.</p>
+</section>
+
+<div class="ctawrap">
+  <div class="cta">
+    <h2>Talk it through</h2>
+    <p class="ctalede">These numbers get you close enough to make a decision about strategy. The exact figures come from your lender, who quotes the real cost of points on the day you lock. I am happy to sit down and go through what your seller is likely to agree to on a specific house.</p>
+    <div class="btnrow">
+      <a class="btn" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.7 2z"/></svg>Call or text 580-351-4683</a>
+      <a class="btn alt" href="mailto:dustin@homes-lawton.com?subject=Rate%20buydown%20question"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Email me</a>
+    </div>
+    <p class="ctafoot">Want the whole payment picture first? Use the <a href="payment-toolkit.html">Buyer Payment Toolkit</a>. Buying with a VA loan? The <a href="va-loan-calculator.html">VA Loan Calculator</a> runs your household income.</p>
+  </div>
+</div>
+
+</div>
+
+<footer class="site">
+  <div class="wrap" style="padding-block:0">
+    <p class="eiooo">Each Office Independently Owned and Operated.</p>
+    <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>
+    <p>Dustin Ray, Buyer Specialist, Pam &amp; Barry's Team RE/MAX Professionals. Oklahoma real estate license #213324. Office on NW Elm Ave, Lawton, Oklahoma. 580-351-4683. dustin@homes-lawton.com</p>
+    <p>This tool is for planning and education. It is not a loan estimate, a commitment to lend, or a quote. Rates, the cost of discount points, mortgage insurance and program rules change constantly and vary by lender, credit profile, and property. Property tax and insurance figures are Lawton area estimates, and your actual amounts will differ. Get a written estimate from your lender before making a decision, and rely on that estimate rather than this page. Seller concessions are negotiated between buyer and seller and are never guaranteed.</p>
+  </div>
+</footer>
+
+<div class="stickybar">
+  <a href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.7 2z"/></svg>Call/Text</a>
+  <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Rate%20buydown%20question"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Email</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var money  = function(n){ return "$" + Math.round(n).toLocaleString("en-US"); };
+  var money2 = function(n){ return "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); };
+
+  // Program rules. Upfront fees finance into the loan; annual figures are a
+  // percent of the loan balance charged monthly.
+  var PROGRAMS = {
+    VA:   {cap: 0.04, upfront: 0.0215, annual: 0,      capLabel: "4% of value"},
+    FHA:  {cap: 0.06, upfront: 0.0175, annual: 0.0055, capLabel: "6% of value"},
+    CONV: {cap: null, upfront: 0,      annual: 0.0060, capLabel: ""},
+    USDA: {cap: 0.06, upfront: 0.0100, annual: 0.0035, capLabel: "6% of value"}
+  };
+  function convCap(downPct){ return downPct >= 10 ? 0.06 : 0.03; }
+
+  function pmt(principal, annualPct, months){
+    if (principal <= 0) return 0;
+    var r = annualPct / 100 / 12;
+    if (r === 0) return principal / months;
+    return principal * r / (1 - Math.pow(1 + r, -months));
+  }
+
+  function inputs(){
+    var prog = $("prog").value, p = PROGRAMS[prog];
+    var price = +$("price").value || 0;
+    var downPct = +$("down").value || 0;
+    var cap = prog === "CONV" ? convCap(downPct) : p.cap;
+    return {
+      prog: prog, p: p, price: price, downPct: downPct,
+      rate: +$("rate").value || 0, conc: +$("conc").value || 0,
+      stay: +$("stay").value || 5, term: +$("term").value || 30,
+      ppp: +$("ppp").value || 0.25, taxPct: +$("tax").value || 0,
+      insPer: +$("ins").value || 0, cap: cap
+    };
+  }
+
+  // Full monthly payment at a given price and rate.
+  function payment(i, price, rate){
+    var down = price * i.downPct / 100;
+    var base = price - down;
+    var loan = base * (1 + i.p.upfront);
+    var months = i.term * 12;
+    var pi = pmt(loan, rate, months);
+    var tax = price * i.taxPct / 100 / 12;
+    var ins = (price / 1000) * i.insPer / 12;
+    var mi = 0;
+    if (i.prog === "CONV"){ if (i.downPct < 20) mi = loan * i.p.annual / 12; }
+    else { mi = loan * i.p.annual / 12; }
+    return {loan: loan, pi: pi, tax: tax, ins: ins, mi: mi, total: pi + tax + ins + mi};
+  }
+
+  // Cost of a temporary buydown: the payment difference for each covered month.
+  function tempCost(i, steps){
+    var full = payment(i, i.price, i.rate), cost = 0, rows = [];
+    steps.forEach(function(drop, idx){
+      var at = payment(i, i.price, Math.max(i.rate - drop, 0));
+      var diff = full.pi - at.pi;
+      cost += diff * 12;
+      rows.push({year: idx + 1, rate: i.rate - drop, payment: at.total, saved: diff});
+    });
+    return {cost: cost, rows: rows, full: full};
+  }
+
+  function card(tag, nm, amt, per, dsc, lines, isBest, stay){
+    return '<div class="card' + (isBest ? " best" : "") + '">' +
+      '<span class="lab' + (isBest ? " win" : "") + '">' + (isBest ? "Most savings by year " + stay : tag) + "</span>" +
+      '<span class="nm">' + nm + "</span>" +
+      '<span class="v">' + amt + '</span><span class="per">' + per + "</span>" +
+      "<p>" + dsc + "</p>" +
+      lines.map(function(l){ return '<div class="line"><span>' + l[0] + "</span><b>" + l[1] + "</b></div>"; }).join("") +
+      "</div>";
+  }
+
+  function render(){
+    var i = inputs();
+    var full = payment(i, i.price, i.rate);
+
+    // concession cap
+    var capDollars = i.cap ? i.price * i.cap : null;
+    var capLabel = i.prog === "CONV"
+      ? (i.downPct >= 10 ? "6% with 10% or more down" : "3% under 10% down")
+      : i.p.capLabel;
+    $("capHint").textContent = "Cap: " + capLabel;
+    $("concHint").textContent = capDollars ? "Cap is " + money(capDollars) : "Dollars";
+
+    var over = capDollars && i.conc > capDollars;
+    var cw = $("capWarn");
+    if (over){
+      cw.hidden = false;
+      cw.querySelector("p").innerHTML = "<b>That is over the cap.</b> " + i.prog + " allows " + capLabel +
+        ", which is " + money(capDollars) + " on this price. Anything above that gets thrown out rather than credited, so the numbers below use " +
+        money(capDollars) + ".";
+    } else { cw.hidden = true; }
+    var conc = over ? capDollars : i.conc;
+
+    // 1. price cut
+    var cutPrice = Math.max(i.price - conc, 0);
+    var cut = payment(i, cutPrice, i.rate);
+
+    // 2. permanent points
+    var pointsCost = conc;
+    var pointsPct = full.loan > 0 ? (pointsCost / full.loan) * 100 : 0;
+    var drop = pointsPct * i.ppp;
+    var permRate = Math.max(i.rate - drop, 0.5);
+    var perm = payment(i, i.price, permRate);
+    var permSave = full.total - perm.total;
+    var breakEven = permSave > 0 ? pointsCost / permSave : null;
+
+    // 3. temporary 2-1 (plus the two alternates for the footnote)
+    var t21 = tempCost(i, [2, 1]);
+    var t10 = tempCost(i, [1]);
+    var t321 = tempCost(i, [3, 2, 1]);
+    var fits21 = conc >= t21.cost;
+
+    // benefit over the horizon the buyer chose
+    var stayMonths = i.stay * 12;
+    var cutBenefit = (full.total - cut.total) * stayMonths;
+    var permBenefit = permSave * stayMonths;
+    var t21Benefit = 0;
+    t21.rows.forEach(function(r){ if (stayMonths > 0) t21Benefit += r.saved * Math.min(12, Math.max(stayMonths - (r.year - 1) * 12, 0)); });
+    var best = Math.max(cutBenefit, permBenefit, t21Benefit);
+
+    var html = "";
+    html += card("Option 1", "Lower the price", money2(cut.total), "per month, every month",
+      "Price drops to " + money(cutPrice) + ". Smaller loan, smaller tax bill, smaller insurance bill, and it never changes.",
+      [["Saves each month", money2(full.total - cut.total)],
+       ["Over " + i.stay + " years", money(cutBenefit)],
+       ["Loan amount", money(cut.loan)]],
+      cutBenefit === best, i.stay);
+
+    html += card("Option 2", "Buy the rate down for good", money2(perm.total), "per month, every month",
+      "About " + (Math.round(pointsPct * 100) / 100) + " points, taking your rate to roughly " + (Math.round(permRate * 1000) / 1000) + "%. Your lender sets the real cost." +
+        (pointsPct > 3 ? " Careful with this one: that is more points than most lenders will sell, and pricing flattens out past two or three, so the real rate would land higher than shown." : ""),
+      [["Saves each month", money2(permSave)],
+       ["Over " + i.stay + " years", money(permBenefit)],
+       ["Break even", breakEven ? Math.ceil(breakEven) + " months" : "n/a"]],
+      permBenefit === best, i.stay);
+
+    html += card("Option 3", "2-1 temporary buydown", money2(t21.rows[0].payment), "per month in year one",
+      "Costs about " + money(t21.cost) + " to set up. " + (fits21
+        ? "The help available covers it, with " + money(conc - t21.cost) + " left over for closing costs."
+        : "That is more than the " + money(conc) + " available, so you would be short " + money(t21.cost - conc) + "."),
+      [["Year two", money2(t21.rows[1].payment)],
+       ["Year three on", money2(full.total)],
+       ["Over " + i.stay + " years", money(t21Benefit)]],
+      t21Benefit === best, i.stay);
+    $("cards").innerHTML = html;
+
+    // verdict
+    var v = "";
+    if (best === cutBenefit){
+      v = "On your numbers, the price cut wins. Keeping the loan " + i.stay +
+          " years means the permanent savings outrun the head start a temporary buydown gives you. It also lowers your tax and insurance, which the other two do not touch.";
+    } else if (best === permBenefit){
+      v = "On your numbers, buying the rate down permanently wins. You break even at month " +
+          (breakEven ? Math.ceil(breakEven) : "n/a") + ", and you are planning to stay " + i.stay +
+          " years, so everything past that is money in your pocket. This flips fast if you refinance early.";
+    } else {
+      v = "On your numbers, the 2-1 buydown wins. It front-loads the savings, which pays off because you are only counting " +
+          i.stay + " years. Remember you still qualify at " + i.rate + "% and your payment reaches " + money2(full.total) + " in year three.";
+    }
+    v += " Full payment at the quoted rate with no help at all would be " + money2(full.total) + " a month.";
+    $("verdict").textContent = v;
+
+    // year table
+    var rows = "";
+    var yrs = Math.min(i.stay === 30 ? 5 : Math.max(i.stay, 3), 10);
+    for (var y = 1; y <= yrs; y++){
+      var tp = y <= 2 ? t21.rows[y - 1].payment : full.total;
+      rows += "<tr" + (y === 3 ? ' class="best"' : "") + '><th scope="row">Year ' + y + "</th>" +
+        "<td>" + money2(full.total) + "</td>" +
+        "<td>" + money2(cut.total) + "</td>" +
+        "<td>" + money2(perm.total) + "</td>" +
+        "<td>" + money2(tp) + "</td></tr>";
+    }
+    $("yearTable").innerHTML =
+      "<caption>Full monthly payment by year, " + money(conc) + " of seller help</caption>" +
+      '<thead><tr><th scope="col"></th><th scope="col">No help</th><th scope="col">Price cut</th><th scope="col">Points</th><th scope="col">2-1 buydown</th></tr></thead><tbody>' +
+      rows + "</tbody>";
+
+    $("tempAlt").textContent = "A 1-0 buydown on this loan runs about " + money(t10.cost) +
+      " and holds your payment at " + money2(t10.rows[0].payment) + " for one year. A 3-2-1 runs about " +
+      money(t321.cost) + " and starts at " + money2(t321.rows[0].payment) +
+      ", which is more than most sellers here will agree to.";
+
+    // cap table follows the price on screen
+    $("capCap").textContent = "Seller concession caps on a " + money(i.price) + " house";
+    var caps = [
+      ["VA", "4% of value", i.price * 0.04],
+      ["FHA", "6% of value", i.price * 0.06],
+      ["Conventional, under 10% down", "3%", i.price * 0.03],
+      ["Conventional, 10% down or more", "6%", i.price * 0.06],
+      ["USDA", "6%", i.price * 0.06]
+    ];
+    $("capBody").innerHTML = caps.map(function(c){
+      return '<tr><th scope="row">' + c[0] + "</th><td>" + c[1] + "</td><td>" + money(c[2]) + "</td></tr>";
+    }).join("");
+  }
+
+  ["price","prog","down","rate","conc","stay","term","ppp","tax","ins"].forEach(function(id){
+    $(id).addEventListener("input", render);
+    $(id).addEventListener("change", render);
+  });
+
+  $("btn-reset").addEventListener("click", function(){
+    $("price").value = 199500; $("prog").value = "CONV"; $("down").value = 5;
+    $("rate").value = 6.76; $("conc").value = 5985; $("stay").value = "5";
+    $("term").value = "30"; $("ppp").value = 0.25; $("tax").value = 1.11; $("ins").value = 19.28;
+    render();
+  });
+
+  render();
+})();
+</script>
+<script src="assets/leadgate.js" defer></script>
+</body>
+</html>

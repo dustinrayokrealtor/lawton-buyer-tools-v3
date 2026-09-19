@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lawton Buyer Payment Toolkit</title>
+<meta name="description" content="Estimate a real monthly house payment in Lawton and SWOK: VA, FHA and conventional side by side, Fort Sill BAH ceilings, seller-concession math, and local tax and insurance defaults.">
+<link rel="canonical" href="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/payment-toolkit.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lawton Buyer Payment Toolkit">
+<meta property="og:description" content="Estimate a real monthly house payment in Lawton and SWOK: VA, FHA and conventional side by side, Fort Sill BAH ceilings, seller-concession math, and local tax and insurance defaults.">
+<meta property="og:url" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/payment-toolkit.html">
+<meta property="og:image" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/team-logo.png">
+<link rel="icon" type="image/png" href="team-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<!--
+  Single-theme by deliberate choice: RE/MAX brand compliance fixes the palette.
+  Every color is painted explicitly so the page holds on any host ground.
+-->
+
+<style>
+:root{ --s-1:12.5px; --s0:15px; --s1:17px; --s2:23px; --s3:32px; --s4:44px; }
+
+body{font-size:var(--s0);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 60px}
+
+h1{font-size:var(--s3)}
+h2{font-size:var(--s2)}
+h3{font-size:var(--s1)}
+p{margin:0;max-width:64ch}
+.muted{color:var(--ink-2);font-size:var(--s-1);line-height:1.6}
+.sitehdr{max-width:1080px;margin:0 auto;padding-inline:16px}
+
+/* ---------- page hero band ---------- */
+.pagehero{background:var(--navy);color:#fff}
+.phin{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:64px 48px}
+.pagehero h1{color:#fff}
+.pagehero h1::after{margin-bottom:14px}
+.pagehero .intro{font-size:clamp(15px,1.9vw,18px);color:var(--on-dark);margin:0 0 26px;max-width:42em;line-height:1.65}
+.phstats{border-top:1px solid rgba(255,255,255,.18);margin-top:32px;padding-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px}
+.phstats b{display:block;font-size:21px;font-weight:600;color:#fff}
+.phstats span{display:block;font-size:12px;color:var(--on-dark-dim);margin-top:4px;line-height:1.45}
+
+/* ---------- input panel ---------- */
+.controls{
+  border:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;
+  background-color:var(--line);margin-bottom:1px;
+}
+.ctl{background:var(--paper);padding:13px 15px 15px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ctl input[type="number"],.ctl input[type="text"],.ctl select{
+  font-family:var(--font-ui);font-size:var(--s1);font-weight:600;line-height:1.2;
+  font-variant-numeric:tabular-nums;
+  background:var(--paper);color:var(--ink);border:2px solid var(--pale);
+  padding:9px 10px;width:100%;min-width:0;
+}
+.ctl select{font-size:var(--s0)}
+.ctl input:focus,.ctl select:focus{outline:none;border-color:var(--blue)}
+.ctl .hint{font-size:11.5px;color:var(--muted);line-height:1.45}
+
+.seg{display:flex;gap:0;border:2px solid var(--pale);overflow:hidden;background:var(--paper)}
+.seg button{
+  flex:1;font-family:var(--font-ui);font-size:var(--s-1);font-weight:600;line-height:1.2;
+  letter-spacing:1.2px;text-transform:uppercase;
+  background:var(--paper);color:var(--muted);border:0;border-right:1px solid var(--pale);
+  padding:10px 4px;cursor:pointer;
+}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff}
+
+/* ---------- result panel ---------- */
+.hero{
+  background:var(--navy);color:#fff;padding:24px;
+  display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:26px;align-items:center;
+}
+@media (max-width:640px){.hero{grid-template-columns:minmax(0,1fr);gap:18px}}
+.hero .lab{color:var(--on-dark-dim)}
+.hero .big{font-size:var(--s4);font-weight:600;line-height:1;color:#fff}
+.hero .sub{font-size:var(--s-1);color:var(--on-dark-dim);margin-top:7px}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:1px;background:#3D4759}
+@media (max-width:640px){.stack{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stack div{background:var(--navy);padding:10px 11px 12px;display:flex;flex-direction:column;gap:4px}
+.stack dt{color:var(--on-dark-dim);font-size:11px;letter-spacing:1.6px}
+.stack dd{margin:0;font-size:var(--s1);font-weight:600;color:#fff}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--blue);margin:26px 0 0;overflow-x:auto}
+.tabs button{
+  font-family:var(--font-ui);font-size:var(--s0);font-weight:600;line-height:1.2;
+  letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;
+  background:transparent;color:var(--muted);border:0;border-bottom:4px solid transparent;
+  padding:12px 16px;cursor:pointer;margin-bottom:-2px;
+}
+.tabs button[aria-selected="true"]{color:var(--blue);border-bottom-color:var(--red)}
+.panel{padding-top:22px;display:flex;flex-direction:column;gap:18px}
+.panel[hidden]{display:none}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:420px;font-variant-numeric:tabular-nums}
+caption{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line)}
+th,td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--line-2);font-size:var(--s0)}
+th:first-child,td:first-child{text-align:left;font-weight:600}
+thead th{color:var(--muted);font-weight:600;border-bottom:2px solid var(--blue)}
+tbody tr:last-child td{border-bottom:0}
+tr.best td{background:var(--wash)}
+tr.total td{border-top:2px solid var(--blue);font-weight:600}
+td.pos{color:var(--blue);font-weight:600}
+td.neg{color:var(--red-dark);font-weight:600}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--paper);padding:16px;display:flex;flex-direction:column;gap:7px}
+.card .v{font-size:var(--s2);font-weight:600;line-height:1.1;color:var(--ink)}
+.card .v.blue{color:var(--blue)}
+.card p{font-size:var(--s-1);color:var(--ink-2);line-height:1.55}
+
+/* ---------- disclosure ---------- */
+details{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--pale)}
+summary{padding:13px 16px;cursor:pointer;font-weight:600;font-size:var(--s0);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--font-ui);color:var(--red);font-size:var(--s2);line-height:1}
+details[open] summary::after{content:"\2212"}
+.dbody{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line-2)}
+.dbody ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.dbody li{font-size:var(--s-1);color:var(--ink-2);line-height:1.6}
+
+.sendhint{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5;max-width:62ch}
+@media print{.sendhint{display:none}}
+
+footer{display:flex;flex-direction:column;gap:8px}
+footer b{color:var(--ink-2)}
+
+.printonly{display:none}
+
+@media print{
+  @page{margin:0.5in}
+  body{background:#fff;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  .tabs,details{display:none!important}
+  .panel[hidden]{display:flex!important}
+  .panel{break-inside:avoid;padding-top:14px;border-top:1px solid #ccc;margin-top:14px}
+  .hero{background:#fff;color:#000;border:2px solid #000}
+  .hero .lab,.hero .sub,.hero .big{color:#000}
+  .stack{background:#ccc}
+  .stack div{background:#fff}
+  .stack dt,.stack dd{color:#000}
+  .ctl input,.ctl select{border:0;padding-left:0;background:#fff}
+  .seg button[aria-pressed="false"]{display:none}
+  .seg{border:0}
+  .seg button[aria-pressed="true"]{background:#fff;color:#000;text-align:left;padding-left:0}
+  .printonly{display:block}
+  h1{font-size:20pt}
+  .pb-logo{height:46px}
+  .rx-chip{border-color:#999}
+}
+</style>
+<link rel="stylesheet" href="assets/palette-v3.css">
+
+<header class="site">
+  <div class="sitehdr">
+    <div class="hdrleft">
+      <a href="./" class="backlink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Tools</a>
+      <span class="brandline">Pam &amp; Barry's Team <span><a href="tel:+15802488800" class="hdrlink">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/" class="hdrlink">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com" class="hdrlink">info@homes-lawton.com</a></span><span>Dustin Ray, Buyer Specialist &middot; <a href="tel:5803514683" class="hdrlink">580-351-4683</a> &middot; <a href="mailto:dustin@homes-lawton.com?subject=Buyer%20Payment%20Toolkit" class="hdrlink">dustin@homes-lawton.com</a></span></span>
+    </div>
+    <span class="logo-wrap"><img src="team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></span>
+  </div>
+</header>
+
+<div class="pagehero">
+  <div class="phin">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 3v4M8 3v4M2 11h20"></path></svg>Payment calculator</span>
+    <h1>Buyer Payment Toolkit</h1>
+    <p class="intro">Lawton and SWOK. Property tax and homeowners insurance are set to real local numbers, so the payment you see is close to the one underwriting will see. Change anything you want. Everything recalculates.</p>
+    <div class="hero-cta">
+      <a class="hbtn" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call or text</a>
+      <a class="hbtn alt" href="mailto:dustin@homes-lawton.com?subject=Buyer%20Payment%20Toolkit&body=Hi%20Dustin%2C%0A%0AI%20was%20using%20the%20payment%20toolkit.%20What%20I%20am%20trying%20to%20figure%20out%3A%0A%0A%0A%0AThanks%2C%0A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="m22 6-10 7L2 6"></path></svg>Email me</a>
+    </div>
+    <div class="phstats">
+      <div><b>$199,500</b><span>Lawton median sale price</span></div>
+      <div><b>6.76%</b><span>Current 30yr rate, Freddie Mac</span></div>
+      <div><b>27 days</b><span>Median days on market</span></div>
+      <div><b>3.8 mo.</b><span>Months of supply</span></div>
+    </div>
+  </div>
+  <svg class="horizon horizon--short" viewBox="0 0 1600 410" preserveAspectRatio="none" aria-hidden="true">
+  <defs><linearGradient id="sky-pt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#272D3E"/><stop offset="0.28" stop-color="#4F5866"/><stop offset="0.62" stop-color="#B7BFBE"/><stop offset="0.8" stop-color="#C9CFC9"/></linearGradient></defs>
+  <rect width="1600" height="410" fill="url(#sky-pt)"/>
+  <g transform="translate(0,150)">
+  <path fill="#56707E" d="M0 170 L134 165 Q250 130 368 80 Q430 58 480 50 L535 44 L636 44 Q690 62 714 80 Q780 118 814 135 L870 143 L948 135 L1004 147 L1070 150 L1150 138 L1215 112 L1250 108 L1285 128 L1310 138 L1340 130 L1400 98 L1445 86 L1490 100 L1561 143 L1600 155 L1600 260 L0 260Z"/>
+  <path fill="#7C8F97" d="M0 200 C80 196 140 186 200 184 C270 182 320 192 390 190 C460 188 520 176 600 176 C680 176 740 188 820 190 C900 192 960 180 1040 178 C1120 176 1180 188 1260 186 C1340 184 1400 176 1470 178 C1530 180 1570 190 1600 192 L1600 260 L0 260Z"/>
+  <path fill="#B9948A" d="M0 224 C120 220 220 212 340 214 C460 216 560 226 700 224 C840 222 940 212 1080 214 C1220 216 1320 226 1440 224 C1520 222 1570 220 1600 220 L1600 260 L0 260Z"/>
+  <path fill="#D9B893" d="M0 244 L1600 244 L1600 260 L0 260Z"/>
+  <g fill="#56707E">
+    <path d="M1180 244 L1180 232 M1180 236 L1174 230 M1180 234 L1186 229" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1230 244 L1230 228 M1230 234 L1223 227 M1230 232 L1238 225 M1230 238 L1236 234" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1290 244 L1290 233 M1290 237 L1284 231 M1290 236 L1296 230" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M420 244 L420 230 M420 236 L413 229 M420 234 L427 227" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M470 244 L470 234 M470 238 L465 233 M470 237 L476 232" stroke="#4E4A45" stroke-width="2" fill="none"/>
+  </g>
+  </g>
+</svg>
+</div>
+
+<div class="wrap">
+<nav class="sitenav" aria-label="Site"><a href="./">&larr; All Lawton buyer tools</a><a href="buying-guide.html">Read the Lawton buyer guide &rarr;</a></nav>
+
+<!-- ============ INPUTS ============ -->
+<section class="controls" aria-label="Loan inputs">
+  <div class="ctl">
+    <label for="price">Purchase price</label>
+    <input type="number" id="price" value="199500" min="20000" max="2000000" step="500" inputmode="numeric">
+    <span class="hint">Lawton median is $199,500</span>
+  </div>
+  <div class="ctl">
+    <label for="rate">Interest rate %</label>
+    <input type="number" id="rate" value="6.76" min="1" max="15" step="0.005" inputmode="decimal">
+    <span class="hint">Freddie Mac survey, 9/10/26</span>
+  </div>
+  <div class="ctl" style="grid-column:span 2">
+    <label for="loantype">Loan type</label>
+    <div class="seg" id="loantype" role="group" aria-label="Loan type">
+      <button type="button" data-loan="va" aria-pressed="true">VA</button>
+      <button type="button" data-loan="fha" aria-pressed="false">FHA</button>
+      <button type="button" data-loan="conv" aria-pressed="false">Conventional</button>
+    </div>
+    <span class="hint" id="loanhint">Zero down, no monthly mortgage insurance</span>
+  </div>
+  <div class="ctl">
+    <label for="downpct">Down payment %</label>
+    <input type="number" id="downpct" value="0" min="0" max="100" step="0.5" inputmode="decimal">
+    <span class="hint" id="downhint">$0 out of pocket</span>
+  </div>
+  <div class="ctl">
+    <label for="term">Term (years)</label>
+    <select id="term">
+      <option value="30" selected>30 year fixed</option>
+      <option value="20">20 year fixed</option>
+      <option value="15">15 year fixed</option>
+    </select>
+    <span class="hint">Most buyers here take 30</span>
+  </div>
+</section>
+
+<!-- ============ HERO RESULT ============ -->
+<section class="hero" aria-live="polite">
+  <div>
+    <span class="lab">Total monthly payment</span>
+    <div class="big" id="hero-piti" data-lead="Total monthly payment">$1,829</div>
+    <div class="sub" id="hero-note">VA, zero down, 6.76%, 30 year</div>
+  </div>
+  <dl class="stack">
+    <div><dt>Principal &amp; interest</dt><dd id="s-pi">$1,323</dd></div>
+    <div><dt>Property tax</dt><dd id="s-tax">$185</dd></div>
+    <div><dt>Insurance</dt><dd id="s-ins">$321</dd></div>
+    <div><dt>Mortgage ins.</dt><dd id="s-mi">$0</dd></div>
+  </dl>
+</section>
+
+<div class="actions">
+  <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
+  <button type="button" id="btn-reset">Reset to Lawton median</button>
+</div>
+<p class="sendhint">Print or save this as a PDF and I'll email you a copy of the exact scenario on screen, then follow up with what's actually listed in this payment range.</p>
+
+<!-- ============ TABS ============ -->
+<div class="tabs" role="tablist" aria-label="Toolkit sections">
+  <button role="tab" id="tab-compare" aria-controls="p-compare" aria-selected="true">Compare loans</button>
+  <button role="tab" id="tab-bah" aria-controls="p-bah" aria-selected="false">BAH ceiling</button>
+  <button role="tab" id="tab-offer" aria-controls="p-offer" aria-selected="false">Offer strategy</button>
+  <button role="tab" id="tab-timing" aria-controls="p-timing" aria-selected="false">Timing</button>
+  <button role="tab" id="tab-assume" aria-controls="p-assume" aria-selected="false">Assumptions</button>
+</div>
+
+<!-- ---------- COMPARE ---------- -->
+<section class="panel" id="p-compare" role="tabpanel" aria-labelledby="tab-compare">
+  <div>
+    <h2>Same house, three ways to finance it</h2>
+    <p class="muted" style="margin-top:6px">Down payment stays at whatever each program's realistic minimum is. Change the numbers above and this moves with them.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption id="cmp-cap">At $199,500 and 6.76%</caption>
+      <thead><tr>
+        <th scope="col">Program</th><th scope="col">Down</th><th scope="col">Loan</th>
+        <th scope="col">P&amp;I</th><th scope="col">Mortgage ins.</th><th scope="col">Total payment</th>
+      </tr></thead>
+      <tbody id="cmp-body"></tbody>
+    </table>
+  </div>
+  <div class="note">
+    <span class="k">Why VA usually wins here</span>
+    <p id="cmp-note">Zero down and no monthly mortgage insurance. On a median Lawton home that's worth real money every month compared to the other two, and it's cash you keep at closing.</p>
+  </div>
+  <div class="printonly muted"><b>Prepared by Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></div>
+</section>
+
+<!-- ---------- BAH ---------- -->
+<section class="panel" id="p-bah" role="tabpanel" aria-labelledby="tab-bah" hidden>
+  <div>
+    <h2>What your housing allowance actually buys</h2>
+    <p class="muted" style="margin-top:6px">This solves for the purchase price where the whole payment equals the allowance. It's a reference point, not a pre-approval. Plenty of buyers spend past BAH out of base pay, and a second income changes it completely.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="bah">Monthly BAH</label>
+      <input type="number" id="bah" value="1233" min="200" max="6000" step="1" inputmode="numeric">
+      <span class="hint">Fort Sill 2026, with dependents</span>
+    </div>
+    <div class="ctl">
+      <label for="bahgrade">Or pick a grade</label>
+      <select id="bahgrade">
+        <option value="1233" selected>E-5 with dependents</option>
+        <option value="1092">E-5 without</option>
+        <option value="1494">E-6 with dependents</option>
+        <option value="1170">E-6 without</option>
+        <option value="1587">E-7 with dependents</option>
+        <option value="1209">E-7 without</option>
+        <option value="1758">O-3 with dependents</option>
+        <option value="1395">O-3 without</option>
+      </select>
+      <span class="hint">2026 Fort Sill rates</span>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Max purchase price</span><span class="v blue" id="bah-max">$120,679</span><p>Where the full payment lands exactly on the allowance, at the rate and loan type you picked above.</p></div>
+    <div class="card"><span class="lab">Share of the median home</span><span class="v" id="bah-share">60%</span><p>Lawton's median sale price is $199,500 year to date.</p></div>
+    <div class="card"><span class="lab">Gap to the median</span><span class="v" id="bah-gap">$78,821</span><p>What base pay or a second income would need to cover to reach a median-priced house.</p></div>
+    <div class="card"><span class="lab">Insurance share of BAH</span><span class="v" id="bah-insshare">26%</span><p>Homeowners insurance on that max-price house, as a share of the allowance.</p></div>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>Every Fort Sill grade at your current rate and loan type</caption>
+      <thead><tr><th scope="col">Grade</th><th scope="col">BAH</th><th scope="col">Max price</th><th scope="col">Share of median</th></tr></thead>
+      <tbody id="bah-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ---------- OFFER ---------- -->
+<section class="panel" id="p-offer" role="tabpanel" aria-labelledby="tab-offer" hidden>
+  <div>
+    <h2>Price cut or seller concession</h2>
+    <p class="muted" style="margin-top:6px">Sellers here are closing at 98.5% of list, so they don't cut much off the number. The same dollars spent buying the rate down move the payment a lot further. This shows the difference on the deal in front of you. For the full comparison, including a 2-1 temporary buydown and what it costs to set up, use the <a href="buydown.html">Rate Buydown vs Price Cut</a> tool.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="concession">Dollars on the table</label>
+      <input type="number" id="concession" value="6000" min="0" max="100000" step="250" inputmode="numeric">
+      <span class="hint">What you think you can get</span>
+    </div>
+    <div class="ctl">
+      <label for="ptsrate">Rate drop per point</label>
+      <input type="number" id="ptsrate" value="0.25" min="0.05" max="0.75" step="0.01" inputmode="decimal">
+      <span class="hint">Get the real number from the lender</span>
+    </div>
+  </div>
+  <div class="tw">
+    <table>
+      <caption id="off-cap">$6,000 in seller money, two ways to spend it</caption>
+      <thead><tr><th scope="col">Option</th><th scope="col">Price</th><th scope="col">Rate</th><th scope="col">Total payment</th><th scope="col">Vs. no concession</th></tr></thead>
+      <tbody id="off-body"></tbody>
+    </table>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Buydown advantage</span><span class="v blue" id="off-adv">$47/mo</span><p id="off-adv-note">Extra monthly savings from putting the money into the rate instead of the price.</p></div>
+    <div class="card"><span class="lab">Over 30 years</span><span class="v" id="off-life">$16,920</span><p>Same seller cost either way. This is what the structure is worth to you over the life of the loan.</p></div>
+    <div class="card"><span class="lab">Seller nets the same</span><span class="v" id="off-seller">$6,000</span><p>Either way the seller gives up the same dollars. A concession is often easier for them to say yes to than a price cut.</p></div>
+  </div>
+  <div class="note warn" id="off-limit" hidden>
+    <span class="k">Watch the concession cap</span>
+    <p></p>
+  </div>
+  <div class="note warn">
+    <span class="k">Before you use this at the table</span>
+    <p>The rate drop per point is a placeholder until the lender on the file gives you a real cost sheet. Lenders price points differently every week, and a temporary 2-1 buydown works nothing like a permanent one. Concession caps also run by program: VA 4% of value, FHA 6%, conventional 3% under 10% down and 6% at 10% or more. Confirm all of it with the lender before you count on it.</p>
+  </div>
+</section>
+
+<!-- ---------- TIMING ---------- -->
+<section class="panel" id="p-timing" role="tabpanel" aria-labelledby="tab-timing" hidden>
+  <div>
+    <h2>What waiting costs</h2>
+    <p class="muted" style="margin-top:6px">Straight arithmetic, no pitch. Last year a buyer who paused twelve months watched the median go from $183,000 to $199,500 and the rate go from 6.35% to 6.76%. Set your own assumptions and see what a repeat looks like.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="appr">Price change in 12 mo</label>
+      <input type="number" id="appr" value="3.8" min="-20" max="30" step="0.1" inputmode="decimal">
+      <span class="hint">Lawton average ran +3.8%</span>
+    </div>
+    <div class="ctl">
+      <label for="ratechg">Rate change in 12 mo</label>
+      <input type="number" id="ratechg" value="0" min="-4" max="4" step="0.05" inputmode="decimal">
+      <span class="hint">Points, so 0.41 means +41 bps</span>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Payment today</span><span class="v" id="t-now">$1,829</span><p id="t-now-note">On a $199,500 house at 6.76%.</p></div>
+    <div class="card"><span class="lab">Payment in 12 months</span><span class="v blue" id="t-later">$1,896</span><p id="t-later-note">Same house, priced forward at your assumptions.</p></div>
+    <div class="card"><span class="lab">Difference</span><span class="v" id="t-diff">$67/mo</span><p id="t-diff-note">That's what twelve months costs on the same house.</p></div>
+  </div>
+  <div class="tw">
+    <table>
+      <caption id="lad-cap">Rate ladder on a $199,500 house</caption>
+      <thead><tr><th scope="col">Rate</th><th scope="col">P&amp;I</th><th scope="col">Total payment</th><th scope="col">Vs. today</th><th scope="col">Buying power at today's payment</th></tr></thead>
+      <tbody id="lad-body"></tbody>
+    </table>
+  </div>
+  <div class="note">
+    <span class="k">The rule of thumb worth memorizing</span>
+    <p id="rule-note">On a Lawton median loan, 100 basis points is worth about $133 a month, or about $19,200 of purchase price at the same payment. That's the number to keep in your head when you're deciding whether to wait.</p>
+  </div>
+</section>
+
+<!-- ---------- ASSUMPTIONS ---------- -->
+<section class="panel" id="p-assume" role="tabpanel" aria-labelledby="tab-assume" hidden>
+  <div>
+    <h2>What's under the hood</h2>
+    <p class="muted" style="margin-top:6px">These are the local defaults. Change them here and every tab updates. A real quote always beats an estimate, so replace these with actual numbers once you have them.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="taxrate">Property tax rate %</label>
+      <input type="number" id="taxrate" value="1.11" min="0" max="5" step="0.01" inputmode="decimal">
+      <span class="hint">Lawton median effective rate</span>
+    </div>
+    <div class="ctl">
+      <label for="insrate">Insurance $ per $1,000</label>
+      <input type="number" id="insrate" value="19.28" min="0" max="80" step="0.01" inputmode="decimal">
+      <span class="hint">Lawton, per year of coverage</span>
+    </div>
+    <div class="ctl">
+      <label for="covpct">Dwelling coverage %</label>
+      <input type="number" id="covpct" value="100" min="40" max="200" step="1" inputmode="numeric">
+      <span class="hint">Of purchase price</span>
+    </div>
+    <div class="ctl">
+      <label for="hoa">HOA dues per month</label>
+      <input type="number" id="hoa" value="0" min="0" max="2000" step="5" inputmode="numeric">
+      <span class="hint">Rare in most of SWOK</span>
+    </div>
+    <div class="ctl">
+      <label for="pmirate">Conventional PMI %</label>
+      <input type="number" id="pmirate" value="0.60" min="0" max="3" step="0.01" inputmode="decimal">
+      <span class="hint">Annual, of loan amount</span>
+    </div>
+    <div class="ctl">
+      <label for="vaexempt">VA funding fee</label>
+      <select id="vaexempt">
+        <option value="0" selected>Charged, first use</option>
+        <option value="2">Charged, subsequent use</option>
+        <option value="1">Exempt</option>
+      </select>
+      <span class="hint">Exempt with disability comp or Purple Heart</span>
+    </div>
+  </div>
+
+  <details>
+    <summary>Where the local numbers come from</summary>
+    <div class="dbody">
+      <ul>
+        <li><b>Property tax, 1.11%.</b> Lawton's median effective rate from Comanche County records. A specific parcel can run higher or lower, and homestead exemption isn't in here. Pull the real number off the assessor site before you settle on a payment.</li>
+        <li><b>Insurance, $19.28 per $1,000 of coverage.</b> Built from Lawton's city average of $4,903 a year at $300,000 of dwelling coverage, scaled down to the coverage a median Lawton home actually carries. Works out to about $3,860 a year, or $321 a month, on a $199,500 house. That's lower than the Oklahoma state average, which blends in the OKC metro and assumes a lot more coverage than a house here needs.</li>
+        <li><b>Dwelling coverage at 100% of price.</b> In a low-cost market, rebuild cost lands at or above market value, because lumber and labor don't get cheaper just because the house does. Adjust it if the lot carries real value.</li>
+        <li><b>VA funding fee.</b> 2.15% first use with less than 5% down, 3.3% on subsequent use, financed into the loan. Zero if you draw service-connected disability compensation or holds a Purple Heart on the closing date.</li>
+        <li><b>FHA.</b> 1.75% upfront premium financed in, plus 0.55% a year with less than 5% down, for the life of the loan. At 10% or more down it drops to 0.50% and falls off after 11 years.</li>
+        <li><b>Conventional PMI.</b> 0.60% a year is a mid-credit placeholder. It falls off at 78% loan to value. Actual pricing swings hard on credit score, so get the real quote.</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="note warn">
+    <span class="k">What this tool is not</span>
+    <p>This is an estimate for shopping, not a loan estimate, a pre-approval, or a quote. Taxes, insurance, and mortgage insurance all get set by somebody other than me. Your lender runs the real numbers, and those are the ones that go in an offer.</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></p>
+  <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>
+  <p>Pam &amp; Barry's Team, RE/MAX Professionals. Each Office Independently Owned and Operated. Payment figures are estimates for planning and are not a commitment to lend, a loan estimate, or a pre-approval. Rates, taxes, insurance, and mortgage insurance change and are set by third parties. Market figures are from the Lawton Board of REALTORS Paragon MLS, year to date through 9/10/2026, Comanche County residential.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var LS = "lbpt.v1";
+  var MEDIAN = 199500;
+
+  var GRADES = [
+    ["E-5 with dependents", 1233], ["E-6 with dependents", 1494],
+    ["E-7 with dependents", 1587], ["O-3 with dependents", 1758],
+    ["E-5 without", 1092], ["E-6 without", 1170],
+    ["E-7 without", 1209], ["O-3 without", 1395]
+  ];
+
+  var $ = function(id){ return document.getElementById(id); };
+  var loan = "va";
+
+  function num(id, fallback){
+    var el = $(id);
+    if (!el) return fallback;
+    var v = parseFloat(el.value);
+    return isFinite(v) ? v : fallback;
+  }
+  function money(v){
+    return "$" + Math.round(v).toLocaleString("en-US");
+  }
+  function money0(v){
+    return "$" + Math.round(v).toLocaleString("en-US");
+  }
+
+  function pmt(principal, annualPct, years){
+    if (principal <= 0) return 0;
+    var r = (annualPct / 100) / 12, n = years * 12;
+    if (r <= 0) return principal / n;
+    var f = Math.pow(1 + r, n);
+    return principal * (r * f) / (f - 1);
+  }
+
+  // Returns the full payment breakdown for one scenario.
+  function calc(opts){
+    var price = opts.price, rate = opts.rate, years = opts.years, type = opts.type;
+    var downPct = opts.downPct;
+
+    var taxRate = num("taxrate", 1.11) / 100;
+    var insRate = num("insrate", 19.28);
+    var covPct  = num("covpct", 100) / 100;
+    var hoa     = num("hoa", 0);
+    var pmiPct  = num("pmirate", 0.60) / 100;
+    var vaMode  = ($("vaexempt") ? $("vaexempt").value : "0");
+
+    var down = price * (downPct / 100);
+    var base = price - down;
+    var financed = 0, mi = 0;
+
+    if (type === "va"){
+      var ff = 0;
+      if (vaMode === "1") ff = 0;
+      else if (downPct >= 10) ff = 0.0125;
+      else if (downPct >= 5)  ff = 0.015;
+      else ff = (vaMode === "2") ? 0.033 : 0.0215;
+      financed = base * ff;
+      mi = 0;
+    } else if (type === "fha"){
+      financed = base * 0.0175;
+      var annual = (downPct < 5) ? 0.0055 : 0.0050;
+      mi = base * annual / 12;
+    } else {
+      financed = 0;
+      var ltv = base / price;
+      mi = (ltv > 0.80) ? (base * pmiPct / 12) : 0;
+    }
+
+    var principal = base + financed;
+    var pi  = pmt(principal, rate, years);
+    var tax = price * taxRate / 12;
+    var ins = (price * covPct / 1000) * insRate / 12;
+
+    return {
+      price: price, down: down, downPct: downPct, base: base,
+      financed: financed, principal: principal,
+      pi: pi, tax: tax, ins: ins, mi: mi, hoa: hoa,
+      total: pi + tax + ins + mi + hoa
+    };
+  }
+
+  function current(){
+    return calc({
+      price: num("price", MEDIAN),
+      rate: num("rate", 6.76),
+      years: parseInt($("term").value, 10) || 30,
+      type: loan,
+      downPct: num("downpct", 0)
+    });
+  }
+
+  // Solve for the price whose total payment equals a budget.
+  function maxPrice(budget, rate, years, type, downPct){
+    var lo = 10000, hi = 2000000;
+    for (var i = 0; i < 70; i++){
+      var mid = (lo + hi) / 2;
+      var r = calc({price: mid, rate: rate, years: years, type: type, downPct: downPct});
+      if (r.total > budget) hi = mid; else lo = mid;
+    }
+    return lo;
+  }
+
+  var LOAN_HINTS = {
+    va:   "Zero down, no monthly mortgage insurance",
+    fha:  "3.5% down minimum, mortgage insurance for the life of the loan",
+    conv: "5% down is typical, PMI falls off at 78% loan to value"
+  };
+  var DEFAULT_DOWN = { va: 0, fha: 3.5, conv: 5 };
+
+  // ---------- renderers ----------
+
+  function renderHero(){
+    var c = current();
+    $("hero-piti").textContent = money(c.total);
+    $("s-pi").textContent  = money(c.pi);
+    $("s-tax").textContent = money(c.tax);
+    $("s-ins").textContent = money(c.ins);
+    $("s-mi").textContent  = money(c.mi);
+    var names = { va: "VA", fha: "FHA", conv: "Conventional" };
+    var dtxt = c.downPct === 0 ? "zero down" : (c.downPct + "% down, " + money(c.down));
+    $("hero-note").textContent =
+      names[loan] + ", " + dtxt + ", " + num("rate", 6.76).toFixed(3).replace(/0+$/, "").replace(/\.$/, "") +
+      "%, " + $("term").value + " year";
+    $("downhint").textContent = money(c.down) + " out of pocket";
+    if (c.hoa > 0) $("hero-note").textContent += ", includes " + money(c.hoa) + " HOA";
+  }
+
+  function renderCompare(){
+    var price = num("price", MEDIAN), rate = num("rate", 6.76);
+    var years = parseInt($("term").value, 10) || 30;
+    var rows = [
+      { key: "va",   name: "VA",           down: (loan === "va"   ? num("downpct", 0)   : 0) },
+      { key: "fha",  name: "FHA",          down: (loan === "fha"  ? num("downpct", 3.5) : 3.5) },
+      { key: "conv", name: "Conventional", down: (loan === "conv" ? num("downpct", 5)   : 5) }
+    ];
+    var out = rows.map(function(r){
+      var c = calc({price: price, rate: rate, years: years, type: r.key, downPct: r.down});
+      return { name: r.name, key: r.key, c: c };
+    });
+    var best = out.reduce(function(a, b){ return b.c.total < a.c.total ? b : a; });
+
+    $("cmp-body").innerHTML = out.map(function(o){
+      var cls = (o.key === best.key) ? ' class="best"' : "";
+      return "<tr" + cls + "><th scope=\"row\">" + o.name + (o.key === best.key ? " (lowest)" : "") + "</th>" +
+        "<td>" + money(o.c.down) + "</td>" +
+        "<td>" + money(o.c.principal) + "</td>" +
+        "<td>" + money(o.c.pi) + "</td>" +
+        "<td>" + (o.c.mi > 0 ? money(o.c.mi) : "none") + "</td>" +
+        "<td><b>" + money(o.c.total) + "</b></td></tr>";
+    }).join("");
+
+    $("cmp-cap").textContent = "At " + money(price) + " and " + rate + "%";
+
+    var va = out[0].c, fha = out[1].c, conv = out[2].c;
+    var vsFha = fha.total - va.total, vsConv = conv.total - va.total;
+    var msg = "Zero down and no monthly mortgage insurance. On this house VA runs " + money(Math.abs(vsFha)) +
+      " a month " + (vsFha >= 0 ? "under" : "over") + " FHA";
+    if (Math.abs(vsConv) < 25){
+      msg += ". Against conventional the payments land within " + money(Math.abs(vsConv)) +
+        " of each other, so the real difference is cash: conventional wants " + money(conv.down) +
+        " at closing and VA wants none of it.";
+    } else {
+      msg += " and " + money(Math.abs(vsConv)) + " " + (vsConv >= 0 ? "under" : "over") +
+        " conventional, and it keeps " + money(conv.down) + " in your pocket at closing.";
+    }
+    $("cmp-note").textContent = msg;
+  }
+
+  function renderBAH(){
+    var rate = num("rate", 6.76);
+    var years = parseInt($("term").value, 10) || 30;
+    var downPct = num("downpct", 0);
+    var bah = num("bah", 1233);
+
+    var mp = maxPrice(bah, rate, years, loan, downPct);
+    var atMax = calc({price: mp, rate: rate, years: years, type: loan, downPct: downPct});
+
+    $("bah-max").textContent = money(mp);
+    $("bah-share").textContent = Math.round(mp / MEDIAN * 100) + "%";
+    $("bah-gap").textContent = mp >= MEDIAN ? "covered" : money(MEDIAN - mp);
+    $("bah-insshare").textContent = Math.round(atMax.ins / bah * 100) + "%";
+
+    $("bah-body").innerHTML = GRADES.map(function(g){
+      var p = maxPrice(g[1], rate, years, loan, downPct);
+      return "<tr><th scope=\"row\">" + g[0] + "</th><td>" + money(g[1]) + "</td>" +
+        "<td>" + money(p) + "</td><td>" + Math.round(p / MEDIAN * 100) + "%</td></tr>";
+    }).join("");
+  }
+
+  function renderOffer(){
+    var price = num("price", MEDIAN), rate = num("rate", 6.76);
+    var years = parseInt($("term").value, 10) || 30;
+    var downPct = num("downpct", 0);
+    var conc = num("concession", 6000);
+    var perPoint = num("ptsrate", 0.25);
+
+    var baseC = calc({price: price, rate: rate, years: years, type: loan, downPct: downPct});
+    var cutC  = calc({price: Math.max(price - conc, 1000), rate: rate, years: years, type: loan, downPct: downPct});
+
+    // One "point" is 1% of the loan amount.
+    var points = baseC.principal > 0 ? (conc / baseC.principal) * 100 : 0;
+    var CAP_POINTS = 4;
+    var capped = points > CAP_POINTS;
+    var usedPoints = Math.min(points, CAP_POINTS);
+    var drop = usedPoints * perPoint;
+    var newRate = Math.max(rate - drop, 0.5);
+    var buyC = calc({price: price, rate: newRate, years: years, type: loan, downPct: downPct});
+
+    // Seller concession limits by program, as a share of price.
+    var LIMITS = { va: 0.04, fha: 0.06, conv: (downPct < 10 ? 0.03 : 0.06) };
+    var limitPct = LIMITS[loan];
+    var limitDollars = price * limitPct;
+    var overLimit = conc > limitDollars;
+
+    function deltaCell(v){
+      if (Math.abs(v) < 0.5) return '<td>even</td>';
+      var cls = v < 0 ? "pos" : "neg";
+      return '<td class="' + cls + '">' + (v < 0 ? "−" : "+") + money(Math.abs(v)) + "/mo</td>";
+    }
+
+    $("off-cap").textContent = money(conc) + " in seller money, two ways to spend it";
+    $("off-body").innerHTML =
+      '<tr><th scope="row">No concession</th><td>' + money(price) + "</td><td>" + rate.toFixed(2) + "%</td><td>" +
+        money(baseC.total) + "</td><td>baseline</td></tr>" +
+      '<tr><th scope="row">Price cut</th><td>' + money(price - conc) + "</td><td>" + rate.toFixed(2) + "%</td><td>" +
+        money(cutC.total) + "</td>" + deltaCell(cutC.total - baseC.total) + "</tr>" +
+      '<tr class="best"><th scope="row">Rate buydown</th><td>' + money(price) + "</td><td>" +
+        newRate.toFixed(2) + "% (" + usedPoints.toFixed(2) + " pts)</td><td>" +
+        money(buyC.total) + "</td>" + deltaCell(buyC.total - baseC.total) + "</tr>";
+
+    var adv = cutC.total - buyC.total;
+    $("off-adv").textContent = (adv >= 0 ? "" : "−") + money(Math.abs(adv)) + "/mo";
+    $("off-adv-note").textContent = adv >= 0
+      ? "Extra monthly savings from putting the money into the rate instead of the price."
+      : "On this deal the price cut actually wins. Take the cut.";
+    $("off-life").textContent = money(Math.abs(adv) * years * 12);
+    $("off-seller").textContent = money(conc);
+
+    var warn = $("off-limit");
+    var msgs = [];
+    if (overLimit){
+      msgs.push(loan.toUpperCase().replace("CONV", "Conventional") + " caps seller-paid concessions at " +
+        Math.round(limitPct * 100) + "% of price on this deal, which is " + money(limitDollars) +
+        ". You're " + money(conc - limitDollars) + " over. Anything above the cap has to come off the price instead.");
+    }
+    if (capped){
+      msgs.push("That's " + points.toFixed(1) + " points, more than most lenders will let a seller buy down at once. " +
+        "The buydown row is held at " + CAP_POINTS + " points.");
+    }
+    if (msgs.length){
+      warn.hidden = false;
+      warn.querySelector("p").textContent = msgs.join(" ");
+    } else {
+      warn.hidden = true;
+    }
+  }
+
+  function renderTiming(){
+    var price = num("price", MEDIAN), rate = num("rate", 6.76);
+    var years = parseInt($("term").value, 10) || 30;
+    var downPct = num("downpct", 0);
+
+    var now = calc({price: price, rate: rate, years: years, type: loan, downPct: downPct});
+    var futPrice = price * (1 + num("appr", 3.8) / 100);
+    var futRate = Math.max(rate + num("ratechg", 0), 0.5);
+    var later = calc({price: futPrice, rate: futRate, years: years, type: loan, downPct: downPct});
+    var diff = later.total - now.total;
+
+    $("t-now").textContent = money(now.total);
+    $("t-now-note").textContent = "On a " + money(price) + " house at " + rate.toFixed(2) + "%.";
+    $("t-later").textContent = money(later.total);
+    $("t-later-note").textContent = money(futPrice) + " at " + futRate.toFixed(2) + "%.";
+    $("t-diff").textContent = (diff < 0 ? "−" : "+") + money(Math.abs(diff)) + "/mo";
+    $("t-diff-note").textContent = (diff < 0 ? "Waiting saves " : "Waiting costs ") +
+      money(Math.abs(diff) * 12) + " over the first year on the same house.";
+
+    var steps = [-1, -0.5, 0, 0.5, 1];
+    $("lad-cap").textContent = "Rate ladder on a " + money(price) + " house";
+    $("lad-body").innerHTML = steps.map(function(s){
+      var r = Math.max(rate + s, 0.5);
+      var c = calc({price: price, rate: r, years: years, type: loan, downPct: downPct});
+      var d = c.total - now.total;
+      var power = maxPrice(now.total, r, years, loan, downPct);
+      var dtxt = Math.abs(d) < 0.5
+        ? "today"
+        : '<span style="color:' + (d < 0 ? "#001C6B" : "#8C0A00") + ';font-weight:700">' +
+          (d < 0 ? "−" : "+") + money(Math.abs(d)) + "</span>";
+      var cls = (s === 0) ? ' class="best"' : "";
+      return "<tr" + cls + '><th scope="row">' + r.toFixed(2) + "%" + (s === 0 ? " (today)" : "") + "</th>" +
+        "<td>" + money(c.pi) + "</td><td>" + money(c.total) + "</td><td>" + dtxt + "</td>" +
+        "<td>" + money(power) + "</td></tr>";
+    }).join("");
+
+    var down100 = calc({price: price, rate: Math.max(rate - 1, 0.5), years: years, type: loan, downPct: downPct});
+    var powerUp = maxPrice(now.total, Math.max(rate - 1, 0.5), years, loan, downPct) - price;
+    $("rule-note").textContent =
+      "On this loan, 100 basis points is worth about " + money(now.pi - down100.pi) +
+      " a month, or about " + money(powerUp) +
+      " of purchase price at the same payment. That's the number to keep in your head when you're deciding whether to wait.";
+  }
+
+  function renderAll(){
+    renderHero();
+    renderCompare();
+    renderBAH();
+    renderOffer();
+    renderTiming();
+    save();
+  }
+
+  // ---------- persistence (per-viewer convenience only) ----------
+  var PERSIST = ["rate", "taxrate", "insrate", "covpct", "pmirate", "ptsrate"];
+  function save(){
+    try {
+      var o = {};
+      PERSIST.forEach(function(k){ if ($(k)) o[k] = $(k).value; });
+      localStorage.setItem(LS, JSON.stringify(o));
+    } catch (e) { /* private mode, blocked storage: fine */ }
+  }
+  function load(){
+    try {
+      var raw = localStorage.getItem(LS);
+      if (!raw) return;
+      var o = JSON.parse(raw);
+      PERSIST.forEach(function(k){ if (o[k] != null && $(k)) $(k).value = o[k]; });
+    } catch (e) { /* fine */ }
+  }
+
+  // ---------- wiring ----------
+  Array.prototype.forEach.call(
+    document.querySelectorAll('input[type="number"], select'),
+    function(el){ el.addEventListener("input", renderAll); el.addEventListener("change", renderAll); }
+  );
+
+  Array.prototype.forEach.call($("loantype").querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      loan = b.dataset.loan;
+      Array.prototype.forEach.call($("loantype").querySelectorAll("button"), function(x){
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      $("loanhint").textContent = LOAN_HINTS[loan];
+      $("downpct").value = DEFAULT_DOWN[loan];
+      renderAll();
+    });
+  });
+
+  $("bahgrade").addEventListener("change", function(){
+    $("bah").value = $("bahgrade").value;
+    renderAll();
+  });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function selectTab(t){
+    tabs.forEach(function(x){
+      var on = (x === t);
+      x.setAttribute("aria-selected", String(on));
+      $(x.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener("click", function(){ selectTab(t); });
+    t.addEventListener("keydown", function(e){
+      var j = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : -1;
+      if (j < 0 || j >= tabs.length) return;
+      e.preventDefault();
+      tabs[j].focus();
+      selectTab(tabs[j]);
+    });
+  });
+
+  $("btn-reset").addEventListener("click", function(){
+    $("price").value = MEDIAN;
+    $("rate").value = 6.76;
+    $("term").value = "30";
+    $("downpct").value = DEFAULT_DOWN[loan];
+    $("concession").value = 6000;
+    $("appr").value = 3.8;
+    $("ratechg").value = 0;
+    renderAll();
+  });
+
+  load();
+  renderAll();
+})();
+</script>
+<script src="assets/leadgate.js" defer></script>
+</body>
+</html>

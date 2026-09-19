@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VA Loan Calculator | Lawton Buyer Tools</title>
+<meta name="description" content="A full VA loan calculator for married buyers, spouses, and co-borrowers: combine active duty pay, military retirement, tax-free BAH/BAS, and VA disability compensation into real qualifying income, DTI, and VA residual income.">
+<link rel="canonical" href="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/va-loan-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VA Loan Calculator for Households">
+<meta property="og:description" content="Combine active duty pay, retirement, disability compensation, and a spouse or co-borrower's income into a real VA loan qualification estimate.">
+<meta property="og:url" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/va-loan-calculator.html">
+<meta property="og:image" content="https://dustinrayokrealtor.github.io/lawton-buyer-tools-v2/team-logo.png">
+<link rel="icon" type="image/png" href="team-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<!--
+  Single-theme by deliberate choice: RE/MAX brand compliance fixes the palette.
+  Every color is painted explicitly so the page holds on any host ground.
+-->
+
+<style>
+:root{ --s-1:12.5px; --s0:15px; --s1:17px; --s2:23px; --s3:32px; --s4:44px; }
+
+body{font-size:var(--s0);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 60px}
+
+h1{font-size:var(--s3)}
+h2{font-size:var(--s2)}
+h3{font-size:var(--s1)}
+p{margin:0;max-width:64ch}
+.muted{color:var(--ink-2);font-size:var(--s-1);line-height:1.6}
+.sitehdr{max-width:1080px;margin:0 auto;padding-inline:16px}
+
+/* ---------- page hero band ---------- */
+.pagehero{background:var(--navy);color:#fff}
+.phin{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:64px 48px}
+.pagehero h1{color:#fff}
+.pagehero h1::after{margin-bottom:14px}
+.pagehero .intro{font-size:clamp(15px,1.9vw,18px);color:var(--on-dark);margin:0 0 26px;max-width:44em;line-height:1.65}
+.phstats{border-top:1px solid rgba(255,255,255,.18);margin-top:32px;padding-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px}
+.phstats b{display:block;font-size:21px;font-weight:600;color:#fff}
+.phstats span{display:block;font-size:12px;color:var(--on-dark-dim);margin-top:4px;line-height:1.45}
+
+/* ---------- input panel ---------- */
+.controls{
+  border:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;
+  background-color:var(--line);margin-bottom:1px;
+}
+.ctl{background:var(--paper);padding:13px 15px 15px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ctl input[type="number"],.ctl input[type="text"],.ctl select{
+  font-family:var(--font-ui);font-size:var(--s1);font-weight:600;line-height:1.2;
+  font-variant-numeric:tabular-nums;
+  background:var(--paper);color:var(--ink);border:2px solid var(--pale);
+  padding:9px 10px;width:100%;min-width:0;
+}
+.ctl select{font-size:var(--s0)}
+.ctl input:focus,.ctl select:focus{outline:none;border-color:var(--blue)}
+.ctl .hint{font-size:11.5px;color:var(--muted);line-height:1.45}
+.ctl.check{flex-direction:row;align-items:center;gap:10px;padding-top:19px}
+.ctl.check input[type="checkbox"]{width:19px;height:19px;flex:none;accent-color:var(--blue)}
+.ctl.check label{font-size:var(--s-1);font-weight:600;letter-spacing:normal;text-transform:none;color:var(--ink);cursor:pointer}
+
+.seg{display:flex;gap:0;border:2px solid var(--pale);overflow:hidden;background:var(--paper)}
+.seg button{
+  flex:1;font-family:var(--font-ui);font-size:var(--s-1);font-weight:600;line-height:1.2;
+  letter-spacing:1.2px;text-transform:uppercase;
+  background:var(--paper);color:var(--muted);border:0;border-right:1px solid var(--pale);
+  padding:10px 4px;cursor:pointer;
+}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff}
+
+/* ---------- result panel ---------- */
+.hero{
+  background:var(--navy);color:#fff;padding:24px;
+  display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:26px;align-items:center;
+}
+@media (max-width:640px){.hero{grid-template-columns:minmax(0,1fr);gap:18px}}
+.hero .lab{color:var(--on-dark-dim)}
+.hero .big{font-size:var(--s4);font-weight:600;line-height:1;color:#fff}
+.hero .sub{font-size:var(--s-1);color:var(--on-dark-dim);margin-top:7px}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:1px;background:#3D4759}
+@media (max-width:640px){.stack{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stack div{background:var(--navy);padding:10px 11px 12px;display:flex;flex-direction:column;gap:4px}
+.stack dt{color:var(--on-dark-dim);font-size:11px;letter-spacing:1.6px}
+.stack dd{margin:0;font-size:var(--s1);font-weight:600;color:#fff}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--blue);margin:26px 0 0;overflow-x:auto}
+.tabs button{
+  font-family:var(--font-ui);font-size:var(--s0);font-weight:600;line-height:1.2;
+  letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;
+  background:transparent;color:var(--muted);border:0;border-bottom:4px solid transparent;
+  padding:12px 16px;cursor:pointer;margin-bottom:-2px;
+}
+.tabs button[aria-selected="true"]{color:var(--blue);border-bottom-color:var(--red)}
+.panel{padding-top:22px;display:flex;flex-direction:column;gap:18px}
+.panel[hidden]{display:none}
+
+/* ---------- borrower blocks ---------- */
+.borrower{border:1px solid var(--line);background:var(--paper)}
+.borrower h3{padding:14px 16px;margin:0;border-bottom:2px solid var(--blue);display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:16px}
+.borrower h3 .role{font-family:var(--font-ui);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.borrower .controls{border:0}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:420px;font-variant-numeric:tabular-nums}
+caption{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line)}
+th,td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--line-2);font-size:var(--s0)}
+th:first-child,td:first-child{text-align:left;font-weight:600}
+thead th{color:var(--muted);font-weight:600;border-bottom:2px solid var(--blue)}
+tbody tr:last-child td{border-bottom:0}
+tr.total td{border-top:2px solid var(--blue);font-weight:600}
+td.pos{color:var(--blue);font-weight:600}
+td.neg{color:var(--red-dark);font-weight:600}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--paper);padding:16px;display:flex;flex-direction:column;gap:7px}
+.card .v{font-size:var(--s2);font-weight:600;line-height:1.1;color:var(--ink)}
+.card .v.blue{color:var(--blue)}
+.card .v.pass{color:var(--blue)}
+.card .v.fail{color:var(--red-dark)}
+.card p{font-size:var(--s-1);color:var(--ink-2);line-height:1.55}
+
+/* ---------- disclosure ---------- */
+details{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--pale)}
+summary{padding:13px 16px;cursor:pointer;font-weight:600;font-size:var(--s0);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--font-ui);color:var(--red);font-size:var(--s2);line-height:1}
+details[open] summary::after{content:"\2212"}
+.dbody{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line-2)}
+.dbody ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.dbody li{font-size:var(--s-1);color:var(--ink-2);line-height:1.6}
+
+.sendhint{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5;max-width:62ch}
+@media print{.sendhint{display:none}}
+
+footer{display:flex;flex-direction:column;gap:8px}
+footer b{color:var(--ink-2)}
+
+.printonly{display:none}
+
+@media print{
+  @page{margin:0.5in}
+  body{background:#fff;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  .tabs,details{display:none!important}
+  .panel[hidden]{display:flex!important}
+  .panel{break-inside:avoid;padding-top:14px;border-top:1px solid #ccc;margin-top:14px}
+  .hero{background:#fff;color:#000;border:2px solid #000}
+  .hero .lab,.hero .sub,.hero .big{color:#000}
+  .stack{background:#ccc}
+  .stack div{background:#fff}
+  .stack dt,.stack dd{color:#000}
+  .ctl input,.ctl select{border:0;padding-left:0;background:#fff}
+  .seg button[aria-pressed="false"]{display:none}
+  .seg{border:0}
+  .seg button[aria-pressed="true"]{background:#fff;color:#000;text-align:left;padding-left:0}
+  .printonly{display:block}
+  h1{font-size:20pt}
+  .pb-logo{height:46px}
+  .rx-chip{border-color:#999}
+}
+</style>
+<link rel="stylesheet" href="assets/palette-v3.css">
+
+<header class="site">
+  <div class="sitehdr">
+    <div class="hdrleft">
+      <a href="./" class="backlink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Tools</a>
+      <span class="brandline">Pam &amp; Barry's Team <span><a href="tel:+15802488800" class="hdrlink">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/" class="hdrlink">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com" class="hdrlink">info@homes-lawton.com</a></span><span>Dustin Ray, Buyer Specialist &middot; <a href="tel:5803514683" class="hdrlink">580-351-4683</a> &middot; <a href="mailto:dustin@homes-lawton.com?subject=VA%20Loan%20Calculator" class="hdrlink">dustin@homes-lawton.com</a></span></span>
+    </div>
+    <span class="logo-wrap"><img src="team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></span>
+  </div>
+</header>
+
+<div class="pagehero">
+  <div class="phin">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.3 4.9 5.4.8-3.9 3.8.9 5.4-4.7-2.5-4.7 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg>VA loan calculator</span>
+    <h1>VA Loan Calculator</h1>
+    <p class="intro">Built for the whole household. Combine active duty pay, military retirement, tax-free BAH and BAS, and VA disability compensation with a spouse or co-borrower's income, then see the real qualifying income, VA residual income, and how much house it supports. The BAH tool looks at one allowance by itself. This one looks at everything.</p>
+    <div class="hero-cta">
+      <a class="hbtn" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call or text</a>
+      <a class="hbtn alt" href="mailto:dustin@homes-lawton.com?subject=VA%20Loan%20Calculator&body=Hi%20Dustin%2C%0A%0AI%20was%20using%20the%20VA%20loan%20calculator.%20What%20I%20am%20trying%20to%20figure%20out%3A%0A%0A%0A%0AThanks%2C%0A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="m22 6-10 7L2 6"></path></svg>Email me</a>
+    </div>
+    <div class="phstats">
+      <div><b>2 incomes</b><span>Veteran plus a spouse or co-borrower</span></div>
+      <div><b>Tax-free counts for more</b><span>BAH, BAS and disability comp get grossed up</span></div>
+      <div><b>VA residual income</b><span>The test that actually decides VA approvals</span></div>
+      <div><b>$0 down</b><span>Same VA math as the payment toolkit</span></div>
+    </div>
+  </div>
+  <svg class="horizon horizon--short" viewBox="0 0 1600 410" preserveAspectRatio="none" aria-hidden="true">
+  <defs><linearGradient id="sky-va" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#272D3E"/><stop offset="0.28" stop-color="#4F5866"/><stop offset="0.62" stop-color="#B7BFBE"/><stop offset="0.8" stop-color="#C9CFC9"/></linearGradient></defs>
+  <rect width="1600" height="410" fill="url(#sky-va)"/>
+  <g transform="translate(0,150)">
+  <path fill="#56707E" d="M0 170 L134 165 Q250 130 368 80 Q430 58 480 50 L535 44 L636 44 Q690 62 714 80 Q780 118 814 135 L870 143 L948 135 L1004 147 L1070 150 L1150 138 L1215 112 L1250 108 L1285 128 L1310 138 L1340 130 L1400 98 L1445 86 L1490 100 L1561 143 L1600 155 L1600 260 L0 260Z"/>
+  <path fill="#7C8F97" d="M0 200 C80 196 140 186 200 184 C270 182 320 192 390 190 C460 188 520 176 600 176 C680 176 740 188 820 190 C900 192 960 180 1040 178 C1120 176 1180 188 1260 186 C1340 184 1400 176 1470 178 C1530 180 1570 190 1600 192 L1600 260 L0 260Z"/>
+  <path fill="#B9948A" d="M0 224 C120 220 220 212 340 214 C460 216 560 226 700 224 C840 222 940 212 1080 214 C1220 216 1320 226 1440 224 C1520 222 1570 220 1600 220 L1600 260 L0 260Z"/>
+  <path fill="#D9B893" d="M0 244 L1600 244 L1600 260 L0 260Z"/>
+  <g fill="#56707E">
+    <path d="M1180 244 L1180 232 M1180 236 L1174 230 M1180 234 L1186 229" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1230 244 L1230 228 M1230 234 L1223 227 M1230 232 L1238 225 M1230 238 L1236 234" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M1290 244 L1290 233 M1290 237 L1284 231 M1290 236 L1296 230" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M420 244 L420 230 M420 236 L413 229 M420 234 L427 227" stroke="#4E4A45" stroke-width="2" fill="none"/>
+    <path d="M470 244 L470 234 M470 238 L465 233 M470 237 L476 232" stroke="#4E4A45" stroke-width="2" fill="none"/>
+  </g>
+  </g>
+</svg>
+</div>
+
+<div class="wrap">
+<nav class="sitenav" aria-label="Site"><a href="./">&larr; All Lawton buyer tools</a><a href="payment-toolkit.html">Compare VA, FHA and conventional &rarr;</a></nav>
+
+<!-- ============ LOAN CONTROLS ============ -->
+<section class="controls" aria-label="Loan inputs">
+  <div class="ctl">
+    <label for="price">Purchase price</label>
+    <input type="number" id="price" value="199500" min="20000" max="2000000" step="500" inputmode="numeric">
+    <span class="hint">Lawton median is $199,500</span>
+  </div>
+  <div class="ctl">
+    <label for="rate">Interest rate %</label>
+    <input type="number" id="rate" value="6.76" min="1" max="15" step="0.005" inputmode="decimal">
+    <span class="hint">Freddie Mac survey, 9/10/26</span>
+  </div>
+  <div class="ctl">
+    <label for="downpct">Down payment %</label>
+    <input type="number" id="downpct" value="0" min="0" max="100" step="0.5" inputmode="decimal">
+    <span class="hint" id="downhint">$0 out of pocket</span>
+  </div>
+  <div class="ctl">
+    <label for="term">Term (years)</label>
+    <select id="term">
+      <option value="30" selected>30 year fixed</option>
+      <option value="20">20 year fixed</option>
+      <option value="15">15 year fixed</option>
+    </select>
+    <span class="hint">Most buyers here take 30</span>
+  </div>
+  <div class="ctl" style="grid-column:span 2">
+    <label for="vaexempt">VA funding fee</label>
+    <select id="vaexempt">
+      <option value="0" selected>Charged, first use</option>
+      <option value="2">Charged, subsequent use</option>
+      <option value="1">Exempt</option>
+    </select>
+    <span class="hint" id="vaexempt-hint">Exempt if a veteran on the loan draws service-connected disability compensation, or holds a Purple Heart</span>
+  </div>
+</section>
+
+<!-- ============ HERO RESULT ============ -->
+<section class="hero" aria-live="polite">
+  <div>
+    <span class="lab">Total monthly payment</span>
+    <div class="big" id="hero-piti" data-lead="Total monthly payment">$1,829</div>
+    <div class="sub" id="hero-note">VA, zero down, 6.76%, 30 year</div>
+  </div>
+  <dl class="stack">
+    <div><dt>Principal &amp; interest</dt><dd id="s-pi">$1,323</dd></div>
+    <div><dt>Property tax</dt><dd id="s-tax">$185</dd></div>
+    <div><dt>Insurance</dt><dd id="s-ins">$321</dd></div>
+    <div><dt>Funding fee financed</dt><dd id="s-ff">$4,289</dd></div>
+  </dl>
+</section>
+
+<div class="actions">
+  <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
+  <button type="button" id="btn-example">Load an example household</button>
+  <button type="button" id="btn-reset">Reset</button>
+</div>
+<p class="sendhint">Print or save this as a PDF and I'll email you a copy of the exact scenario on screen, then follow up with anything I'd want a lender to look at first.</p>
+
+<!-- ============ TABS ============ -->
+<div class="tabs" role="tablist" aria-label="VA loan calculator sections">
+  <button role="tab" id="tab-income" aria-controls="p-income" aria-selected="true">Household income</button>
+  <button role="tab" id="tab-qualify" aria-controls="p-qualify" aria-selected="false">Qualifying income</button>
+  <button role="tab" id="tab-dti" aria-controls="p-dti" aria-selected="false">DTI &amp; residual income</button>
+  <button role="tab" id="tab-assume" aria-controls="p-assume" aria-selected="false">Assumptions</button>
+</div>
+
+<!-- ---------- HOUSEHOLD INCOME ---------- -->
+<section class="panel" id="p-income" role="tabpanel" aria-labelledby="tab-income">
+  <div>
+    <h2>Who's on the loan, and where the money comes from</h2>
+    <p class="muted" style="margin-top:6px">Borrower 1 is the veteran using entitlement. Add a spouse or co-borrower if the loan will be joint. Households where one spouse is retired and rated disabled and the other is still serving or working a civilian job are common here.</p>
+  </div>
+
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="dependents">Dependents (besides the two adults)</label>
+      <input type="number" id="dependents" value="0" min="0" max="10" step="1" inputmode="numeric">
+      <span class="hint">Kids or other household dependents</span>
+    </div>
+    <div class="ctl">
+      <label for="region">VA residual income region</label>
+      <select id="region">
+        <option value="ne">Northeast</option>
+        <option value="mw">Midwest</option>
+        <option value="south" selected>South (Oklahoma)</option>
+        <option value="west">West</option>
+      </select>
+      <span class="hint">Fixes which residual minimum applies</span>
+    </div>
+    <div class="ctl check" style="grid-column:span 2">
+      <input type="checkbox" id="include-b">
+      <label for="include-b">Add a spouse or co-borrower to this loan</label>
+    </div>
+  </div>
+
+  <div class="borrower">
+    <h3>Borrower 1 <span class="role">Veteran &middot; entitlement holder</span></h3>
+    <div class="controls">
+      <div class="ctl">
+        <label for="a-type">Employment</label>
+        <select id="a-type">
+          <option value="active">Active duty military</option>
+          <option value="retired" selected>Military retired</option>
+          <option value="civilian">Civilian employment</option>
+          <option value="none">Not employed</option>
+        </select>
+      </div>
+      <div class="ctl" data-show="active,civilian" id="a-base-wrap">
+        <label for="a-base" id="a-base-lab">Base pay, monthly</label>
+        <input type="number" id="a-base" value="0" min="0" max="30000" step="10" inputmode="numeric">
+        <span class="hint">Taxable</span>
+      </div>
+      <div class="ctl" data-show="active" id="a-bah-wrap">
+        <label for="a-bah">BAH, monthly</label>
+        <input type="number" id="a-bah" value="0" min="0" max="6000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free</span>
+      </div>
+      <div class="ctl" data-show="active" id="a-bas-wrap">
+        <label for="a-bas">BAS, monthly</label>
+        <input type="number" id="a-bas" value="0" min="0" max="1000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free</span>
+      </div>
+      <div class="ctl" data-show="retired" id="a-retire-wrap">
+        <label for="a-retire">Retirement pay, monthly</label>
+        <input type="number" id="a-retire" value="2400" min="0" max="20000" step="10" inputmode="numeric">
+        <span class="hint">Taxable, unless it's CRSC</span>
+      </div>
+      <div class="ctl">
+        <label for="a-other">Other taxable income, monthly</label>
+        <input type="number" id="a-other" value="0" min="0" max="20000" step="10" inputmode="numeric">
+        <span class="hint">Side work, rental, etc.</span>
+      </div>
+      <div class="ctl check">
+        <input type="checkbox" id="a-disab" checked>
+        <label for="a-disab">Draws VA disability compensation</label>
+      </div>
+      <div class="ctl" data-show-disab="1" id="a-disabamt-wrap">
+        <label for="a-disabamt">Disability compensation, monthly</label>
+        <input type="number" id="a-disabamt" value="4158" min="0" max="10000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free. Also drives the funding fee exemption</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="borrower" id="borrower-b" hidden>
+    <h3>Borrower 2 <span class="role">Spouse or co-borrower</span></h3>
+    <div class="controls">
+      <div class="ctl">
+        <label for="b-type">Employment</label>
+        <select id="b-type">
+          <option value="active" selected>Active duty military</option>
+          <option value="retired">Military retired</option>
+          <option value="civilian">Civilian employment</option>
+          <option value="none">Not employed</option>
+        </select>
+      </div>
+      <div class="ctl" data-show="active,civilian" id="b-base-wrap">
+        <label for="b-base" id="b-base-lab">Base pay, monthly</label>
+        <input type="number" id="b-base" value="4859" min="0" max="30000" step="10" inputmode="numeric">
+        <span class="hint">Taxable</span>
+      </div>
+      <div class="ctl" data-show="active" id="b-bah-wrap">
+        <label for="b-bah">BAH, monthly</label>
+        <input type="number" id="b-bah" value="1509" min="0" max="6000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free</span>
+      </div>
+      <div class="ctl" data-show="active" id="b-bas-wrap">
+        <label for="b-bas">BAS, monthly</label>
+        <input type="number" id="b-bas" value="328" min="0" max="1000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free</span>
+      </div>
+      <div class="ctl" data-show="retired" id="b-retire-wrap" hidden>
+        <label for="b-retire">Retirement pay, monthly</label>
+        <input type="number" id="b-retire" value="0" min="0" max="20000" step="10" inputmode="numeric">
+        <span class="hint">Taxable, unless it's CRSC</span>
+      </div>
+      <div class="ctl">
+        <label for="b-other">Other taxable income, monthly</label>
+        <input type="number" id="b-other" value="0" min="0" max="20000" step="10" inputmode="numeric">
+        <span class="hint">Side work, rental, etc.</span>
+      </div>
+      <div class="ctl check">
+        <input type="checkbox" id="b-disab">
+        <label for="b-disab">Draws VA disability compensation</label>
+      </div>
+      <div class="ctl" data-show-disab="1" id="b-disabamt-wrap" hidden>
+        <label for="b-disabamt">Disability compensation, monthly</label>
+        <input type="number" id="b-disabamt" value="0" min="0" max="10000" step="1" inputmode="numeric">
+        <span class="hint">Tax-free. Also drives the funding fee exemption</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="k">Why two incomes can look this different</span>
+    <p>A household where one spouse is retired and rated disabled and the other is still serving can have a tax-free disability check, taxable retirement pay, and a full active-duty pay and allowance package, all at once. None of that shows up if you only run one person's BAH. Hit "Load an example household" above to see it filled in with sample numbers. Swap in your real LES and award letter figures before you take it to a lender.</p>
+  </div>
+  <div class="printonly muted"><b>Prepared by Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></div>
+</section>
+
+<!-- ---------- QUALIFYING INCOME ---------- -->
+<section class="panel" id="p-qualify" role="tabpanel" aria-labelledby="tab-qualify" hidden>
+  <div>
+    <h2>What a lender actually counts</h2>
+    <p class="muted" style="margin-top:6px">BAH, BAS and VA disability compensation are federal tax-free, so VA guidelines let a lender gross them up before applying the debt-to-income ratio. It's the reason two households with the same take-home pay can qualify for very different loan amounts.</p>
+  </div>
+  <div class="note">
+    <span class="k">What "grossed up" means</span>
+    <p>The debt-to-income ratio is figured on gross pay, before taxes. BAH, BAS and disability compensation never get taxed, so a $1,000 disability check is worth more than $1,000 of wages. To keep the comparison fair, the lender bumps tax-free income up by a percentage, usually 15% to 25%. At 25%, $1,000 tax-free counts as $1,250 on the ratio. It's a paper adjustment for qualifying only. Your check does not change, and it does not apply to the residual income test, which uses real take-home dollars.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="growup">Tax-free gross-up %</label>
+      <input type="number" id="growup" value="25" min="0" max="35" step="1" inputmode="numeric">
+      <span class="hint">VA allows up to 25%, ask the lender</span>
+    </div>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>Monthly income by borrower</caption>
+      <thead><tr><th scope="col">Borrower</th><th scope="col">Taxable</th><th scope="col">Tax-free</th><th scope="col">Grossed up tax-free</th><th scope="col">Qualifying income</th></tr></thead>
+      <tbody id="qualify-body"></tbody>
+    </table>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Total qualifying income</span><span class="v blue" id="q-total" data-lead="Total qualifying income">$0</span><p>Taxable income plus tax-free income grossed up. This is the number used against the debt-to-income ratio.</p></div>
+    <div class="card"><span class="lab">Approx. net take-home</span><span class="v" id="q-net">$0</span><p>Taxable income after an estimated withholding rate, plus tax-free income at face value. Used for the VA residual income test on the next tab.</p></div>
+    <div class="card"><span class="lab">Tax-free share of income</span><span class="v" id="q-share">0%</span><p>How much of qualifying income is BAH, BAS, or disability compensation rather than taxable pay.</p></div>
+  </div>
+  <div class="note warn">
+    <span class="k">Gross-up is an estimate, not a guarantee</span>
+    <p>Lenders vary between 15% and 25%, and some use the buyer's actual marginal tax rate instead of a flat percentage. Confirm the number your lender is using before you count on a qualifying income figure.</p>
+  </div>
+</section>
+
+<!-- ---------- DTI & RESIDUAL INCOME ---------- -->
+<section class="panel" id="p-dti" role="tabpanel" aria-labelledby="tab-dti" hidden>
+  <div>
+    <h2>The two tests that actually decide a VA approval</h2>
+    <p class="muted" style="margin-top:6px">VA loans don't have a hard debt-to-income ceiling, but 41% is the line most underwriters want compensating factors to justify past. Residual income is the harder test: real dollars left over after the house payment and other debts, checked against a minimum that depends on family size and region.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="otherdebts">Other monthly debts</label>
+      <input type="number" id="otherdebts" value="0" min="0" max="10000" step="10" inputmode="numeric">
+      <span class="hint">Car, credit cards, student loans, child support</span>
+    </div>
+    <div class="ctl">
+      <label for="dticap">DTI comfort ceiling %</label>
+      <input type="number" id="dticap" value="41" min="20" max="65" step="1" inputmode="numeric">
+      <span class="hint">Above this, VA wants compensating factors</span>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Debt-to-income ratio</span><span class="v" id="d-dti" data-lead="Debt-to-income ratio">0%</span><p id="d-dti-note">House payment plus other debts, divided by qualifying income.</p></div>
+    <div class="card"><span class="lab">VA residual income</span><span class="v" id="d-resid" data-lead="VA residual income">$0</span><p id="d-resid-note">Approx. net income minus the house payment and other debts.</p></div>
+    <div class="card"><span class="lab">Residual income required</span><span class="v" id="d-req">$0</span><p id="d-req-note">Family size and region minimum.</p></div>
+  </div>
+  <div class="note" id="d-verdict-note">
+    <span class="k" id="d-verdict-k">Verdict</span>
+    <p id="d-verdict-p"></p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>Estimated max purchase price this household supports</caption>
+      <thead><tr><th scope="col">Test</th><th scope="col">Max monthly payment</th><th scope="col">Max purchase price</th></tr></thead>
+      <tbody id="max-body"></tbody>
+    </table>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="lab">Supportable purchase price</span><span class="v blue" id="d-supportable" data-lead="Supportable purchase price">$0</span><p>The lower of the two ceilings above. The safer number to shop with.</p></div>
+  </div>
+</section>
+
+<!-- ---------- ASSUMPTIONS ---------- -->
+<section class="panel" id="p-assume" role="tabpanel" aria-labelledby="tab-assume" hidden>
+  <div>
+    <h2>What's under the hood</h2>
+    <p class="muted" style="margin-top:6px">These are the local defaults and VA program rules this calculator runs on. Change them here and every tab updates. A real quote from a lender always beats an estimate.</p>
+  </div>
+  <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+    <div class="ctl">
+      <label for="taxrate">Property tax rate %</label>
+      <input type="number" id="taxrate" value="1.11" min="0" max="5" step="0.01" inputmode="decimal">
+      <span class="hint">Lawton median effective rate</span>
+    </div>
+    <div class="ctl">
+      <label for="insrate">Insurance $ per $1,000</label>
+      <input type="number" id="insrate" value="19.28" min="0" max="80" step="0.01" inputmode="decimal">
+      <span class="hint">Lawton, per year of coverage</span>
+    </div>
+    <div class="ctl">
+      <label for="covpct">Dwelling coverage %</label>
+      <input type="number" id="covpct" value="100" min="40" max="200" step="1" inputmode="numeric">
+      <span class="hint">Of purchase price</span>
+    </div>
+    <div class="ctl">
+      <label for="hoa">HOA dues per month</label>
+      <input type="number" id="hoa" value="0" min="0" max="2000" step="5" inputmode="numeric">
+      <span class="hint">Rare in most of SWOK</span>
+    </div>
+    <div class="ctl">
+      <label for="withhold">Estimated withholding %</label>
+      <input type="number" id="withhold" value="22" min="0" max="40" step="1" inputmode="numeric">
+      <span class="hint">Applied to taxable pay only, for residual income</span>
+    </div>
+  </div>
+
+  <details>
+    <summary>Where these numbers come from</summary>
+    <div class="dbody">
+      <ul>
+        <li><b>Property tax, 1.11%, and insurance, $19.28 per $1,000 of coverage.</b> Same Lawton and Comanche County defaults as the payment toolkit. Pull the real numbers off the assessor site and an actual insurance quote before quoting a payment.</li>
+        <li><b>VA funding fee.</b> 2.15% first use with less than 5% down, 1.5% at 5% to 9.99% down, 1.25% at 10% or more down; 3.3% on a subsequent use with less than 5% down. Exempt if a veteran on the loan draws service-connected disability compensation or holds a Purple Heart on the closing date. One qualifying veteran on the loan is enough for the exemption. A non-veteran spouse's status doesn't matter for this.</li>
+        <li><b>Tax-free gross-up, up to 25%.</b> BAH, BAS, and VA disability compensation are exempt from federal income tax, so VA guidelines let a lender add back a percentage before running the debt-to-income ratio. This calculator applies the gross-up to the qualifying-income number only, not to the residual income number, since residual income is meant to reflect real take-home dollars.</li>
+        <li><b>Estimated withholding, 22%.</b> A placeholder for the tax bite on taxable pay, used only to approximate net take-home for the residual income test. Tax-free income (BAH, BAS, disability compensation) is already counted at full face value with no withholding, because none is withheld from it. The real number is whatever's on the LES or paystub. Use that once you have it.</li>
+        <li><b>Military retirement pay.</b> Treated as fully taxable here. A retiree rated 50% or higher generally keeps both retirement pay and disability compensation under concurrent retirement and disability pay; below 50%, VA disability compensation typically offsets retirement pay dollar for dollar unless Combat-Related Special Compensation applies. Don't assume both figures stack without checking the award letter and retiree account statement.</li>
+        <li><b>VA residual income table, families of 1 to 5, loan amounts of $80,000 and up.</b> Northeast $450 / $755 / $909 / $1,025 / $1,062. Midwest and South (Oklahoma) $441 / $738 / $889 / $1,003 / $1,039. West $491 / $823 / $990 / $1,117 / $1,158. Add $80 per family member beyond five, in every region. Loans under $80,000 use a lower table; check with the lender if that applies.</li>
+        <li><b>41% DTI ceiling.</b> Not a hard VA cap. There is no maximum ratio in VA guidelines, but past 41% underwriters usually want documented compensating factors: residual income well above the minimum, strong credit, real cash reserves.</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="note warn">
+    <span class="k">What this tool is not</span>
+    <p>This is an estimate for shopping, not a loan estimate, a pre-approval, a credit decision, or tax advice. Qualifying income, gross-up, residual income, taxes, insurance, and the funding fee are all set by your lender and the VA. Confirm every number here against real pay stubs, your VA award letter, and the lender's own worksheet before it goes in an offer.</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></p>
+  <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>
+  <p>Pam &amp; Barry's Team, RE/MAX Professionals. Each Office Independently Owned and Operated. Figures here are estimates for planning and are not a commitment to lend, a loan estimate, or a pre-approval. Rates, taxes, insurance, gross-up percentages, and residual income minimums are set or verified by the buyer's lender and the VA, and change over time. Example household figures on this page (military pay, BAH, BAS, and VA disability compensation) are samples. Use actual LES and award letter figures.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function num(id, fallback){
+    var el = $(id);
+    if (!el) return fallback;
+    var v = parseFloat(el.value);
+    return isFinite(v) ? v : fallback;
+  }
+  function money(v){
+    return "$" + Math.round(v).toLocaleString("en-US");
+  }
+
+  function pmt(principal, annualPct, years){
+    if (principal <= 0) return 0;
+    var r = (annualPct / 100) / 12, n = years * 12;
+    if (r <= 0) return principal / n;
+    var f = Math.pow(1 + r, n);
+    return principal * (r * f) / (f - 1);
+  }
+
+  // ---------- VA payment math (same rules as the payment toolkit) ----------
+  function calcPayment(price, rate, years, downPct, vaMode){
+    var taxRate = num("taxrate", 1.11) / 100;
+    var insRate = num("insrate", 19.28);
+    var covPct  = num("covpct", 100) / 100;
+    var hoa     = num("hoa", 0);
+
+    var down = price * (downPct / 100);
+    var base = price - down;
+
+    var ff = 0;
+    if (vaMode === "1") ff = 0;
+    else if (downPct >= 10) ff = 0.0125;
+    else if (downPct >= 5)  ff = 0.015;
+    else ff = (vaMode === "2") ? 0.033 : 0.0215;
+    var financed = base * ff;
+
+    var principal = base + financed;
+    var pi  = pmt(principal, rate, years);
+    var tax = price * taxRate / 12;
+    var ins = (price * covPct / 1000) * insRate / 12;
+
+    return {
+      price: price, down: down, downPct: downPct, base: base,
+      financed: financed, principal: principal,
+      pi: pi, tax: tax, ins: ins, hoa: hoa,
+      total: pi + tax + ins + hoa
+    };
+  }
+
+  function currentPayment(){
+    return calcPayment(
+      num("price", 199500), num("rate", 6.76),
+      parseInt($("term").value, 10) || 30,
+      num("downpct", 0), $("vaexempt").value
+    );
+  }
+
+  // Solve for the price whose total payment equals a budget.
+  function maxPriceForBudget(budget, rate, years, downPct, vaMode){
+    if (budget <= 0) return 0;
+    var lo = 10000, hi = 3000000;
+    for (var i = 0; i < 70; i++){
+      var mid = (lo + hi) / 2;
+      var r = calcPayment(mid, rate, years, downPct, vaMode);
+      if (r.total > budget) hi = mid; else lo = mid;
+    }
+    return lo;
+  }
+
+  // ---------- household income ----------
+  var TYPE_FIELDS = {
+    active:   { taxable: ["a-base","a-other"], taxfree: ["a-bah","a-bas"] }
+  };
+
+  function borrowerData(p){
+    var type = $(p + "-type").value;
+    var taxable = 0, taxfree = 0;
+    if (type === "active"){
+      taxable += num(p + "-base", 0);
+      taxfree += num(p + "-bah", 0) + num(p + "-bas", 0);
+    } else if (type === "retired"){
+      taxable += num(p + "-retire", 0);
+    } else if (type === "civilian"){
+      taxable += num(p + "-base", 0);
+    }
+    taxable += num(p + "-other", 0);
+    var disab = $(p + "-disab").checked;
+    var disabAmt = disab ? num(p + "-disabamt", 0) : 0;
+    taxfree += disabAmt;
+    return { type: type, taxable: taxable, taxfree: taxfree, disab: disab, disabAmt: disabAmt };
+  }
+
+  function household(){
+    var growPct = num("growup", 25);
+    var withholdPct = num("withhold", 22);
+    var includeB = $("include-b").checked;
+    var a = borrowerData("a");
+    var b = includeB ? borrowerData("b") : { type: "none", taxable: 0, taxfree: 0, disab: false, disabAmt: 0 };
+
+    var taxableTotal = a.taxable + b.taxable;
+    var taxfreeTotal = a.taxfree + b.taxfree;
+    var grossedFree = taxfreeTotal * (1 + growPct / 100);
+    var qualifying = taxableTotal + grossedFree;
+    var netApprox = taxableTotal * (1 - withholdPct / 100) + taxfreeTotal;
+    var anyDisab = a.disab || b.disab;
+
+    return {
+      a: a, b: b, includeB: includeB,
+      taxableTotal: taxableTotal, taxfreeTotal: taxfreeTotal,
+      grossedFree: grossedFree, qualifying: qualifying, netApprox: netApprox,
+      anyDisab: anyDisab
+    };
+  }
+
+  function familySize(){
+    return 1 + ($("include-b").checked ? 1 : 0) + num("dependents", 0);
+  }
+
+  var RESIDUAL_TABLE = {
+    ne:    [450, 755, 909, 1025, 1062],
+    mw:    [441, 738, 889, 1003, 1039],
+    south: [441, 738, 889, 1003, 1039],
+    west:  [491, 823, 990, 1117, 1158]
+  };
+
+  function residualRequirement(region, size){
+    var arr = RESIDUAL_TABLE[region] || RESIDUAL_TABLE.south;
+    size = Math.max(1, Math.round(size));
+    if (size <= 5) return arr[size - 1];
+    return arr[4] + (size - 5) * 80;
+  }
+
+  // ---------- renderers ----------
+
+  function updateVisibility(p){
+    var type = $(p + "-type").value;
+    document.querySelectorAll('#p-income [data-show]').forEach(function(el){
+      if (el.id.indexOf(p + "-") !== 0) return;
+      var list = el.getAttribute("data-show").split(",");
+      el.hidden = list.indexOf(type) === -1;
+    });
+    var lab = $(p + "-base-lab");
+    if (lab) lab.textContent = (type === "civilian") ? "Gross monthly pay" : "Base pay, monthly";
+  }
+
+  function updateDisabVisibility(p){
+    var wrap = $(p + "-disabamt-wrap");
+    if (wrap) wrap.hidden = !$(p + "-disab").checked;
+  }
+
+  function renderHero(){
+    var c = currentPayment();
+    $("hero-piti").textContent = money(c.total);
+    $("s-pi").textContent  = money(c.pi);
+    $("s-tax").textContent = money(c.tax);
+    $("s-ins").textContent = money(c.ins);
+    $("s-ff").textContent  = money(c.financed);
+    var dtxt = c.downPct === 0 ? "zero down" : (c.downPct + "% down, " + money(c.down));
+    var rateTxt = num("rate", 6.76).toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+    $("hero-note").textContent = "VA, " + dtxt + ", " + rateTxt + "%, " + $("term").value + " year";
+    if (c.hoa > 0) $("hero-note").textContent += ", includes " + money(c.hoa) + " HOA";
+    $("downhint").textContent = money(c.down) + " out of pocket";
+  }
+
+  function borrowerRow(name, d, growPct){
+    var grossed = d.taxfree * (1 + growPct / 100);
+    var qual = d.taxable + grossed;
+    return "<tr><th scope=\"row\">" + name + "</th>" +
+      "<td>" + money(d.taxable) + "</td>" +
+      "<td>" + money(d.taxfree) + "</td>" +
+      "<td>" + money(grossed) + "</td>" +
+      "<td><b>" + money(qual) + "</b></td></tr>";
+  }
+
+  function renderQualify(){
+    var h = household();
+    var growPct = num("growup", 25);
+    var rows = [ borrowerRow("Borrower 1", h.a, growPct) ];
+    if (h.includeB) rows.push(borrowerRow("Borrower 2", h.b, growPct));
+    rows.push('<tr class="total"><th scope="row">Household total</th><td>' + money(h.taxableTotal) +
+      "</td><td>" + money(h.taxfreeTotal) + "</td><td>" + money(h.grossedFree) +
+      "</td><td><b>" + money(h.qualifying) + "</b></td></tr>");
+    $("qualify-body").innerHTML = rows.join("");
+
+    $("q-total").textContent = money(h.qualifying);
+    $("q-net").textContent = money(h.netApprox);
+    $("q-share").textContent = h.qualifying > 0 ? Math.round(h.grossedFree / h.qualifying * 100) + "%" : "0%";
+  }
+
+  function renderDTI(){
+    var h = household();
+    var c = currentPayment();
+    var otherDebts = num("otherdebts", 0);
+    var dtiCap = num("dticap", 41);
+    var region = $("region").value;
+    var size = familySize();
+    var required = residualRequirement(region, size);
+
+    var dti = h.qualifying > 0 ? (c.total + otherDebts) / h.qualifying * 100 : 0;
+    var residual = h.netApprox - c.total - otherDebts;
+
+    $("d-dti").textContent = dti.toFixed(1) + "%";
+    $("d-dti").className = "v " + (dti <= dtiCap ? "pass" : "fail");
+    $("d-dti-note").textContent = money(c.total) + " house payment plus " + money(otherDebts) +
+      " in other debts, against " + money(h.qualifying) + " in qualifying income.";
+
+    $("d-resid").textContent = money(residual);
+    $("d-resid").className = "v " + (residual >= required ? "pass" : "fail");
+    $("d-req").textContent = money(required);
+    $("d-req-note").textContent = "Family of " + size + ", " +
+      ({ne:"Northeast", mw:"Midwest", south:"South", west:"West"}[region]) + " region.";
+
+    var dtiOk = dti <= dtiCap;
+    var residOk = residual >= required;
+    var note = $("d-verdict-note"), k = $("d-verdict-k"), p = $("d-verdict-p");
+    note.className = "note" + ((dtiOk && residOk) ? "" : " warn");
+    if (dtiOk && residOk){
+      k.textContent = "Clears both tests";
+      p.textContent = "DTI is at or under " + dtiCap + "% and residual income clears the VA minimum by " +
+        money(residual - required) + " a month. This is the easy case to underwrite.";
+    } else if (!dtiOk && residOk){
+      k.textContent = "Residual income clears, DTI runs hot";
+      p.textContent = "Debt-to-income is over " + dtiCap + "%, but residual income still clears the VA minimum. VA underwriting leans on residual income more than the ratio, so this can still work with strong compensating factors.";
+    } else if (dtiOk && !residOk){
+      k.textContent = "DTI looks fine, residual income falls short";
+      p.textContent = "The ratio looks fine, but residual income is " + money(required - residual) +
+        " under the VA minimum for a family of " + size + " in this region. This is usually the harder problem to fix.";
+    } else {
+      k.textContent = "Both tests are short";
+      p.textContent = "DTI is over " + dtiCap + "% and residual income is " + money(required - residual) +
+        " short of the VA minimum. A lower price, more income on the application, or paying down other debts would all move this.";
+    }
+
+    var years = parseInt($("term").value, 10) || 30;
+    var rate = num("rate", 6.76);
+    var downPct = num("downpct", 0);
+    var vaMode = $("vaexempt").value;
+
+    var budgetDTI = Math.max((dtiCap / 100) * h.qualifying - otherDebts, 0);
+    var budgetResid = Math.max(h.netApprox - otherDebts - required, 0);
+    var priceDTI = maxPriceForBudget(budgetDTI, rate, years, downPct, vaMode);
+    var priceResid = maxPriceForBudget(budgetResid, rate, years, downPct, vaMode);
+    var supportable = Math.min(priceDTI, priceResid);
+
+    $("max-body").innerHTML =
+      "<tr><th scope=\"row\">DTI at " + dtiCap + "%</th><td>" + money(budgetDTI) + "</td><td>" + money(priceDTI) + "</td></tr>" +
+      "<tr><th scope=\"row\">VA residual income</th><td>" + money(budgetResid) + "</td><td>" + money(priceResid) + "</td></tr>";
+    $("d-supportable").textContent = money(supportable);
+  }
+
+  function renderAll(){
+    updateVisibility("a");
+    updateVisibility("b");
+    updateDisabVisibility("a");
+    updateDisabVisibility("b");
+    renderHero();
+    renderQualify();
+    renderDTI();
+  }
+
+  // ---------- example scenario ----------
+  function loadExample(){
+    $("include-b").checked = true;
+    $("borrower-b").hidden = false;
+    $("dependents").value = 0;
+    $("region").value = "south";
+
+    $("a-type").value = "retired";
+    $("a-retire").value = 2400;
+    $("a-disab").checked = true;
+    $("a-disabamt").value = 4158;
+
+    $("b-type").value = "active";
+    $("b-base").value = 4859;
+    $("b-bah").value = 1509;
+    $("b-bas").value = 328;
+    $("b-disab").checked = false;
+    $("b-disabamt").value = 0;
+
+    $("vaexempt").value = "1";
+    $("price").value = 199500;
+    $("downpct").value = 0;
+    $("otherdebts").value = 450;
+
+    renderAll();
+  }
+
+  // ---------- wiring ----------
+  Array.prototype.forEach.call(
+    document.querySelectorAll('input[type="number"], input[type="checkbox"], select'),
+    function(el){ el.addEventListener("input", renderAll); el.addEventListener("change", renderAll); }
+  );
+
+  $("include-b").addEventListener("change", function(){
+    $("borrower-b").hidden = !$("include-b").checked;
+    renderAll();
+  });
+
+  // Suggest the funding fee exemption whenever either borrower's disability
+  // status changes, or on load. Still fully editable afterward.
+  function syncFundingFeeExemption(){
+    var anyDisab = $("a-disab").checked || ($("include-b").checked && $("b-disab").checked);
+    $("vaexempt").value = anyDisab ? "1" : "0";
+  }
+  ["a", "b"].forEach(function(p){
+    $(p + "-disab").addEventListener("change", function(){
+      syncFundingFeeExemption();
+      renderAll();
+    });
+  });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function selectTab(t){
+    tabs.forEach(function(x){
+      var on = (x === t);
+      x.setAttribute("aria-selected", String(on));
+      $(x.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener("click", function(){ selectTab(t); });
+    t.addEventListener("keydown", function(e){
+      var j = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : -1;
+      if (j < 0 || j >= tabs.length) return;
+      e.preventDefault();
+      tabs[j].focus();
+      selectTab(tabs[j]);
+    });
+  });
+
+  $("btn-example").addEventListener("click", loadExample);
+  $("btn-reset").addEventListener("click", function(){
+    $("price").value = 199500;
+    $("rate").value = 6.76;
+    $("term").value = "30";
+    $("downpct").value = 0;
+    $("vaexempt").value = "0";
+    $("dependents").value = 0;
+    $("region").value = "south";
+    $("include-b").checked = false;
+    $("borrower-b").hidden = true;
+
+    $("a-type").value = "retired";
+    $("a-base").value = 0; $("a-bah").value = 0; $("a-bas").value = 0;
+    $("a-retire").value = 2400; $("a-other").value = 0;
+    $("a-disab").checked = true; $("a-disabamt").value = 4158;
+
+    $("b-type").value = "active";
+    $("b-base").value = 0; $("b-bah").value = 0; $("b-bas").value = 0;
+    $("b-retire").value = 0; $("b-other").value = 0;
+    $("b-disab").checked = false; $("b-disabamt").value = 0;
+
+    $("growup").value = 25;
+    $("withhold").value = 22;
+    $("otherdebts").value = 0;
+    $("dticap").value = 41;
+
+    syncFundingFeeExemption();
+    renderAll();
+  });
+
+  syncFundingFeeExemption();
+  renderAll();
+})();
+</script>
+<script src="assets/leadgate.js" defer></script>
+</body>
+</html>
