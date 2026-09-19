@@ -420,8 +420,8 @@ details[open] summary::after{content:"\2212"}
 (function(){
   "use strict";
   var $ = function(id){ return document.getElementById(id); };
-  var money  = function(n){ return "$" + Math.round(n).toLocaleString("en-US"); };
-  var money2 = function(n){ return "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); };
+  var money  = function(n){ if (!isFinite(n)) return "\u2014"; return "$" + Math.round(n).toLocaleString("en-US"); };
+  var money2 = function(n){ if (!isFinite(n)) return "\u2014"; return "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); };
 
   // Program rules. Upfront fees finance into the loan; annual figures are a
   // percent of the loan balance charged monthly.
@@ -440,17 +440,49 @@ details[open] summary::after{content:"\2212"}
     return principal * r / (1 - Math.pow(1 + r, -months));
   }
 
+  function clamp(v, lo, hi, dflt){
+    if (!isFinite(v)) v = dflt;
+    return Math.min(Math.max(v, lo), hi);
+  }
+
+  // A cleared or nonsense rate box falls back to the default instead of zero:
+  // a zero rate makes every buydown look like a loss.
+  function rateOrDefault(raw, dflt){
+    var v = parseFloat(raw);
+    if (!isFinite(v) || v <= 0) v = dflt;
+    return Math.min(v, 25);
+  }
+
+  // The upfront fee and the monthly mortgage insurance both move with the down
+  // payment. Kept in step with the payment toolkit so the same scenario gives
+  // the same number in both tools.
+  function tieredProgram(prog, downPct){
+    var p = PROGRAMS[prog];
+    var out = {cap: p.cap, upfront: p.upfront, annual: p.annual, capLabel: p.capLabel};
+    if (prog === "VA"){
+      out.upfront = downPct >= 10 ? 0.0125 : (downPct >= 5 ? 0.015 : 0.0215);
+    } else if (prog === "FHA"){
+      out.annual = downPct < 5 ? 0.0055 : 0.0050;
+    }
+    return out;
+  }
+
   function inputs(){
-    var prog = $("prog").value, p = PROGRAMS[prog];
-    var price = +$("price").value || 0;
-    var downPct = +$("down").value || 0;
+    var prog = $("prog").value;
+    var price   = clamp(+$("price").value, 0, 5000000, 0);
+    var downPct = clamp(+$("down").value, 0, 100, 0);
+    var p = tieredProgram(prog, downPct);
     var cap = prog === "CONV" ? convCap(downPct) : p.cap;
     return {
       prog: prog, p: p, price: price, downPct: downPct,
-      rate: +$("rate").value || 0, conc: +$("conc").value || 0,
-      stay: +$("stay").value || 5, term: +$("term").value || 30,
-      ppp: +$("ppp").value || 0.25, taxPct: +$("tax").value || 0,
-      insPer: +$("ins").value || 0, cap: cap
+      rate:   rateOrDefault($("rate").value, 6.5),
+      conc:   clamp(+$("conc").value, 0, 500000, 0),
+      stay:   clamp(+$("stay").value, 1, 40, 5),
+      term:   clamp(+$("term").value, 5, 40, 30),
+      ppp:    clamp(+$("ppp").value, 0, 10, 0.25),
+      taxPct: clamp(+$("tax").value, 0, 10, 0),
+      insPer: clamp(+$("ins").value, 0, 200, 0),
+      cap: cap
     };
   }
 
@@ -633,5 +665,6 @@ details[open] summary::after{content:"\2212"}
 })();
 </script>
 <script src="assets/leadgate.js" defer></script>
+<script src="assets/track.js" defer></script>
 </body>
 </html>

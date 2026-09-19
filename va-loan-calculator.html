@@ -599,13 +599,26 @@ footer b{color:var(--ink-2)}
 
   var $ = function(id){ return document.getElementById(id); };
 
+  
+  // ---- input guards: keep bad input from reaching the math (v3.1) ----
+  var CLAMP = {
+    price:[0,5000000], rate:[0,25], hoa:[0,10000], taxrate:[0,10],
+    insrate:[0,200], covpct:[0,300], pmirate:[0,5], down:[0,100], ptsrate:[0,10]
+  };
+  function clampVal(id, v){
+    var c = CLAMP[id];
+    return c ? Math.min(Math.max(v, c[0]), c[1]) : v;
+  }
+
   function num(id, fallback){
     var el = $(id);
     if (!el) return fallback;
     var v = parseFloat(el.value);
-    return isFinite(v) ? v : fallback;
+    if (!isFinite(v)) v = fallback;
+    return clampVal(id, v);
   }
   function money(v){
+    if (!isFinite(v)) return "\u2014";
     return "$" + Math.round(v).toLocaleString("en-US");
   }
 
@@ -964,5 +977,6 @@ footer b{color:var(--ink-2)}
 })();
 </script>
 <script src="assets/leadgate.js" defer></script>
+<script src="assets/track.js" defer></script>
 </body>
 </html>
