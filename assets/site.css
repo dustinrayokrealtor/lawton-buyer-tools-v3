@@ -1,0 +1,545 @@
+/* ==========================================================================
+   Lawton Buyer Tools — shared design language
+   Matched to pamandbarry.com: Guidance Blue, Signal Red, Playfair Display
+   uppercase headings over Outfit, square corners, and the 205px red rule.
+   Loaded by every page before its own page-specific <style> block.
+   ========================================================================== */
+
+:root {
+  /* Brand — measured from the live team site */
+  --blue:        #004A9A;
+  --blue-dark:   #003B7D;
+  --red:         #B4090B;
+  --red-dark:    #8E0709;
+
+  /* Grounds */
+  --paper:       #FFFFFF;
+  --mist:        #EAEAEA;
+  --pale:        #C2D0E0;
+  --wash:        #EDF2F8;
+  --navy:        #272D3E;
+  --navy-deep:   #1E2430;
+
+  /* Type */
+  --ink:         #222222;
+  --ink-2:       #424242;
+  --muted:       #595959;
+  --line:        #DCDCDC;
+  --line-2:      #EDEDED;
+  --on-dark:     #E4E8EE;
+  --on-dark-dim: #C2D0E0;
+
+  /* Legacy token names still referenced by page styles, remapped */
+  --cream:       #FFFFFF;
+  --surface:     #FFFFFF;
+  --sky:         #C2D0E0;
+  --sky-wash:    #EDF2F8;
+  --dark:        #272D3E;
+  --ink-3:       #595959;
+  --rule:        #DCDCDC;
+  --rule-2:      #EDEDED;
+  --darkmuted:   #C2D0E0;
+  --rx-blue:     #004A9A;
+  --rx-red:      #B4090B;
+  --good:        #E6EDF5;
+  --good-ink:    #004A9A;
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Outfit', 'Trebuchet MS', 'Lucida Grande', Tahoma, sans-serif;
+
+  --rule-w: 205px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  line-height: 1.7;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue); }
+a:hover { color: var(--red); }
+
+/* Square corners are the whole look — nothing on these pages is rounded. */
+a, button, input, select, textarea, summary,
+.btn, .hbtn, .sendbtn, .backlink, .pill, .tool, .calc, .result,
+.cta, .note, .tscroll, .tw, .subfields, .exempt, .flag,
+.seg, .ctl input, .ctl select, .rx-chip, .logo-slot, .kicker .ic,
+.tocgrid a, .tocgrid .ic, .toolkicker .ic, .stickybar a, details {
+  border-radius: 0;
+}
+
+:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.hero :focus-visible, .pagehero :focus-visible,
+.cta :focus-visible, .result :focus-visible,
+.stickybar :focus-visible { outline-color: var(--paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ==========================================================================
+   Typography — Playfair uppercase for headings, Outfit for everything else.
+   Figures stay in Outfit 600, the way the team site sets its stat numbers.
+   ========================================================================== */
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  line-height: 1.12;
+  text-wrap: balance;
+  color: var(--blue);
+}
+h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; }
+h2 { font-size: clamp(22px, 3.4vw, 32px); }
+h3 { font-size: 21px; color: var(--ink); }
+
+strong, b { font-weight: 600; }
+
+/* Numerals keep the UI face and line up in columns. */
+.mono, .num, td.num, th.num,
+.paystack dd, .market dd, .stack dd, .card .v,
+.rbig, .hero .big, .stat b, .phstats b {
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: normal;
+}
+
+/* The eyebrow: uppercase, 3.2px tracking. On dark it goes pale blue. */
+.eyebrow {
+  display: inline-block;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 18px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 3.2px;
+  text-transform: uppercase;
+  color: var(--on-dark-dim);
+}
+.eyebrow svg { display: none; }
+
+/* Light-ground labels — same pattern, blue or grey. */
+.lab, .toolslabel, .toclabel, .calclabel, .rlabel,
+.note .k, caption, thead th, .ctl label, .paystack dt, .market dt, .stack dt {
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.toolslabel, .toclabel, .calclabel { color: var(--blue); }
+.rlabel { color: var(--on-dark-dim); }
+.calclabel svg { display: none; }
+
+/* The signature: 205px x 1.6px red rule, under section headings. */
+.rule-mark,
+section.block > h2::after,
+.kicker + h2::after,
+.hero h1::after,
+.pagehero h1::after,
+.masthead h1::after,
+.cta h2::after {
+  content: "";
+  display: block;
+  width: var(--rule-w);
+  max-width: 100%;
+  height: 0;
+  border-bottom: 1.6px solid var(--red);
+  margin: 20px 0 4px;
+}
+.cta h2::after { margin-left: auto; margin-right: auto; }
+
+/* On navy the rule turns white — red on navy is 1.9:1 and simply disappears,
+   the same reason the action buttons invert on dark grounds. */
+.hero h1::after,
+.pagehero h1::after,
+.cta h2::after,
+.band--navy h2::after {
+  border-bottom-color: var(--paper);
+}
+
+/* ==========================================================================
+   Accent bar and site chrome
+   ========================================================================== */
+
+.accentbar { height: 4px; background: var(--red); }
+@media print { .accentbar { display: none; } }
+
+header.site {
+  background: var(--paper);
+  border-bottom: 2px solid var(--blue);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+/* Scoped to header.site so a page's own .wrap rule cannot reset the
+   vertical padding — .hdr carries both classes. */
+header.site .hdr, header.site .sitehdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 16px;
+  flex-wrap: wrap;
+}
+.brandline, .brandname {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .02em;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.brandline span, .brandname span {
+  display: block;
+  font-weight: 400;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.hdrlink, .brandname a { color: var(--muted); text-decoration: none; }
+.hdrlink:hover, .brandname a:hover { color: var(--blue); text-decoration: underline; }
+.hdrleft { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  text-decoration: none;
+  padding: 9px 15px;
+  border: 2px solid var(--blue);
+  white-space: nowrap;
+  flex: none;
+}
+.backlink svg { width: 13px; height: 13px; }
+.backlink:hover { background: var(--blue); color: var(--paper); }
+
+.logochip, .rx-chip, .logo-slot {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 12px 18px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+}
+.logochip img, .rx-chip img { display: block; height: 30px; width: auto; }
+.rx-chip { padding: 8px 14px; }
+.rx-chip img { height: 26px; }
+.logo-wrap { display: inline-flex; align-items: center; gap: 16px; }
+.pb-logo { height: 60px; width: auto; display: block; }
+
+.sitenav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding-block: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.sitenav a { color: var(--blue); text-decoration: none; }
+.sitenav a:hover { color: var(--red); text-decoration: underline; }
+@media print { .sitenav { display: none !important; } }
+
+/* ==========================================================================
+   Buttons — square, uppercase, 2px border, 48px min height.
+   Red is the action. On navy it turns white, because red on navy fails contrast.
+   ========================================================================== */
+
+.btn, .hbtn, .sendbtn, .hero-actions a, .actions a.send {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 24px;
+  border: 2px solid var(--red);
+  background: var(--red);
+  color: var(--paper);
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.btn:hover, .hbtn:hover, .sendbtn:hover,
+.hero-actions a:hover, .actions a.send:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  color: var(--paper);
+}
+.btn.alt, .hbtn.alt, .hero-actions a.alt {
+  background: transparent;
+  border-color: var(--paper);
+  color: var(--paper);
+}
+.btn.alt:hover, .hbtn.alt:hover, .hero-actions a.alt:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--blue);
+}
+.btn svg, .hbtn svg, .sendbtn svg,
+.hero-actions svg, .actions svg { width: 16px; height: 16px; flex: none; }
+
+/* Buttons that sit on a light ground (the guide's masthead) */
+.masthead .hero-actions a.alt {
+  background: transparent;
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.masthead .hero-actions a.alt:hover { background: var(--blue); color: var(--paper); }
+
+.btnrow, .hero-cta, .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.btnrow { justify-content: center; }
+
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.actions button, .actions a.btn {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  padding: 13px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.actions button:hover, .actions a.btn:hover { background: var(--blue); color: var(--paper); }
+.actions button.primary { background: var(--blue); color: var(--paper); }
+.actions button.primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+
+/* ==========================================================================
+   Notes and callouts — flat pale panel, 4px left border. No gradients.
+   ========================================================================== */
+
+.note {
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blue);
+  padding: 18px 20px;
+  margin: 0 0 18px;
+  display: flex;
+  gap: 14px;
+}
+.note .nic { flex: none; width: 24px; height: 24px; color: var(--blue); margin-top: 3px; }
+.note p { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
+.note p:last-child, .note .ntext p:last-child { margin-bottom: 0; }
+.note.warn, .note.flag { background: #FBEDED; border-left-color: var(--red); }
+.note.warn .nic { color: var(--red); }
+
+/* ==========================================================================
+   Footer — the required RE/MAX lines live here.
+   ========================================================================== */
+
+footer.site {
+  background: var(--navy);
+  border-top: 0;
+  padding: 40px 0 96px;
+  color: var(--on-dark);
+}
+footer.site p { font-size: 13px; color: var(--on-dark-dim); line-height: 1.7; max-width: none; }
+footer.site a { color: var(--paper); }
+footer.site .eiooo {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--paper);
+  font-size: 13px;
+}
+
+/* The document pages use a bare <footer> inside the sheet. */
+footer:not(.site) { margin-top: 32px; padding-top: 16px; border-top: 2px solid var(--blue); }
+footer:not(.site) p { font-size: 12px; color: var(--muted); line-height: 1.6; max-width: 94ch; }
+
+/* ==========================================================================
+   Mobile sticky call bar
+   ========================================================================== */
+
+.stickybar { display: none; }
+@media (max-width: 680px) {
+  .stickybar {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    background: var(--navy);
+    border-top: 2px solid var(--paper);
+    padding: 10px 16px;
+    gap: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+  .stickybar a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--red);
+    border: 2px solid var(--red);
+  }
+  .stickybar a.alt { background: transparent; border-color: var(--paper); }
+  .stickybar svg { width: 17px; height: 17px; flex: none; }
+  footer.site { padding-bottom: 30px; }
+}
+
+/* ==========================================================================
+   Print — these pages are handed to clients on paper too.
+   ========================================================================== */
+
+@media print {
+  body { background: #fff; color: #000; }
+  h1, h2, h3 { color: #000; }
+  .btn, .hbtn, .sendbtn, .stickybar, .backlink,
+  .hero-cta, .hero-actions, .actions, .logo-slot { display: none !important; }
+  section.block > h2::after, .kicker + h2::after,
+  .hero h1::after, .pagehero h1::after, .masthead h1::after {
+    border-bottom-color: #000;
+  }
+  footer.site { background: #fff; color: #000; padding-bottom: 0; }
+  footer.site p, footer.site .eiooo, footer.site a { color: #000; }
+}
+
+/* ==========================================================================
+   Lead gate — the Print / Save as PDF button asks for a name, email and
+   phone once, then prints. Square, flat, same tokens as everything else.
+   ========================================================================== */
+
+.lg-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(30, 36, 48, .72);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.lg-backdrop[hidden] { display: none !important; }
+.lg-modal {
+  background: var(--paper);
+  border: 2px solid var(--blue);
+  border-top: 6px solid var(--red);
+  width: 100%; max-width: 460px;
+  padding: 26px 24px 22px;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px; line-height: 1.55;
+  max-height: calc(100vh - 32px); overflow: auto;
+}
+.lg-modal h2 { font-size: 24px; margin: 0 0 6px; }
+.lg-modal h2::after {
+  content: ""; display: block; width: var(--rule-w); max-width: 100%;
+  height: 0; border-bottom: 1.6px solid var(--red); margin: 14px 0 4px;
+}
+.lg-modal p { margin: 8px 0 16px; color: var(--ink-2); font-size: 14.5px; }
+.lg-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.lg-field label {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  letter-spacing: 2.2px; text-transform: uppercase; color: var(--muted);
+}
+.lg-field input {
+  font-family: var(--font-ui); font-size: 17px; font-weight: 600;
+  padding: 11px 12px; border: 2px solid var(--pale); background: var(--paper);
+  color: var(--ink); width: 100%; border-radius: 0;
+}
+.lg-field input:focus { outline: none; border-color: var(--blue); }
+.lg-field input[aria-invalid="true"] { border-color: var(--red); }
+.lg-err { font-size: 12.5px; color: var(--red-dark); min-height: 1.2em; margin: -4px 0 8px; }
+.lg-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.lg-row button {
+  font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  padding: 13px 20px; cursor: pointer; border-radius: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.lg-primary { background: var(--red); color: var(--paper); border: 2px solid var(--red); flex: 1; justify-content: center; }
+.lg-primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.lg-primary[disabled] { opacity: .7; cursor: progress; }
+.lg-cancel { background: transparent; color: var(--blue); border: 2px solid var(--blue); }
+.lg-cancel:hover { background: var(--blue); color: var(--paper); }
+.lg-fine { font-size: 12px; color: var(--muted); margin: 14px 0 0; line-height: 1.5; }
+
+.lg-toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  z-index: 101; background: var(--navy); color: var(--paper);
+  border-left: 4px solid var(--paper);
+  padding: 12px 18px; font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+  max-width: calc(100% - 32px);
+}
+.lg-toast[hidden] { display: none !important; }
+@media (max-width: 680px) { .lg-toast { bottom: 84px; } }
+
+/* While the PDF snapshot is being captured: show every tab panel, hide chrome. */
+body.pdf-mode .tabs, body.pdf-mode .actions, body.pdf-mode .stickybar,
+body.pdf-mode .sendhint, body.pdf-mode .hero-cta, body.pdf-mode .hero-actions,
+body.pdf-mode .btnrow, body.pdf-mode .ctawrap, body.pdf-mode .sitenav,
+body.pdf-mode .backlink, body.pdf-mode details, body.pdf-mode .lg-backdrop,
+body.pdf-mode .lg-toast { display: none !important; }
+body.pdf-mode .panel { display: flex !important; padding-top: 14px; border-top: 1px solid var(--line); margin-top: 14px; }
+body.pdf-mode header.site { position: static; }
+body.pdf-mode .printonly { display: block !important; }
+
+/* ==========================================================================
+   Compact header on phones. The header is pinned, so on a small screen it
+   collapses to one slim row: back link, team name, logos. Phone and email
+   still live in the footer and the sticky call bar.
+   ========================================================================== */
+@media (max-width: 680px) {
+  header.site .hdr, header.site .sitehdr { padding-block: 8px; gap: 10px; flex-wrap: nowrap; align-items: center; }
+  .brandline span, .brandname span { display: none; }
+  .brandline, .brandname { font-size: 12.5px; line-height: 1.2; }
+  .hdrleft { gap: 10px; flex-wrap: nowrap; min-width: 0; }
+  .backlink { padding: 7px 10px; font-size: 11px; letter-spacing: .06em; }
+  .backlink svg { width: 11px; height: 11px; }
+  .logo-wrap { gap: 8px; flex: none; }
+  .pb-logo { height: 34px; }
+  .rx-chip { padding: 5px 8px; }
+  .rx-chip img { height: 16px; }
+  .logochip { padding: 6px 10px; }
+  .logochip img { height: 20px; }
+}
+/* A touch tighter on desktop too. */
+@media (min-width: 681px) {
+  header.site .hdr, header.site .sitehdr { padding-block: 12px; }
+  .pb-logo { height: 52px; }
+}

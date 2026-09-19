@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Palette v3 — the Wichitas horizon
+   Loaded after site.css and each page's own <style> block, so it can win on
+   equal specificity. Warms the page ground to RE/MAX cream and adds the
+   Mount Scott / Saddle Mountain skyline to every navy hero band. Blue, red,
+   square corners, and the 205px rule are untouched from v2.
+   ========================================================================== */
+
+:root {
+  --paper:   #F7F5EE;  /* was #FFFFFF — warm cream ground */
+  --card:    #FFFFFF;  /* cards and inputs stay white so they lift off the cream */
+  --sand:    #EDE4D3;  /* alternate section ground, replaces --mist on cream pages */
+  --line:    #DCD3C2;  /* hairlines warmed to match */
+  --line-2:  #E9E2D4;
+  --wash:    #F1E9DA;
+  --ochre:   #B9948A;  /* tool-card top accent — the horizon's foreground rise */
+  --lit:     #D9B893;  /* sunlit rim — the heading rule and eyebrow on navy */
+}
+
+body { background: var(--paper); }
+header.site { background: var(--paper); }
+.logochip, .rx-chip { background: #fff; }
+
+/* cards that used to sit on white now sit on cream */
+.tool, section.block.alt, .paystack > div, .steps > div, .market {
+  background: var(--card);
+}
+.tool { border-top-color: var(--ochre); }
+.tool:hover { border-top-color: var(--red); }
+
+/* the rule and eyebrow on navy read warmer against the horizon */
+.hero h1::after, .pagehero h1::after, .masthead h1::after, .cta h2::after {
+  border-bottom-color: var(--lit);
+}
+.hero .eyebrow, .pagehero .eyebrow { color: var(--lit); }
+
+/* give the hero bands room for the horizon graphic under the copy */
+.hero .wrap.hero-in, .hero .hero-in { padding-block-end: 8px; }
+.pagehero .phin { padding-block-end: 4px; }
+
+/* ---------- the horizon graphic ----------
+   One deliberate exception to the v2 "no gradients" rule: the sky inside
+   this SVG. Buttons, cards and panels all stay flat. */
+.hero, .pagehero { position: relative; }
+.horizon { display: block; width: 100%; margin-top: -10px; }
+.horizon--tall  { height: clamp(190px, 28vw, 410px); }
+.horizon--short { height: clamp(96px, 15vw, 190px); margin-top: -4px; }
+
+@media print {
+  .horizon { display: none; }
+}
