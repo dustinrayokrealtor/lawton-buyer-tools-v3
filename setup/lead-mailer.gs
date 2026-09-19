@@ -19,7 +19,94 @@ var TO        = "dustin@homes-lawton.com";      // where every lead lands
 var FROM_NAME = "Dustin Ray, Pam & Barry's Team";
 var CC_BUYER  = true;                            // email the buyer their copy too
 
+// ---------------------------------------------------------------------------
+// Traffic logging. assets/track.js beacons one "view" per page load; the
+// capture form posts everything else. doPost routes on kind and the lead
+// path below is unchanged from what it always was.
+// ---------------------------------------------------------------------------
+var HITS_SHEET_ID = "";     // blank until you run setupHits() once
+var HITS_TAB      = "Hits";
+
 function doPost(e) {
+  var probe = {};
+  try { probe = JSON.parse((e && e.postData && e.postData.contents) || "{}"); } catch (err) {}
+  if (probe.kind === "view") { logView(probe); return okText(); }
+  return handleCapture(e);
+}
+
+function okText() {
+  return ContentService.createTextOutput("ok").setMimeType(ContentService.MimeType.TEXT);
+}
+
+function logView(d) {
+  if (!HITS_SHEET_ID) return;          // not set up yet, drop it quietly
+  if (!d.sid) return;                  // no session id means it was not our beacon
+  try {
+    var sh = SpreadsheetApp.openById(HITS_SHEET_ID).getSheetByName(HITS_TAB);
+    sh.appendRow([
+      new Date(),
+      String(d.page  || "/").slice(0, 120),
+      String(d.title || "").slice(0, 160),
+      String(d.ref   || "").slice(0, 80),
+      String(d.sid   || "").slice(0, 16),
+      d.device === "mobile" ? "mobile" : "desktop",
+      d.seen   === "yes"    ? "yes"    : "no"
+    ]);
+  } catch (err) { /* never let logging break a capture */ }
+}
+
+// Run once by hand. Creates the sheet and prints its id into the execution log.
+function setupHits() {
+  var ss = SpreadsheetApp.create("Lawton Buyer Tools \u2014 Hits");
+  var sh = ss.getSheets()[0].setName(HITS_TAB);
+  sh.appendRow(["When", "Page", "Title", "Referrer", "Session", "Device", "Returning"]);
+  sh.getRange(1, 1, 1, 7).setFontWeight("bold");
+  sh.setFrozenRows(1);
+  Logger.log("HITS_SHEET_ID = " + ss.getId());
+}
+
+// Time-driven trigger, 1am to 2am. One email a night, label-first so the
+// Buyer Ops Hub parses it the same way it parses "New lead:".
+function dailyTraffic() {
+  if (!HITS_SHEET_ID) return;
+  var end = new Date(); end.setHours(0, 0, 0, 0);
+  var start = new Date(end.getTime() - 864e5);
+  var rows = SpreadsheetApp.openById(HITS_SHEET_ID).getSheetByName(HITS_TAB)
+               .getDataRange().getValues().slice(1)
+               .filter(function (r) { var t = new Date(r[0]); return t >= start && t < end; });
+
+  var pages = {}, refs = {}, sids = {}, mobile = 0, ret = 0;
+  rows.forEach(function (r) {
+    var key = r[2] || r[1];
+    pages[key] = (pages[key] || 0) + 1;
+    if (r[3]) refs[r[3]] = (refs[r[3]] || 0) + 1;
+    sids[r[4]] = 1;
+    if (r[5] === "mobile") mobile++;
+    if (r[6] === "yes") ret++;
+  });
+
+  var rank = function (o) {
+    return Object.keys(o).sort(function (a, b) { return o[b] - o[a]; })
+             .map(function (k) { return k + " " + o[k]; }).join(", ") || "none";
+  };
+  var d = Utilities.formatDate(start, Session.getScriptTimeZone(), "M/d/yyyy");
+
+  MailApp.sendEmail({
+    to: TO,
+    subject: "Site traffic: " + d,
+    body: [
+      "Date: " + d,
+      "Views: " + rows.length,
+      "Visits: " + Object.keys(sids).length,
+      "Mobile: " + mobile,
+      "Returning: " + ret,
+      "Pages: " + rank(pages),
+      "Referrers: " + rank(refs)
+    ].join("\n")
+  });
+}
+
+function handleCapture(e) {
   try {
     var d = JSON.parse((e && e.postData && e.postData.contents) || "{}");
     var name  = clean(d.name), email = clean(d.email), phone = clean(d.phone);
