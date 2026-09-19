@@ -247,6 +247,9 @@ header.site .hdr, header.site .sitehdr {
 .rx-chip { padding: 8px 14px; }
 .rx-chip img { height: 26px; }
 .logo-wrap { display: inline-flex; align-items: center; gap: 16px; }
+/* the header lockup is a link home on every page but the homepage */
+.logo-home { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+.logo-home:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .pb-logo { height: 60px; width: auto; display: block; }
 
 .sitenav {
@@ -532,6 +535,7 @@ body.pdf-mode .printonly { display: block !important; }
   .backlink { padding: 7px 10px; font-size: 11px; letter-spacing: .06em; }
   .backlink svg { width: 11px; height: 11px; }
   .logo-wrap { gap: 8px; flex: none; }
+  .logo-home { flex: none; }
   .pb-logo { height: 34px; }
   .rx-chip { padding: 5px 8px; }
   .rx-chip img { height: 16px; }
