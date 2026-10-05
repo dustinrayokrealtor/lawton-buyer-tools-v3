@@ -125,3 +125,28 @@ and keeps a fingerprintable UA string out of the sheet.
   with no error anywhere.
 - **A new deployment URL that never made it into `track.js`.** If the sheet
   stops filling after you edit the script, check that first.
+
+## Inline lead forms and the Dakno copy (added Oct 5, 2026)
+
+`assets/leadform.js` powers the "send me the list" forms on the home page
+(three spots) and the BAH page (under the calculator result). They post to
+the **same** web app URL with `kind: "inquiry"`. The script logs the lead to
+the sheet like any other (the Page column reads `Moving to Fort Sill | <source>`,
+so you can count leads by placement), emails you, and sends the buyer a short
+"got it" note instead of the PDF copy. After sending, the visitor lands on
+`/thanks.html?source=<source>`.
+
+Sources: `where-people-look`, `pcs-out`, `home-cta`, `bah-page`.
+
+To get every lead (forms and prints) into Dakno:
+
+1. Paste Dakno's lead-intake email address into `DAKNO_TO` at the top of the script.
+2. Save, then **Deploy > Manage deployments > (pencil) > Version: New version > Deploy**.
+   The URL stays the same, so the site doesn't need touching.
+3. Pick **sendInquiryTest** in the toolbar and **Run**. You should get the lead
+   email and the "got it" note, the sheet gets a row (delete it after), and the
+   lead should show up in Dakno within a few minutes. If it doesn't, check how
+   Dakno wants inbound lead emails formatted; the copy is plain text with one
+   `Label: value` per line.
+
+With the Dakno copy on, each lead uses three of the ~100 daily Gmail sends.

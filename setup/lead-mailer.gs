@@ -3,21 +3,28 @@
  * ------------------------------------------------------------------
  * Lives inside the "Lawton Buyer Tools Leads" Google Sheet
  * (Extensions > Apps Script). Deployed as a web app it receives one
- * POST per print from assets/leadgate.js on the site and then:
+ * POST per print from assets/leadgate.js, and one per form sent from
+ * assets/leadform.js (kind "inquiry"), and then:
  *
  *   1. appends the lead to the first sheet tab (your email list),
  *   2. emails Dustin the contact details, the scenario, and the PDF,
- *   3. emails the buyer their own copy of the PDF (optional).
+ *   3. emails the buyer their own copy of the PDF, or for a form, a short
+ *      "got it" note (optional),
+ *   4. emails a plain-text copy to Dakno's lead-intake address so the
+ *      lead lands in the CRM (once DAKNO_TO is filled in).
  *
  * Nothing here needs an API key. It sends from the Google account that
  * deploys it, so it counts against that account's daily Gmail quota
- * (about 100 messages a day on a regular Gmail account, two per lead).
+ * (about 100 messages a day on a regular Gmail account, three per lead
+ * once the Dakno copy is on).
  * ------------------------------------------------------------------
  */
 
 var TO        = "dustin@homes-lawton.com";      // where every lead lands
 var FROM_NAME = "Dustin Ray, Pam & Barry's Team";
 var CC_BUYER  = true;                            // email the buyer their copy too
+var DAKNO_TO  = "";                              // Dakno lead-intake address; blank = no CRM copy
+var SOURCE    = "movingtoftsill.com";            // lead source label for Dakno
 
 // ---------------------------------------------------------------------------
 // Traffic logging. assets/track.js beacons one "view" per page load; the
@@ -106,9 +113,31 @@ function dailyTraffic() {
   });
 }
 
+// JSON from leadgate.js / leadform.js. If a browser ever posts the lead form
+// without JavaScript, it arrives form-encoded instead; read that too.
+function readBody(e) {
+  try { return JSON.parse((e && e.postData && e.postData.contents) || "{}"); }
+  catch (err) {
+    var p = (e && e.parameter) || {}, ps = (e && e.parameters) || {}, d = {};
+    Object.keys(p).forEach(function (k) { d[k] = p[k]; });
+    if (ps.want) d.wants = ps.want.join(",");
+    if (!d.summary && d.kind === "inquiry") {
+      d.summary = ["Wants: " + (d.wants || "Just a conversation"),
+                   d.grade ? "Pay grade: " + d.grade : "",
+                   "Reports: " + (d.report || "Not sure yet"),
+                   d.notes ? "Notes: " + d.notes : "",
+                   "Form: " + (d.source || "site") + " (no JavaScript)"].filter(String).join("\n");
+      d.page = "Moving to Fort Sill | " + (d.source || "site");
+    }
+    return d;
+  }
+}
+
 function handleCapture(e) {
   try {
-    var d = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    var d = readBody(e);
+    if (d.company) return out({ ok: true });     // honeypot: a person never fills this
+    var inquiry = d.kind === "inquiry";
     var name  = clean(d.name), email = clean(d.email), phone = clean(d.phone);
     var page  = clean(d.page) || "Lawton Buyer Tools";
     var url   = clean(d.url);
@@ -145,7 +174,7 @@ function handleCapture(e) {
         "<b>" + esc(name) + "</b><br>" +
         "<a href='mailto:" + esc(email) + "'>" + esc(email) + "</a><br>" +
         "<a href='tel:" + esc(phone.replace(/\D/g, "")) + "'>" + esc(phone) + "</a></p>" +
-        "<p style='font:14px/1.5 Arial,sans-serif;color:#424242'>Printed <b>" + esc(page) + "</b> on " + when +
+        "<p style='font:14px/1.5 Arial,sans-serif;color:#424242'>" + (inquiry ? "Sent the form on <b>" : "Printed <b>") + esc(page) + "</b> on " + when +
         (url ? " &middot; <a href='" + esc(url) + "'>open the page</a>" : "") + "</p>" +
         (summary ? "<pre style='font:13px/1.5 Menlo,Consolas,monospace;background:#EDF2F8;padding:12px;border-left:4px solid #004A9A;white-space:pre-wrap'>" + esc(summary) + "</pre>" : "") +
         (atts.length ? "<p style='font:13px Arial,sans-serif;color:#595959'>Their PDF is attached.</p>" : ""),
@@ -153,7 +182,32 @@ function handleCapture(e) {
     });
 
     // 4. to the buyer
-    if (CC_BUYER) {
+    if (CC_BUYER && inquiry) {
+      var first1 = name.split(/\s+/)[0] || "there";
+      var wants = String(d.wants || "");
+      var lines = [];
+      if (wants.indexOf("listings")  > -1) lines.push("I'll pull what's actually listed in your range right now and send it over.");
+      if (wants.indexOf("payment")   > -1) lines.push("I'll send your payment broken down line by line.");
+      if (wants.indexOf("rentcomps") > -1) lines.push("I'll pull comparable rents so you can see the rental side before you buy.");
+      MailApp.sendEmail({
+        to: email,
+        replyTo: TO,
+        name: FROM_NAME,
+        subject: "Got your note about the move",
+        htmlBody:
+          "<div style='font:15px/1.6 Arial,sans-serif;color:#222;max-width:60ch'>" +
+          "<p>Hey " + esc(first1) + ",</p>" +
+          "<p>Got your info from movingtoftsill.com. I'll get back to you personally." +
+          (lines.length ? " " + esc(lines.join(" ")) : "") + "</p>" +
+          "<p>If you want to talk it through sooner, call or text me at 580-351-4683.</p>" +
+          "<p>I appreciate you,</p>" +
+          "<p><b>Dustin Ray</b><br>Buyer Specialist, Pam &amp; Barry's Team, RE/MAX Professionals<br>" +
+          "580-351-4683 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
+          "<a href='https://movingtoftsill.com/'>movingtoftsill.com</a></p>" +
+          "<p style='font-size:12px;color:#595959'>Each Office Independently Owned and Operated.</p>" +
+          "</div>"
+      });
+    } else if (CC_BUYER) {
       var first = name.split(/\s+/)[0] || "there";
       MailApp.sendEmail({
         to: email,
@@ -175,10 +229,48 @@ function handleCapture(e) {
       });
     }
 
+    // 5. to Dakno, plain text with one labeled field per line so its lead
+    //    parser can pick it up. Never let a CRM hiccup break the capture.
+    if (DAKNO_TO) {
+      try {
+        var parts = name.split(/\s+/);
+        MailApp.sendEmail({
+          to: DAKNO_TO,
+          replyTo: email,
+          subject: "New lead: " + name + " (" + SOURCE + ")",
+          body: [
+            "First Name: " + (parts[0] || ""),
+            "Last Name: " + parts.slice(1).join(" "),
+            "Email: " + email,
+            "Phone: " + phone,
+            "Source: " + SOURCE,
+            "Form: " + (inquiry ? clean(d.source) || "site" : "print / save as PDF"),
+            "Page: " + page,
+            "URL: " + url,
+            "",
+            "Comments:",
+            summary
+          ].join("\n")
+        });
+      } catch (err) { /* keep going */ }
+    }
+
     return out({ ok: true });
   } catch (err) {
     return out({ ok: false, error: String(err) });
   }
+}
+
+// Run this once from the editor after filling in DAKNO_TO: sends a fake
+// form lead through the whole path (sheet, you, buyer copy, Dakno).
+function sendInquiryTest() {
+  var fake = { postData: { contents: JSON.stringify({
+    kind: "inquiry", source: "test", name: "Test Buyer", email: TO, phone: "580-555-0100",
+    page: "Moving to Fort Sill | test", url: "https://movingtoftsill.com/",
+    summary: "Wants: Listings in my price range\nPay grade: E-6\nReports: Not sure yet\nForm: test",
+    wants: "listings"
+  }) } };
+  Logger.log(doPost(fake).getContent());
 }
 
 // Visiting the web app URL in a browser just confirms it's alive.
