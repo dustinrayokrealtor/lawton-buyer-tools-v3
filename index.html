@@ -323,7 +323,29 @@ tbody tr:nth-child(even){background:var(--mist)}
     <span class="pill">Geronimo <b>&middot; SW of town</b></span>
   </div>
   <p>That list moves with the market. Two of those areas have inventory in your band some months and nothing in it other months. It is a starting point for a search, not a promise about what is available the week you call.</p>
-  <p>I am not ranking these or telling you which one is nicer. Drive them, look at the houses, and use the <a href="#honest">data sources above</a> if you want numbers. If it helps, I will pull everything currently listed in your range across all of them and send it over, so you are comparing actual houses.</p>
+  <p>I am not ranking these or telling you which one is nicer. Drive them, look at the houses, and use the <a href="#honest">data sources above</a> if you want numbers.</p>
+<form class="leadform" data-source="where-people-look" action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate>
+  <p class="lf-lede">If it helps, I will pull everything currently listed in your range across all of them and send it over, so you are comparing actual houses.</p>
+  <input type="hidden" name="source" value="where-people-look">
+  <input type="hidden" name="kind" value="inquiry">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Pay grade</span><select name="grade"><option value="">Pick one</option></select></label>
+    <label class="lf-field"><span>When you report</span><select name="report"><option value="">Not sure yet</option><option value="Already here">Already here</option></select></label>
+  </div>
+  <fieldset class="lf-wants"><legend>Send me</legend>
+    <label class="lf-chk"><input type="checkbox" name="want" value="listings" checked> Listings in my price range</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="payment"> My payment broken down</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="rentcomps"> Rent comps for keeping it as a rental later</label>
+  </fieldset>
+  <label class="lf-field lf-full"><span>Anything else <i>(optional)</i></span><textarea name="notes" rows="2"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Send me the list</button>
+  <p class="lf-fine">I&rsquo;ll follow up personally. No cost, no obligation, and I never share your info. Sending this means you&rsquo;re OK with me calling or texting the number above about your move.</p>
+</form>
 </section>
 
 <section id="outoftown" class="block alt">
@@ -413,7 +435,28 @@ tbody tr:nth-child(even){background:var(--mist)}
     <li>Run the numbers on the actual house with actual rents, not on a rule of thumb.</li>
     <li>Talk to somebody about the tax side before you convert it, not after.</li>
   </ul>
-  <p>Ask me and I will pull comparable rents on any house you are considering so you can see it before you buy rather than three years later.</p>
+<form class="leadform" data-source="pcs-out" action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate>
+  <p class="lf-lede">Ask me and I will pull comparable rents on any house you are considering so you can see it before you buy rather than three years later.</p>
+  <input type="hidden" name="source" value="pcs-out">
+  <input type="hidden" name="kind" value="inquiry">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Pay grade</span><select name="grade"><option value="">Pick one</option></select></label>
+    <label class="lf-field"><span>When you report</span><select name="report"><option value="">Not sure yet</option><option value="Already here">Already here</option></select></label>
+  </div>
+  <fieldset class="lf-wants"><legend>Send me</legend>
+    <label class="lf-chk"><input type="checkbox" name="want" value="listings"> Listings in my price range</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="payment"> My payment broken down</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="rentcomps" checked> Rent comps for keeping it as a rental later</label>
+  </fieldset>
+  <label class="lf-field lf-full"><span>The house you&rsquo;re looking at <i>(optional)</i></span><textarea name="notes" rows="2"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Send me rent comps</button>
+  <p class="lf-fine">I&rsquo;ll follow up personally. No cost, no obligation, and I never share your info. Sending this means you&rsquo;re OK with me calling or texting the number above about your move.</p>
+</form>
 </section>
 
 <section id="refuge" class="block alt">
@@ -456,6 +499,28 @@ tbody tr:nth-child(even){background:var(--mist)}
         Email me
       </a>
     </div>
+<form class="leadform" data-source="home-cta" action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate>
+  <p class="lf-lede">Or leave your info and I&rsquo;ll reach out.</p>
+  <input type="hidden" name="source" value="home-cta">
+  <input type="hidden" name="kind" value="inquiry">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Pay grade</span><select name="grade"><option value="">Pick one</option></select></label>
+    <label class="lf-field"><span>When you report</span><select name="report"><option value="">Not sure yet</option><option value="Already here">Already here</option></select></label>
+  </div>
+  <fieldset class="lf-wants"><legend>Send me</legend>
+    <label class="lf-chk"><input type="checkbox" name="want" value="listings"> Listings in my price range</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="payment"> My payment broken down</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="rentcomps"> Rent comps for keeping it as a rental later</label>
+  </fieldset>
+  <label class="lf-field lf-full"><span>What&rsquo;s on your mind <i>(optional)</i></span><textarea name="notes" rows="2"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Send</button>
+  <p class="lf-fine">I&rsquo;ll follow up personally. No cost, no obligation, and I never share your info. Sending this means you&rsquo;re OK with me calling or texting the number above about your move.</p>
+</form>
     <p class="ctafoot">Also useful: the <a href="bah/">Fort Sill BAH calculator</a>, the <a href="payment-toolkit.html">Buyer Payment Toolkit</a>, and <a href="buying-guide.html">Buying a Home in Lawton</a>.</p>
   </div>
 </div>
@@ -487,6 +552,7 @@ tbody tr:nth-child(even){background:var(--mist)}
 
 <script>document.getElementById("yr").textContent=new Date().getFullYear();</script>
 
+<script src="assets/leadform.js" defer></script>
 <script src="assets/track.js" defer></script>
 </body>
 </html>
