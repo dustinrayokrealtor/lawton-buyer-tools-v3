@@ -313,6 +313,28 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
         <span class="sendnote">I'll email you a copy of these exact numbers, then follow up with the houses actually in this range right now.</span>
       </div>
     </div>
+<form class="leadform" data-source="bah-page" data-sync-grade="grade" action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate>
+  <h3 class="lf-head">Want this breakdown texted to you?</h3>
+  <input type="hidden" name="source" value="bah-page">
+  <input type="hidden" name="kind" value="inquiry">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Pay grade</span><select name="grade"><option value="">Pick one</option></select></label>
+    <label class="lf-field"><span>When you report</span><select name="report"><option value="">Not sure yet</option><option value="Already here">Already here</option></select></label>
+  </div>
+  <fieldset class="lf-wants"><legend>Send me</legend>
+    <label class="lf-chk"><input type="checkbox" name="want" value="listings"> Listings in my price range</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="payment" checked> My payment broken down</label>
+    <label class="lf-chk"><input type="checkbox" name="want" value="rentcomps"> Rent comps for keeping it as a rental later</label>
+  </fieldset>
+  <label class="lf-field lf-full"><span>Anything else <i>(optional)</i></span><textarea name="notes" rows="2"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Text me this breakdown</button>
+  <p class="lf-fine">I&rsquo;ll follow up personally. No cost, no obligation, and I never share your info. Sending this means you&rsquo;re OK with me calling or texting the number above about your move.</p>
+</form>
   </div>
 
   <p class="calcfoot">Property tax is figured at 1.11% of value per year, the Lawton median effective rate from Comanche County records. Insurance is $19.28 per $1,000 of dwelling coverage per year, the Lawton city average scaled to your actual coverage. Statewide Oklahoma insurance figures blend in the Oklahoma City metro and will overstate a Lawton payment by about $110 a month. This is an estimate for planning. Your lender gives you the real number.</p>
@@ -710,6 +732,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 </script>
 <script src="../assets/leadgate.js" defer></script>
 
+<script src="../assets/leadform.js" defer></script>
 <script src="../assets/track.js" defer></script>
 </body>
 </html>
