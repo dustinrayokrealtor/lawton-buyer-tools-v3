@@ -1,0 +1,82 @@
+name: Update mortgage rate
+
+# Every Monday morning, pull the latest Freddie Mac 30-year fixed rate and
+# write it into data/market.json. The payment toolkit reads that file.
+# Run it by hand any time from the Actions tab (Run workflow).
+on:
+  schedule:
+    - cron: "20 13 * * 1"   # 8:20 am Central (7:20 am in winter)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the latest Freddie Mac 30-year rate
+        run: |
+          python3 - <<'PY'
+          import csv, io, json, datetime, urllib.request
+
+          def get(url):
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (rate-bot)"})
+              return urllib.request.urlopen(req, timeout=30).read().decode("utf-8-sig")
+
+          def from_fred():
+              rows = list(csv.reader(io.StringIO(get("https://fred.stlouisfed.org/graph/fredgraph.csv?id=MORTGAGE30US"))))
+              for d, v in reversed(rows[1:]):
+                  if v.strip() not in ("", "."):
+                      return d, float(v)
+
+          def from_freddie():
+              rows = list(csv.reader(io.StringIO(get("https://www.freddiemac.com/pmms/docs/PMMS_history.csv"))))
+              head = [h.strip().lower() for h in rows[0]]
+              col = head.index("pmms30") if "pmms30" in head else 1
+              for r in reversed(rows[1:]):
+                  if len(r) > col and r[col].strip():
+                      m, d, y = r[0].strip().split("/")
+                      return "%04d-%02d-%02d" % (int(y), int(m), int(d)), float(r[col])
+
+          result = None
+          for fn in (from_fred, from_freddie):
+              try:
+                  result = fn()
+                  if result:
+                      break
+              except Exception as e:
+                  print("source failed:", fn.__name__, e)
+          if not result:
+              raise SystemExit("No rate source worked")
+
+          date, rate = result
+          age = (datetime.date.today() - datetime.date.fromisoformat(date)).days
+          if not (1 < rate < 15):
+              raise SystemExit("Rate out of range: %s" % rate)
+          if age > 21:
+              raise SystemExit("Rate is stale (%s, %d days old)" % (date, age))
+
+          with open("data/market.json") as f:
+              data = json.load(f)
+          data["rate"] = {"value": round(rate, 2), "asOf": date, "source": "Freddie Mac PMMS 30-year fixed"}
+          data["updated"] = datetime.date.today().isoformat()
+          with open("data/market.json", "w") as f:
+              json.dump(data, f, indent=2)
+              f.write("\n")
+          print("Rate", rate, "as of", date)
+          PY
+
+      - name: Commit if it changed
+        run: |
+          git config user.name "rate-bot"
+          git config user.email "rate-bot@users.noreply.github.com"
+          git add data/market.json
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "Update 30-year rate"
+            git push
+          fi
