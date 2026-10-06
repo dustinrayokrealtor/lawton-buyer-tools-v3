@@ -1,0 +1,15 @@
+{
+  "rate": {
+    "value": 6.76,
+    "asOf": "2026-09-10",
+    "source": "Freddie Mac PMMS 30-year fixed"
+  },
+  "market": {
+    "medianPrice": 199500,
+    "daysOnMarket": 27,
+    "monthsSupply": 3.8,
+    "throughDate": "2026-09-10",
+    "source": "Lawton Board of REALTORS Paragon MLS, Comanche County residential, year to date"
+  },
+  "updated": "2026-10-06"
+}
