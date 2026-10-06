@@ -116,3 +116,5 @@ of showing a seam. That exception is scoped to this one SVG. Buttons, cards,
 and panels stay flat — don't let a gradient creep in anywhere else.
 
 Dustin Ray, Buyer Specialist · Pam & Barry's Team, RE/MAX Professionals · Each Office Independently Owned and Operated.
+
+<!-- rebuild -->
