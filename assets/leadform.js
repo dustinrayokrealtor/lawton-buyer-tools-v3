@@ -9,6 +9,13 @@
 
    The source tag rides along in the sheet's Page column
    ("Moving to Fort Sill | bah-page") so leads can be counted by placement.
+
+   Optional form attributes:
+     data-phone="optional"   phone may be left blank (email is still needed)
+     data-sync-price="id"    the form's "maxprice" box follows that calculator
+                             field until the visitor types their own number
+     data-scenario           send the calculator run along with the request
+   A hidden <input name="want" value="listings"> counts as a checked box.
    ========================================================================== */
 (function(){
   "use strict";
@@ -91,8 +98,54 @@
   function wants(form){
     var out = [];
     var boxes = form.querySelectorAll('input[name="want"]');
-    for (var i = 0; i < boxes.length; i++) if (boxes[i].checked) out.push(boxes[i].value);
+    for (var i = 0; i < boxes.length; i++) {
+      if (boxes[i].type === "hidden" || boxes[i].checked) out.push(boxes[i].value);
+    }
     return out;
+  }
+
+  function digits(v){ return String(v == null ? "" : v).replace(/[^\d.]/g, ""); }
+  function money(v){
+    var n = Math.round(parseFloat(digits(v)));
+    return isFinite(n) && n > 0 ? "$" + n.toLocaleString("en-US") : "";
+  }
+
+  // Keep the form's price box in step with the calculator until the visitor
+  // types in it themselves.
+  function syncPrice(form){
+    var src = document.getElementById(form.getAttribute("data-sync-price") || "");
+    var mine = form.elements.maxprice;
+    if (!src || !mine) return;
+    var touched = false;
+    mine.addEventListener("input", function(){ touched = true; });
+    function pull(){
+      if (touched) return;
+      var v = "value" in src ? src.value : src.textContent;
+      var n = Math.round(parseFloat(digits(v)));
+      if (isFinite(n) && n > 0) mine.value = n;
+    }
+    src.addEventListener("input", pull);
+    src.addEventListener("change", pull);
+    pull();
+    // the calculators also move the price from buttons (reset, examples)
+    document.addEventListener("click", function(){ setTimeout(pull, 50); });
+  }
+
+  // Plain-text snapshot of the calculator: the page's own LEAD_SUMMARY if it
+  // has one, otherwise every visible [data-lead] figure outside the form.
+  function scenario(form){
+    if (typeof window.LEAD_SUMMARY === "function") {
+      try { return String(window.LEAD_SUMMARY()); } catch (e) {}
+    }
+    var out = [];
+    var els = document.querySelectorAll("[data-lead]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (form.contains(el) || !(el.offsetParent || el.getClientRects().length)) continue;
+      var t = el.textContent.replace(/\s+/g, " ").trim();
+      if (t) out.push(el.getAttribute("data-lead") + ": " + t);
+    }
+    return out.join("\n");
   }
 
   function onSubmit(ev){
@@ -112,7 +165,8 @@
     var phone = (E.phone.value || "").trim();
     var nameBad  = name.length < 2;
     var emailBad = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-    var phoneBad = phone.replace(/\D/g, "").length < 10;
+    var phoneOptional = form.getAttribute("data-phone") === "optional";
+    var phoneBad = phoneOptional && !phone ? false : phone.replace(/\D/g, "").length < 10;
     bad(E.name, nameBad); bad(E.email, emailBad); bad(E.phone, phoneBad);
     if (nameBad || emailBad || phoneBad) {
       setErr(form, nameBad ? "Put your name in so I know who I'm talking to."
@@ -127,15 +181,19 @@
     var grade  = E.grade  ? E.grade.value  : "";
     var report = E.report ? E.report.value : "";
     var notes  = E.notes  ? (E.notes.value || "").trim() : "";
+    var maxp   = E.maxprice ? money(E.maxprice.value) : "";
 
     var L = [];
     L.push("Wants: " + (w.length ? w.map(function(k){ return WANTS[k] || k; }).join("; ") : "Just a conversation"));
+    if (maxp)   L.push("Price range: up to " + maxp);
     if (grade)  L.push("Pay grade: " + grade);
-    L.push("Reports: " + (report || "Not sure yet"));
+    if (E.report) L.push("Reports: " + (report || "Not sure yet"));
     if (notes)  L.push("Notes: " + notes);
+    if (!phone) L.push("Phone: none given, send by email");
     L.push("Form: " + source);
-    if (w.indexOf("payment") > -1 && typeof window.LEAD_SUMMARY === "function") {
-      try { L.push("", "Their calculator run:", window.LEAD_SUMMARY()); } catch (e) {}
+    if (form.hasAttribute("data-scenario") || w.indexOf("payment") > -1) {
+      var run = scenario(form);
+      if (run) L.push("", "Their calculator run:", run);
     }
 
     var payload = {
@@ -190,6 +248,7 @@
       if (!form.elements.phone.value) form.elements.phone.value = lead.phone || "";
     }
     syncGrade(form);
+    syncPrice(form);
     form.addEventListener("input", function(ev){
       if (ev.target.getAttribute("aria-invalid")) { bad(ev.target, false); setErr(form, ""); }
     });

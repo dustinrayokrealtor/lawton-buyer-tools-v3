@@ -1,4 +1,4 @@
-/* Live market numbers for the payment toolkit.
+/* Live market numbers for the calculators (payment toolkit, VA loan, buydown, BAH).
    Reads /data/market.json (rate is refreshed every Monday by a GitHub Action,
    the MLS numbers are edited by hand) and fills in the stat tiles, the hint
    labels, the footer date and the calculator inputs. If the file can't be
@@ -6,7 +6,7 @@
 (function () {
   "use strict";
   var KEY = "lbpt.mkt";
-  var LEGACY_RATE = 6.76, LEGACY_PRICE = 199500; // what the page shipped with
+  var LEGACY_RATES = [6.76, 6.5], LEGACY_PRICE = 199500; // what the pages shipped with (6.5 was the BAH page)
 
   function $(id) { return document.getElementById(id); }
   function near(a, b) { return Math.abs(a - b) < 0.0005; }
@@ -20,7 +20,7 @@
 
   function setInput(id, val) {
     var el = $(id);
-    if (!el) return;
+    if (!el || el.tagName !== "INPUT") return;   // only ever touch a real input box
     el.value = val;
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
@@ -75,8 +75,9 @@
     // number (i.e. the box still holds a number the site itself put there).
     if (rate) {
       var cur = parseFloat(($("rate") || {}).value);
-      var oldRate = prev.rate != null ? prev.rate : LEGACY_RATE;
-      if (force || !isFinite(cur) || near(cur, oldRate) || near(cur, LEGACY_RATE)) setInput("rate", rate);
+      var oldRate = prev.rate != null ? prev.rate : LEGACY_RATES[0];
+      var stale = LEGACY_RATES.some(function (r) { return near(cur, r); });
+      if (force || !isFinite(cur) || near(cur, oldRate) || stale) setInput("rate", rate);
     }
     if (price) {
       var curP = parseFloat(($("price") || {}).value);
@@ -90,6 +91,9 @@
     apply(m, false);
     var reset = $("btn-reset");
     if (reset) reset.addEventListener("click", function () { setTimeout(function () { apply(m, true); }, 0); });
+    // VA calculator: the example household puts the old median back in the price box
+    var example = $("btn-example");
+    if (example) example.addEventListener("click", function () { setTimeout(function () { apply(m, false); }, 0); });
   }
 
   fetch("/data/market.json", { cache: "no-cache" })
