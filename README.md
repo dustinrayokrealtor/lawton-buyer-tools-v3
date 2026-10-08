@@ -26,22 +26,59 @@ click away at `/tools/`.
 
 Plain static HTML. No build step. Edit a page and push to `main`, and Pages redeploys in a minute or two.
 
+## Navigation
+
+Every page has the same header (team logos, the team's phone, site and email
+next to its name, and Dustin's number) and under it a tool bar that sticks to
+the top while you scroll: Fort Sill Guide, Payment, VA Loan, BAH, Buydown,
+Buyer's Guide, All Tools. The current page is marked with `aria-current="page"`.
+Each tool page ends with a "More tools" row of cards for the other tools. On
+phones the same Call / Text and Email bar sits at the bottom of every page, so
+the hero doesn't repeat those buttons.
+
+If you add a page: copy the `<header class="site site4">` block and the
+`<nav class="toolnav">` under it from any page, add the new link to the tool bar
+on every page, and add a card to the "More tools" rows.
+
 ## Lead capture
 
-Every "Print or save as PDF" button runs through `assets/leadgate.js`. The first
-click asks for name, email and phone (remembered in that browser), then the page
-is snapshotted to a PDF in the browser and posted, with the contact details and a
-plain-text summary of the scenario, to a Google Apps Script that emails Dustin,
-emails the buyer their copy, and logs the lead to a Google Sheet. The print
-dialog opens either way, so a network hiccup never costs a visitor their printout.
+The rule: we only ask for contact info when we're giving something back for it.
+No gates. "Print or save as PDF" just opens the print window (`assets/leadgate.js`
+kept its name so no page had to change, but it no longer asks for anything).
 
-One-time setup (about five minutes) is in [`setup/README.md`](setup/README.md).
-The web app URL lives in `ENDPOINT` at the top of `assets/leadgate.js`.
+The ask is the "Send me homes in my range" form under each calculator result
+(payment toolkit, VA loan calculator, buydown tool), plus the existing forms on
+the homepage and the BAH page. All of them are `<form class="leadform">` handled
+by `assets/leadform.js`, which posts to the Google Apps Script in
+`setup/lead-mailer.gs`. That script logs the lead to the Google Sheet, emails
+Dustin with the request and the visitor's calculator run, sends the buyer a short
+"got it" note, and copies the lead to Dakno.
 
-Pages that use it: the payment toolkit, the VA loan calculator, the buydown
-tool, the BAH calculator, and the buying guide. A page opts in by including the
-script and having a `#btn-print` button; an optional `window.LEAD_SUMMARY`
-function or `data-lead="Label"` attributes improve the email summary.
+Useful form attributes: `data-phone="optional"` (email only is fine),
+`data-sync-price="price"` (the "Homes up to" box follows the calculator's price
+until the visitor types their own), and `data-scenario` (send the calculator run
+along). A page's `window.LEAD_SUMMARY` function or `data-lead="Label"` attributes
+shape that calculator summary.
+
+One-time Apps Script setup is in [`setup/README.md`](setup/README.md). The web
+app URL lives in `ENDPOINT` at the top of `assets/leadform.js` and in each form's
+`action` attribute (the no-JavaScript fallback).
+
+## Live market numbers
+
+`data/market.json` holds the 30-year rate and the MLS numbers (median price,
+days on market, months of supply, and the "through" date). `assets/market.js`
+reads it on the payment toolkit, the VA loan calculator and the buydown tool and
+fills in the stat tiles, the "Lawton median is" and "Freddie Mac survey" labels,
+the footer date, and the price and rate boxes (unless the visitor typed their
+own number).
+
+The rate updates itself every Monday morning
+(`.github/workflows/update-rate.yml`, Freddie Mac's weekly survey via FRED). You
+can also run it any time from the Actions tab. The MLS numbers are edited by hand
+in `data/market.json`. The buying guide and the BAH page still carry these
+numbers in written paragraphs with payments worked out from them, so those get
+refreshed by hand when the MLS numbers move.
 
 ## Search / SEO
 

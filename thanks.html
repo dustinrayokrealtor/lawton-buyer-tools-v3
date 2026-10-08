@@ -32,23 +32,31 @@
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap hdr">
-    <div class="hdrleft">
-      <a href="/" class="backlink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Home</a>
-      <div class="brandline">
-        Pam &amp; Barry's Team<br>RE/MAX Professionals
-        <span>Dustin Ray, Buyer Specialist &middot; <a href="tel:5803514683" class="hdrlink">580-351-4683</a> &middot; <a href="mailto:dustin@homes-lawton.com" class="hdrlink">dustin@homes-lawton.com</a></span>
-      </div>
+<header class="site site4">
+  <div class="hd4">
+    <a class="hd4-logos" href="/" aria-label="Moving to Fort Sill, home"><img src="/team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="/assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></a>
+    <div class="hd4-team">
+      <b>Pam &amp; Barry's Team <span class="nb">RE/MAX Professionals</span></b>
+      <span class="hd4-contact"><a href="tel:+15802488800">(580) 248-8800</a> <i>&middot;</i> <a href="https://www.pamandbarry.com/">pamandbarry.com</a> <i>&middot;</i> <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></span>
     </div>
-    <a class="logo-home" href="/" aria-label="Moving to Fort Sill &mdash; home"><span class="logo-wrap"><img src="/team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="/assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></span></a>
+    <div class="hd4-me">
+      <span>Dustin Ray, Buyer Specialist</span>
+      <a class="hd4-call" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>580-351-4683</a>
+      <a class="hd4-mail" href="mailto:dustin@homes-lawton.com?subject=Moving%20to%20Fort%20Sill">dustin@homes-lawton.com</a>
+    </div>
   </div>
 </header>
+<nav class="toolnav" aria-label="Tools and guides">
+  <div class="tn-in">
+    <a href="/">Fort Sill Guide</a><a href="/payment-toolkit.html">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/bah/">BAH</a><a href="/buydown.html">Buydown</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/tools/">All Tools</a>
+  </div>
+</nav>
+<script>(function(){var c=document.querySelector(".toolnav [aria-current]");if(c){var r=c.parentNode;if(r.scrollWidth>r.clientWidth)r.scrollLeft=Math.max(0,c.offsetLeft-(r.clientWidth-c.offsetWidth)/2);}})();</script>
 
 <div class="hero">
   <div class="wrap hero-in">
     <h1>Got it</h1>
-    <p class="lede">Your info came through. I&rsquo;ll get back to you personally by text or email. If you&rsquo;d rather not wait, call or text me now.</p>
+    <p class="lede" id="thanks-lede">Your info came through. I&rsquo;ll get back to you personally by text or email. If you&rsquo;d rather not wait, call or text me now.</p>
 
     <div class="hero-cta">
       <a class="btn" href="tel:5803514683">
@@ -87,6 +95,10 @@
   var source = pick(location.search);
   if (!source) { try { source = pick(new URL(document.referrer).search); } catch (e) {} }
   document.documentElement.setAttribute("data-lead-source", source || "unknown");
+  var lede = document.getElementById("thanks-lede");
+  if (lede && /listings|where-people-look|bah-page/.test(source)) {
+    lede.innerHTML = "Your info came through. I&rsquo;ll go through what&rsquo;s listed in your range and send you the ones worth a look myself, by text or email. If you want to talk sooner, call or text me now.";
+  }
   if (window.console) console.log("[thanks] lead source:", source || "unknown");
 })();
 </script>

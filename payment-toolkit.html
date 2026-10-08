@@ -60,7 +60,7 @@
 }
 </script>
 </head>
-<body>
+<body class="has-sticky page-payment">
 <!--
   Single-theme by deliberate choice: RE/MAX brand compliance fixes the palette.
   Every color is painted explicitly so the page holds on any host ground.
@@ -205,15 +205,26 @@ footer b{color:var(--ink-2)}
 </style>
 <link rel="stylesheet" href="assets/palette-v3.css">
 
-<header class="site">
-  <div class="sitehdr">
-    <div class="hdrleft">
-      <a href="tools/" class="backlink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Tools</a>
-      <span class="brandline">Pam &amp; Barry's Team <span><a href="tel:+15802488800" class="hdrlink">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/" class="hdrlink">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com" class="hdrlink">info@homes-lawton.com</a></span><span>Dustin Ray, Buyer Specialist &middot; <a href="tel:5803514683" class="hdrlink">580-351-4683</a> &middot; <a href="mailto:dustin@homes-lawton.com?subject=Buyer%20Payment%20Toolkit" class="hdrlink">dustin@homes-lawton.com</a></span></span>
+<header class="site site4">
+  <div class="hd4">
+    <a class="hd4-logos" href="/" aria-label="Moving to Fort Sill, home"><img src="/team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="/assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></a>
+    <div class="hd4-team">
+      <b>Pam &amp; Barry's Team <span class="nb">RE/MAX Professionals</span></b>
+      <span class="hd4-contact"><a href="tel:+15802488800">(580) 248-8800</a> <i>&middot;</i> <a href="https://www.pamandbarry.com/">pamandbarry.com</a> <i>&middot;</i> <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></span>
     </div>
-    <a class="logo-home" href="./" aria-label="Moving to Fort Sill — home"><span class="logo-wrap"><img src="team-logo.png" alt="Pam and Barry's Real Estate Team" class="pb-logo" width="141" height="180"><span class="rx-chip"><img src="assets/remax-logo.png" alt="RE/MAX" width="381" height="116"></span></span></a>
+    <div class="hd4-me">
+      <span>Dustin Ray, Buyer Specialist</span>
+      <a class="hd4-call" href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>580-351-4683</a>
+      <a class="hd4-mail" href="mailto:dustin@homes-lawton.com?subject=Buyer%20Payment%20Toolkit">dustin@homes-lawton.com</a>
+    </div>
   </div>
 </header>
+<nav class="toolnav" aria-label="Tools and guides">
+  <div class="tn-in">
+    <a href="/">Fort Sill Guide</a><a href="/payment-toolkit.html" aria-current="page">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/bah/">BAH</a><a href="/buydown.html">Buydown</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/tools/">All Tools</a>
+  </div>
+</nav>
+<script>(function(){var c=document.querySelector(".toolnav [aria-current]");if(c){var r=c.parentNode;if(r.scrollWidth>r.clientWidth)r.scrollLeft=Math.max(0,c.offsetLeft-(r.clientWidth-c.offsetWidth)/2);}})();</script>
 
 <div class="pagehero">
   <div class="phin">
@@ -244,7 +255,6 @@ footer b{color:var(--ink-2)}
 </div>
 
 <div class="wrap">
-<nav class="sitenav" aria-label="Site"><a href="./">&larr; Moving to Fort Sill guide</a><a href="buying-guide.html">Read the Lawton buyer guide &rarr;</a></nav>
 
 <!-- ============ INPUTS ============ -->
 <section class="controls" aria-label="Loan inputs">
@@ -288,7 +298,7 @@ footer b{color:var(--ink-2)}
   <div>
     <span class="lab">Total monthly payment</span>
     <div class="big" id="hero-piti" data-lead="Total monthly payment">$1,829</div>
-    <div class="sub" id="hero-note">VA, zero down, 6.76%, 30 year</div>
+    <div class="sub" id="hero-note" data-lead="Loan">VA, zero down, 6.76%, 30 year</div>
   </div>
   <dl class="stack">
     <div><dt>Principal &amp; interest</dt><dd id="s-pi">$1,323</dd></div>
@@ -302,7 +312,24 @@ footer b{color:var(--ink-2)}
   <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
   <button type="button" id="btn-reset">Reset to Lawton median</button>
 </div>
-<p class="sendhint">Print or save this as a PDF and I'll email you a copy of the exact scenario on screen, then follow up with what's actually listed in this payment range.</p>
+<form class="leadform listform" data-source="toolkit-listings" data-phone="optional" data-sync-price="price" data-scenario action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate style="margin-top:22px">
+  <h3 class="lf-head">Want to see what&rsquo;s for sale at this price?</h3>
+  <p class="lf-lede">Tell me where to send them and I&rsquo;ll go through what&rsquo;s listed in your range right now. I pick out the ones worth a look and send them to you myself. No automated alerts. You get a direct line to me, and you can call or text back any time.</p>
+  <input type="hidden" name="source" value="toolkit-listings">
+  <input type="hidden" name="kind" value="inquiry">
+  <input type="hidden" name="want" value="listings">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Phone <i>(optional, if you'd rather get them by text)</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+    <label class="lf-field"><span>Homes up to</span><input name="maxprice" type="number" min="20000" step="1000" inputmode="numeric"></label>
+  </div>
+  <label class="lf-field lf-full"><span>Anything I should know <i>(optional)</i></span><textarea name="notes" rows="2" placeholder="Beds, part of town, schools, a fenced yard, when you need to move"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Send me homes in my range</button>
+  <p class="lf-fine">It&rsquo;s just me on the other end, Dustin Ray, 580-351-4683. I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
+</form>
 
 <!-- ============ TABS ============ -->
 <div class="tabs" role="tablist" aria-label="Toolkit sections">
@@ -517,6 +544,15 @@ footer b{color:var(--ink-2)}
   </div>
 </section>
 
+<section class="moretools" aria-labelledby="mt-head">
+  <h2 id="mt-head" class="mt-head">More tools</h2>
+  <div class="mt-grid">
+    <a class="mt-card" href="/va-loan-calculator.html"><b>VA Loan Calculator</b><span>Household income, VA residual income, and how much house it supports.</span><i>Open &rarr;</i></a>
+    <a class="mt-card" href="/bah/"><b>BAH Calculator</b><span>What your 2026 Fort Sill housing allowance buys, by pay grade.</span><i>Open &rarr;</i></a>
+    <a class="mt-card" href="/buydown.html"><b>Buydown vs Price Cut</b><span>Spend seller help on a lower price or a lower rate. See which wins.</span><i>Open &rarr;</i></a>
+    <a class="mt-card" href="/buying-guide.html"><b>Buyer's Guide</b><span>How buying in Lawton actually goes, start to finish. Prints clean.</span><i>Open &rarr;</i></a>
+  </div>
+</section>
 <footer>
   <p><b>Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></p>
   <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>
@@ -928,6 +964,11 @@ footer b{color:var(--ink-2)}
 })();
 </script>
 <script src="assets/leadgate.js" defer></script>
+<script src="assets/leadform.js" defer></script>
 <script src="assets/track.js" defer></script>
+<div class="stickybar">
+  <a href="tel:5803514683"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call / Text</a>
+  <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Buyer%20Payment%20Toolkit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
+</div>
 </body>
 </html>
