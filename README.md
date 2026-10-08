@@ -36,6 +36,10 @@ Each tool page ends with a "More tools" row of cards for the other tools. On
 phones the same Call / Text and Email bar sits at the bottom of every page, so
 the hero doesn't repeat those buttons.
 
+The shared files are linked with a version tag (`assets/site.css?v=4`). When
+you change one of them, bump the number on every page so nobody's browser pairs
+a cached old stylesheet with new markup.
+
 If you add a page: copy the `<header class="site site4">` block and the
 `<nav class="toolnav">` under it from any page, add the new link to the tool bar
 on every page, and add a card to the "More tools" rows.
