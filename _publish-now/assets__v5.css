@@ -1,0 +1,262 @@
+/* ==========================================================================
+   v5 — tighter pages, tool-first layouts
+   Loaded last on every page, after site.css, the page's own <style> and
+   palette-v3.css. Same brand language (navy band, Playfair caps, Outfit,
+   blue and red, square corners, cream ground, the Wichitas horizon). What
+   changes is how much room everything takes: a slimmer header and hero so
+   the tool or the answer is on the first screen, less padding between
+   sections, and one layout for every calculator (inputs left, answer right).
+   To undo all of it, remove this file's <link> from the pages.
+   ========================================================================== */
+
+/* ---------- header: one slim row ---------- */
+.hd4 { padding: 8px 16px; gap: 14px; }
+.hd4-logos { gap: 10px; }
+.hd4-logos .pb-logo { height: 40px; }
+.hd4-logos .rx-chip { padding: 6px 10px; }
+.hd4-logos .rx-chip img { height: 20px; }
+.hd4-team { font-size: 13.5px; gap: 1px; }
+.hd4-contact { font-size: 12px; }
+.hd4-me { flex-direction: row; align-items: center; gap: 12px; }
+.hd4-me > span { font-size: 13px; }
+.hd4-mail { display: none; }
+.hd4-call { padding: 7px 13px; font-size: 13.5px; }
+
+/* ---------- tool bar ---------- */
+.toolnav a { padding: 12px 11px 9px; font-size: 12.5px; letter-spacing: .07em; }
+.toolnav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--red); }
+.toolnav a:last-child { margin-left: 0; }
+/* ---------- hero bands: say what the page is and get out of the way ---------- */
+.hero .hero-in, .hero .wrap.hero-in { padding-block: 34px 6px; }
+.pagehero .phin { padding-block: 30px 4px; }
+.hero h1, .pagehero h1 { font-size: clamp(26px, 3.6vw, 38px); margin: 0 0 6px; }
+.hero h1::after, .pagehero h1::after { margin: 12px 0 12px; }
+.hero .eyebrow, .pagehero .eyebrow { margin-bottom: 10px; font-size: 12.5px; letter-spacing: 2.6px; }
+.hero .lede, .pagehero .intro { font-size: 16.5px; line-height: 1.55; margin: 0 0 6px; max-width: 46em; }
+.pagehero .stamp, .hero .stamp { margin-top: 6px; }
+.pagehero .hero-cta { display: none; }               /* the header and the phone bar already carry Call and Email */
+.page-buydown .pagehero .phstats, .page-tools .hero .stats { display: none; }
+.hero .stats, .phstats { margin-top: 16px; padding-top: 14px; gap: 14px 20px; }
+.hero .stat b, .phstats b { font-size: clamp(18px, 2.2vw, 22px); }
+.hero .stat span, .phstats div > span { font-size: 12px; margin-top: 2px; }
+.crumbs { margin: 0 0 10px; font-size: 12.5px; }
+.horizon--tall { height: clamp(56px, 8vw, 104px); margin-top: 0; }
+.horizon--short { height: clamp(44px, 6vw, 80px); margin-top: 0; }
+
+/* ---------- sections ---------- */
+section.block { padding: 34px 0; }
+h2 { font-size: clamp(21px, 2.8vw, 27px); }
+section.block > h2::after, .kicker + h2::after { margin: 12px 0 4px; }
+.kicker { margin-bottom: 12px; }
+.kicker .ic { width: 36px; height: 36px; }
+.kicker svg { width: 18px; height: 18px; }
+.ctawrap { padding: 30px 0 40px; }
+.cta { padding: 34px 24px; }
+.calcwrap { padding-top: 26px; }
+.moretools { margin: 32px auto; }
+footer.site { padding: 28px 0 84px; }
+footer.site p { font-size: 12.5px; line-height: 1.6; margin: 0 0 9px; }
+
+/* ---------- lead form: same asks, less height ---------- */
+.leadform { padding: 18px 20px 14px; max-width: none; }
+.leadform .lf-head { font-size: 18px; }
+.leadform .lf-head::after { margin: 9px 0 2px; }
+.leadform .lf-lede { margin-bottom: 10px; }
+.lf-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 12px; }
+.lf-field input, .lf-field select, .lf-field textarea { min-height: 42px; padding: 8px 11px; }
+.lf-field textarea { min-height: 42px; }
+.lf-wants { margin-top: 10px; }
+.lf-wants .lf-chk { display: inline-flex; margin: 0 18px 4px 0; }
+.leadform .lf-full { margin-top: 10px; }
+.lf-go { padding: 12px 22px; }
+.lf-fine { margin-top: 9px; }
+
+/* ==========================================================================
+   Tool layout: what you put in on the left, the answer on the right.
+   On a phone the answer follows the inputs.
+   ========================================================================== */
+.toolwrap { max-width: 1112px; margin: 0 auto; padding: 22px 16px 8px; }
+.tcalc { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .tcalc { grid-template-columns: 1fr; } }
+
+.tin { background: var(--card, #fff); border: 1px solid var(--line); border-top: 4px solid var(--blue); padding: 18px 18px 8px; }
+.tin h2, .tin .grp { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase;
+  color: var(--blue); margin: 0 0 12px; }
+.tin h2::after { display: none; }
+.tin .grp { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+.flds { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 14px; margin-bottom: 14px; }
+.fld { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fld > label, .fld > span.l { font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin: 0; }
+.fld input[type=number], .fld input[type=date], .fld input[type=text], .fld select {
+  width: 100%; min-height: 42px; padding: 8px 10px; font-family: var(--font-ui); font-size: 16px; font-weight: 500;
+  border: 2px solid var(--pale); background: #fff; color: var(--ink); border-radius: 0; font-variant-numeric: tabular-nums; }
+.fld input:focus, .fld select:focus { outline: none; border-color: var(--blue); }
+.fld .hint { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.fld.wide { grid-column: 1 / -1; }
+.chk { display: flex; align-items: flex-start; gap: 9px; font-size: 15px; line-height: 1.4; margin: 0 0 10px; cursor: pointer;
+  font-weight: 500; letter-spacing: normal; text-transform: none; color: var(--ink); }
+.chk input { width: 18px; height: 18px; margin-top: 2px; flex: none; accent-color: var(--blue); }
+.seg { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--blue); }
+.seg label { margin: 0; cursor: pointer; font-size: 13.5px; font-weight: 600; letter-spacing: .03em; text-transform: none; color: var(--blue); }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; padding: 9px 13px; }
+.seg input:checked + span { background: var(--blue); color: #fff; }
+.seg input:focus-visible + span { outline: 3px solid var(--red); outline-offset: 2px; }
+
+.tout { background: var(--navy); color: #fff; padding: 20px 20px 16px; position: sticky; top: 52px; }
+@media (max-width: 860px) { .tout { position: static; } }
+.tout .lab { font-size: 12px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--on-dark-dim); display: block; margin: 0 0 4px; }
+.tout .big { font-family: var(--font-ui); font-size: clamp(32px, 5vw, 46px); font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.tout .sub { font-size: 14px; color: var(--on-dark); margin-top: 6px; line-height: 1.45; }
+.kv { margin-top: 14px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 8px; }
+.kv div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; font-size: 14.5px; color: var(--on-dark-dim); }
+.kv div b { color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.kv div.tot { border-top: 1px solid rgba(255,255,255,.18); margin-top: 6px; padding-top: 10px; color: #fff; font-weight: 600; }
+.verdict { margin-top: 14px; padding: 11px 13px; font-size: 14.5px; line-height: 1.5; background: rgba(255,255,255,.08); border-left: 4px solid var(--lit, #D9B893); }
+.verdict.ok { border-left-color: #8FD0A8; }
+.verdict.no { border-left-color: #F0A3A4; }
+.tpill { display: inline-block; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; margin-left: 8px; vertical-align: 2px; }
+.tpill.ok { background: #1F5A3A; color: #D6F2E1; }
+.tpill.no { background: #7A1C1E; color: #FBDDDD; }
+.tout .acts { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tbtn { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; cursor: pointer;
+  background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); padding: 8px 12px; border-radius: 0; text-decoration: none; display: inline-block; }
+.tbtn:hover { background: #fff; color: var(--blue); border-color: #fff; }
+.tbtn.light { color: var(--blue); border-color: var(--blue); }
+.tbtn.light:hover { background: var(--blue); color: #fff; }
+
+.tnote { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 12px 0 0; max-width: none; }
+.tbody { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+@media (max-width: 480px) { .tbody { padding: 0 16px; } }
+.tbody p { margin: 0 0 13px; max-width: 46em; }
+.tbody ul, .tbody ol { margin: 0 0 13px; padding-left: 20px; max-width: 46em; }
+.tbody li { margin-bottom: 6px; }
+details.more { border: 1px solid var(--line); background: var(--card, #fff); margin: 0 0 14px; }
+details.more > summary { cursor: pointer; padding: 11px 14px; font-weight: 600; font-size: 14.5px; color: var(--blue); }
+details.more > div { padding: 2px 14px 12px; }
+
+/* ---------- the row of other tools at the foot of every page ---------- */
+.toolchips { max-width: 1112px; margin: 26px auto 30px; padding: 0 16px; }
+.tbody + .toolchips, .wrap .toolchips { padding-inline: 0; }
+.toolchips p { font-size: 12px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: var(--muted); margin: 0 0 9px; }
+.toolchips div { display: flex; flex-wrap: wrap; gap: 8px; }
+.toolchips a { display: inline-block; padding: 8px 12px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--blue);
+  background: var(--card, #fff); border: 1px solid var(--line); border-left: 3px solid var(--ochre, #B9948A); }
+.toolchips a:hover { border-left-color: var(--red); color: var(--red); }
+.toolchips a[aria-current] { color: var(--ink); border-left-color: var(--blue); background: var(--wash); }
+@media print { .toolchips { display: none !important; } }
+
+/* ---------- hubs: the home page and the tools page ---------- */
+.hubgrid { list-style: none; margin: 0 0 6px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; max-width: none; }
+.hubgrid li { margin: 0; }
+.hubgrid a { display: flex; flex-direction: column; gap: 4px; height: 100%; background: var(--card, #fff); border: 1px solid var(--line);
+  border-top: 3px solid var(--ochre, #B9948A); padding: 13px 15px 12px; text-decoration: none; color: var(--ink); transition: border-top-color .15s ease; }
+.hubgrid a:hover { border-top-color: var(--red); }
+.hubgrid b { font-size: 16px; font-weight: 600; color: var(--blue); line-height: 1.3; }
+.hubgrid span { font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.hubgrid i { font-style: normal; font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--muted); }
+.hubgrid.tight { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.hero .hubgrid a { border-color: transparent; border-top-color: var(--ochre, #B9948A); }
+.hublabel { font-size: 12px; font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; color: var(--on-dark-dim); margin: 18px 0 10px; }
+.hubwrap { max-width: 1112px; margin: 0 auto; padding: 0 16px; }
+.hubwrap section.block:first-of-type { border-top: 0; }
+
+/* ---------- a line of jump links for the long pages ---------- */
+.jump { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 14px 0 2px; font-size: 14px; }
+.jump b { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.jump a { font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--pale); }
+.jump a:hover { border-bottom-color: var(--red); }
+
+/* ---------- the dated list on the PCS timeline ---------- */
+.tl { list-style: none; margin: 0; padding: 0; max-width: none; }
+.tl li { display: grid; grid-template-columns: 124px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); margin: 0; }
+.tl li:first-child { border-top: 0; }
+.tl .when { font-weight: 600; font-size: 14px; color: var(--blue); font-variant-numeric: tabular-nums; line-height: 1.35; }
+.tl .when small { display: block; font-weight: 500; font-size: 12px; color: var(--muted); }
+.tl .what b { display: block; font-size: 16px; }
+.tl .what span { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.tl li.past .when { color: var(--red); }
+@media (max-width: 480px) { .tl li { grid-template-columns: 1fr; gap: 2px; } }
+
+@media (max-width: 680px) {
+  .hd4 { padding: 7px 14px; }
+  .hd4-logos .pb-logo { height: 32px; }
+  .hero .hero-in, .hero .wrap.hero-in { padding-block: 24px 4px; }
+  .pagehero .phin { padding-block: 22px 2px; }
+  section.block { padding: 28px 0; }
+  .toolwrap { padding: 16px 14px 6px; }
+  .tin { padding: 14px 14px 4px; }
+}
+@media print {
+  .tout { background: #fff !important; color: #000 !important; border: 1px solid #000; position: static; }
+  .tout .lab, .tout .sub, .kv div, .kv div b, .tout .big { color: #000 !important; }
+  .tout .acts, .jump { display: none !important; }
+}
+
+/* ---------- tool pages: the calculator starts on the first screen ---------- */
+.page-tool .pagehero .phin { max-width: 1112px; padding-block: 18px 0; }
+.page-tool .pagehero .eyebrow { display: none; }
+.page-tool .pagehero h1 { font-size: clamp(24px, 3.2vw, 34px); }
+.page-tool .pagehero h1::after { margin: 9px 0 9px; }
+.page-tool .pagehero .intro { font-size: 15.5px; }
+.page-tool .horizon--short { height: clamp(26px, 3.6vw, 48px); }
+.page-tool .crumbs { margin-bottom: 7px; }
+#yt tr.tot td { background: var(--wash); }
+
+/* On a phone the answer sits below the inputs, so the headline number rides
+   along under the tool bar while they type. tools.js builds it. */
+.tstrip { display: none; }
+@media (max-width: 860px) {
+  .tstrip { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; position: sticky; z-index: 40;
+    background: var(--navy); color: #fff; padding: 8px 14px; margin: 0 -14px 12px; text-decoration: none; cursor: pointer; }
+  .tstrip span { font-size: 11px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase; color: var(--on-dark-dim); }
+  .tstrip b { font-size: 19px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+}
+@media print { .tstrip { display: none !important; } }
+
+/* ---------- the home page and the tools page ---------- */
+.hubhero .phin { max-width: 1112px; padding-inline: 16px; padding-block: 30px 8px; }
+.hubhero .hublabel { margin-top: 16px; }
+.two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; gap: 16px; } }
+.two > div > :last-child { margin-bottom: 0; }
+.two .note { margin: 0; }
+.two .note ul { margin-bottom: 10px; }
+.topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.topic { background: var(--card, #fff); border: 1px solid var(--line); border-top: 3px solid var(--ochre, #B9948A); padding: 16px 18px 14px; min-width: 0; }
+.topic h3 { margin: 0 0 7px; font-size: 18px; }
+.topic p, .topic ul { font-size: 15px; line-height: 1.55; margin: 0 0 9px; max-width: none; }
+.topic li { margin-bottom: 3px; }
+.topic .go { margin: 0; font-weight: 600; font-size: 14.5px; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.pillrow { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.pillrow .pill { background: var(--card, #fff); border: 1px solid var(--line); border-left: 3px solid var(--blue); padding: 7px 13px; font-size: 14px; font-weight: 500; display: inline-flex; align-items: baseline; gap: 6px; }
+.pillrow .pill b { color: var(--blue); font-weight: 600; }
+.page-home footer.site .wrap, .page-tools footer.site .wrap, .page-tool footer.site .wrap { max-width: 1112px; padding-inline: 16px; }
+
+/* ---------- the ask under a calculator ---------- */
+.askwrap { margin: 26px 0 0; }
+.askwrap .leadform { margin: 0; }
+
+/* ---------- BAH page: inputs left, answer right, like the other tools ---------- */
+.page-bah .jump { padding-top: 16px; }
+.page-bah .calcwrap { padding-top: 14px; }
+@media (min-width: 940px) {
+  .page-bah .calcwrap { position: relative; left: 50%; width: min(1080px, calc(100vw - 32px)); margin-left: calc(min(1080px, calc(100vw - 32px)) / -2); }
+  .page-bah .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 24px; align-items: start; padding: 22px; }
+  .page-bah .calc > * { grid-column: 1; }
+  .page-bah .calc > .result { grid-column: 2; grid-row: 1 / span 4; position: sticky; top: 60px; padding: 22px; }
+  .page-bah .calc > .leadform { grid-column: 1 / -1; }
+  .page-bah .calcfoot { max-width: none; }
+}
+.page-bah .hero .stats { display: none; }
+.page-bah .hero .wrap.hero-in { max-width: 1080px; padding-block: 22px 0; }
+.page-bah .hero .eyebrow { margin-bottom: 6px; }
+.page-bah .horizon--tall { height: clamp(30px, 4.4vw, 60px); }
+.page-bah .wrap > .jump { max-width: none; }
+@media (min-width: 940px) { .page-bah .wrap > .jump { position: relative; left: 50%; width: min(1080px, calc(100vw - 32px)); margin-left: calc(min(1080px, calc(100vw - 32px)) / -2); } }
+@media (max-width: 560px) {
+  .hubhero .hubgrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hubhero .hubgrid a { padding: 10px 11px 9px; }
+  .hubhero .hubgrid span { display: none; }
+  .hubhero .hubgrid b { font-size: 14.5px; }
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "@id": "https://movingtoftsill.com/#agent",
+    "name": "Dustin Ray, Buyer Specialist - Pam & Barry's Team, RE/MAX Professionals",
+    "url": "https://movingtoftsill.com/",
+    "telephone": "+1-580-351-4683",
+    "email": "dustin@homes-lawton.com",
+    "image": "https://movingtoftsill.com/team-logo.png",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lawton",
+      "addressRegion": "OK",
+      "addressCountry": "US"
+    },
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "RE/MAX Professionals",
+      "url": "https://www.pamandbarry.com/"
+    },
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Lawton",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "OK",
+          "addressCountry": "US"
+        }
+      },
+      {
+        "@type": "Place",
+        "name": "Fort Sill"
+      },
+      {
+        "@type": "City",
+        "name": "Cache"
+      },
+      {
+        "@type": "City",
+        "name": "Elgin"
+      },
+      {
+        "@type": "City",
+        "name": "Medicine Park"
+      },
+      {
+        "@type": "City",
+        "name": "Geronimo"
+      },
+      {
+        "@type": "City",
+        "name": "Fletcher"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Comanche County, Oklahoma"
+      }
+    ],
+    "knowsAbout": [
+      "VA home loans",
+      "Fort Sill BAH",
+      "military PCS relocation",
+      "first-time home buying",
+      "Lawton Oklahoma real estate"
+    ],
+    "sameAs": [
+      "https://www.pamandbarry.com/staff/dustin",
+      "https://www.pamandbarry.com/",
+      "https://www.remax.com/real-estate-teams/pam-barry-inc-lawton-ok/101900138"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://movingtoftsill.com/#website",
+    "url": "https://movingtoftsill.com/",
+    "name": "Moving to Fort Sill",
+    "publisher": {
+      "@id": "https://movingtoftsill.com/#agent"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Moving to Fort Sill: A Straight Guide to Living in the Lawton Area",
+    "description": "Tools and straight answers for families moving to Fort Sill: gates and commutes, school districts, where the affordable homes are, and what to do with the house when you PCS out.",
+    "image": "https://movingtoftsill.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Dustin Ray",
+      "url": "https://movingtoftsill.com/"
+    },
+    "publisher": {
+      "@id": "https://movingtoftsill.com/#agent"
+    },
+    "datePublished": "2026-09-19",
+    "dateModified": "2026-10-12",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://movingtoftsill.com/"
+    }
+  }
+]
