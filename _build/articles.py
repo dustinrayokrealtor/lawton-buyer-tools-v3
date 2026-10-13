@@ -21,7 +21,7 @@ import os
 import re
 
 import bah
-from common import (FOOT_AREA, HERE, MORETOOLS, SITE, article_ld, breadcrumb_ld, cta, esc, expand, faq_html,
+from common import (FOOT_AREA, HERE, SITE, toolchips, article_ld, breadcrumb_ld, cta, esc, expand, faq_html,
                     faq_ld, footer, head, header, hero, leadform, strip_tags)
 
 PUBLISHED = "2026-10-12"
@@ -105,7 +105,7 @@ def render(a, queued=False):
     else:
         crumbs = [("Moving to Fort Sill", "/"), ("Guides", "/guides/"), (a.get("crumb", a["h1"]), None)]
         ld_crumbs = [("Moving to Fort Sill", SITE + "/"), ("Guides", SITE + "/guides/"), (a["h1"], canon)]
-        nav = None
+        nav = "guides"
     stats = [(expand(b), expand(s)) for b, s in a.get("stats", [])] or None
 
     body = a["body"]
@@ -135,20 +135,21 @@ def render(a, queued=False):
     if faqs:
         ld.append(faq_ld(faqs))
     subj = a.get("subject", "Moving to Fort Sill")
+    contact = ""
+    if not f:
+        contact = cta(a.get("cta_h2", "Questions about the move?"),
+                      "I am a buyer specialist with Pam &amp; Barry's Team at RE/MAX Professionals in Lawton. If you "
+                      "are PCSing in and have questions about the process, the timeline, or a specific house, call "
+                      "or text. It costs nothing to ask, and there is no obligation to work with me.",
+                      subj,
+                      'Also useful: the <a href="/bah/">Fort Sill BAH calculator</a> and '
+                      '<a href="/tools/">the rest of the tools</a>.')
     page = (head(a["title"], desc, canon, ld)
             + header(nav, subj)
             + hero(crumbs, a["eyebrow"], a["h1"], expand(a["intro"]), a.get("stamp"), stats)
-            + '\n<main class="wrap">\n\n' + main
-            + cta(a.get("cta_h2", "Questions about the move?"),
-                  a.get("cta_lede",
-                        "I am a buyer specialist with Pam &amp; Barry's Team at RE/MAX Professionals in Lawton. If you "
-                        "are PCSing in and have questions about the process, the timeline, or a specific house, call "
-                        "or text. It costs nothing to ask, and there is no obligation to work with me."),
-                  subj,
-                  'Also useful: the <a href="/bah/">Fort Sill BAH calculator</a>, the '
-                  '<a href="/payment-toolkit.html">Buyer Payment Toolkit</a>, and '
-                  '<a href="/guides/">all the guides</a>.')
-            + "\n</main>\n\n" + MORETOOLS
+            + '\n<main class="wrap">\n\n' + main + contact
+            + toolchips()
+            + "\n</main>\n\n"
             + footer(FOOT_AREA, "Information current as of October 2026.", subj))
     return url, canon, page
 

@@ -125,6 +125,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 }
 </style>
 <link rel="stylesheet" href="../assets/palette-v3.css?v=4">
+<link rel="stylesheet" href="../assets/v5.css?v=1">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -175,7 +176,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 </header>
 <nav class="toolnav" aria-label="Tools and guides">
   <div class="tn-in">
-    <a href="/">Fort Sill Guide</a><a href="/payment-toolkit.html">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/bah/" aria-current="page">BAH</a><a href="/buydown.html">Buydown</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/tools/">All Tools</a>
+    <a href="/">Fort Sill Guide</a><a href="/tools/">All Tools</a><a href="/bah/" aria-current="true">BAH</a><a href="/payment-toolkit.html">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/rent-vs-buy/">Rent vs Buy</a><a href="/property-tax-calculator/">Property Tax</a><a href="/guides/">Guides</a>
   </div>
 </nav>
 <script>(function(){var c=document.querySelector(".toolnav [aria-current]");if(c){var r=c.parentNode;if(r.scrollWidth>r.clientWidth)r.scrollLeft=Math.max(0,c.offsetLeft-(r.clientWidth-c.offsetWidth)/2);}})();</script>
@@ -210,6 +211,8 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 </div>
 
 <main class="wrap">
+
+<p class="jump"><b>On this page</b><a href="#calc">Calculator</a><a href="#rates">2026 rate table</a><a href="#bas">Counting BAS</a><a href="#va">VA disability</a><a href="#rent">Rent or buy</a></p>
 
 <div class="calcwrap">
   <div class="calc" id="calc">
@@ -349,68 +352,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <p class="calcfoot">Property tax is figured at 1.11% of value per year, the Lawton median effective rate from Comanche County records. Insurance is $19.28 per $1,000 of dwelling coverage per year, the Lawton city average scaled to your actual coverage. Statewide Oklahoma insurance figures blend in the Oklahoma City metro and will overstate a Lawton payment by about $110 a month. This is an estimate for planning. Your lender gives you the real number.</p>
 </div>
 
-<section class="block">
-  <div class="kicker">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
-    <h2>The part nobody tells you before you PCS here</h2>
-  </div>
-  <p>The median home sale in Comanche County is <span data-live="median">$199,900</span>. A full payment on that runs about <span data-live="pay" data-price="median">$1,920</span> a month.</p>
-  <p>An E-7 with dependents draws $1,587. That is roughly <span data-live="gap" data-budget="1587">$333</span> a month short of the median.</p>
-  <p>That does not mean you cannot buy. It means BAH alone shops a different part of the market than the headline number, and that is worth knowing before you land. Here is what it looks like on the ground.</p>
-  <ul>
-    <li>Enlisted grades with dependents land between about <span data-live="price" data-budget="1203">$125,200</span> and <span data-live="price" data-budget="1842">$191,700</span> on BAH alone. There is real inventory in that band in Lawton.</li>
-    <li>A few hundred dollars of base pay on top moves you up faster than you would think. At current rates every extra $100 a month is roughly <span data-live="per100">$10,400</span> more house.</li>
-    <li>Seller paid closing costs are common here. On a VA loan the seller can contribute up to 4% of the value, which is money you do not bring to the table.</li>
-    <li>Active inventory is around 345 homes, about 3.4 months of supply. Homes sell at 98.4% of list in a median of 27 days. You have room to negotiate, and you do not have unlimited time to think about it.</li>
-  </ul>
-</section>
-
-<section class="block alt">
-  <div class="kicker">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
-    <h2>Your BAS, and the honest answer about it</h2>
-  </div>
-  <p>BAS is $476.95 a month for enlisted and $328.48 for officers in 2026. Flat across every rank, tax free, its own line on your LES.</p>
-  <p>Two separate questions get mixed up here, so take them one at a time.</p>
-  <h3>Does BAS help you qualify?</h3>
-  <p>Yes. BAS is stable, documented military income and lenders count it the same way they count BAH. Because it is tax free, many lenders gross it up when they run your debt to income ratio, so it carries more weight than the same amount of base pay. On its face, $476.95 a month is roughly <span data-live="price" data-budget="476.95">$49,600</span> of additional buying power at current rates.</p>
-  <h3>Should you actually spend it on a house payment?</h3>
-  <p>That is a different question and the answer is usually no, or not all of it. BAS covers your food. It does not cover your family's food. Put the whole thing into a mortgage and you have moved your grocery money into a payment you cannot renegotiate next month.</p>
-  <p>What I see work: qualify on the full picture, buy on a number you can carry without touching BAS, and let the extra room be the reason you sleep at night. The checkbox above exists so you can see both versions of the math. Run it with BAS and run it without, then decide which one you want to sign for.</p>
-
-  <div class="note warn">
-    <span class="nic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
-    <p><strong>Residual income is the test that actually catches people.</strong> The VA does not only look at your debt to income ratio. It checks how much cash is left over after the payment, taxes, and your other debts. Oklahoma sits in the South region. A family of four on a loan above $80,000 needs $1,003 a month left over, plus a utility allowance of $0.14 per square foot. On a 1,600 square foot house that is another $224 off the top. Ask your lender to run your residual income before you go shopping. It is the number that decides borderline files.</p>
-  </div>
-</section>
-
-<section class="block">
-  <div class="kicker">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-    <h2>If you have a VA disability rating</h2>
-  </div>
-  <p>A rating changes three separate things about buying a house, and most people only know about one of them.</p>
-
-  <h3>The compensation counts as income</h3>
-  <p>VA disability compensation is tax free, it does not expire, and it does not depend on a job. Lenders treat it as some of the strongest qualifying income there is, and many will gross it up when they run your ratios because it is untaxed. A 70% rating with a spouse pays $1,961.45 a month in 2026. On its own, with the funding fee waived, that carries roughly a <span data-live="price" data-budget="1961.45" data-ff="0">$207,400</span> house at current rates.</p>
-  <p>One thing to be careful about. If you are still on active duty, you generally cannot draw full military pay and VA compensation at the same time. Receiving compensation means waiving military pay dollar for dollar. Most people using both numbers are separating or already out. Ask finance before you build a budget on both.</p>
-
-  <h3>The funding fee disappears</h3>
-  <p>Any service connected rating of 10% or higher waives the VA funding fee entirely. Not reduced. Gone. On a $175,000 purchase that is about $3,760 you do not borrow, which means a smaller loan and a smaller payment for thirty years. A Purple Heart recipient on active duty gets the same waiver.</p>
-  <p>If your rating comes through after you close, you can apply for a refund of the fee you already paid. People miss this one constantly. It is worth a phone call.</p>
-
-  <h3>At 100%, Oklahoma stops charging you property tax</h3>
-  <p>This is the one that moves the number the most, and it is specific to living here. Oklahoma exempts the full fair cash value of your homestead from property tax if you are certified at the 100% permanent service connected rate, or paid at the 100% rate through individual unemployability. There is no cap on the home's value and no income limit. The exemption also carries to an unremarried surviving spouse.</p>
-  <p>On a $200,000 house in Lawton that is about $185 a month that never comes out of your pocket. Over thirty years it is real money, and it is money that goes straight into what you can afford instead.</p>
-  <p>It is not automatic. You file Oklahoma Tax Commission Form 998 with the Comanche County Assessor and bring your rating letter from the VA. Do it once, keep it as long as you qualify.</p>
-
-  <div class="note">
-    <span class="nic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-    <p>Oklahoma also exempts military retirement pay from state income tax and gives 100% rated veterans a sales tax exemption. Neither one changes your mortgage payment, but both change what your money does once you live here. The Oklahoma Department of Veterans Affairs office in Lawton can walk you through what you qualify for.</p>
-  </div>
-</section>
-
-<section class="block alt">
+<section id="rates" class="block alt">
   <div class="kicker">
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
     <h2>2026 Fort Sill BAH by pay grade, and what each one buys</h2>
@@ -461,7 +403,68 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <p style="font-size:13.5px;color:var(--muted)">BAH rates published by the Defense Travel Management Office. Confirm your exact rate with the official DoD calculator or your finance office.</p>
 </section>
 
-<section class="block">
+<section id="nobody" class="block">
+  <div class="kicker">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+    <h2>The part nobody tells you before you PCS here</h2>
+  </div>
+  <p>The median home sale in Comanche County is <span data-live="median">$199,900</span>. A full payment on that runs about <span data-live="pay" data-price="median">$1,920</span> a month.</p>
+  <p>An E-7 with dependents draws $1,587. That is roughly <span data-live="gap" data-budget="1587">$333</span> a month short of the median.</p>
+  <p>That does not mean you cannot buy. It means BAH alone shops a different part of the market than the headline number, and that is worth knowing before you land. Here is what it looks like on the ground.</p>
+  <ul>
+    <li>Enlisted grades with dependents land between about <span data-live="price" data-budget="1203">$125,200</span> and <span data-live="price" data-budget="1842">$191,700</span> on BAH alone. There is real inventory in that band in Lawton.</li>
+    <li>A few hundred dollars of base pay on top moves you up faster than you would think. At current rates every extra $100 a month is roughly <span data-live="per100">$10,400</span> more house.</li>
+    <li>Seller paid closing costs are common here. On a VA loan the seller can contribute up to 4% of the value, which is money you do not bring to the table.</li>
+    <li>Active inventory is around 345 homes, about 3.4 months of supply. Homes sell at 98.4% of list in a median of 27 days. You have room to negotiate, and you do not have unlimited time to think about it.</li>
+  </ul>
+</section>
+
+<section id="bas" class="block alt">
+  <div class="kicker">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+    <h2>Your BAS, and the honest answer about it</h2>
+  </div>
+  <p>BAS is $476.95 a month for enlisted and $328.48 for officers in 2026. Flat across every rank, tax free, its own line on your LES.</p>
+  <p>Two separate questions get mixed up here, so take them one at a time.</p>
+  <h3>Does BAS help you qualify?</h3>
+  <p>Yes. BAS is stable, documented military income and lenders count it the same way they count BAH. Because it is tax free, many lenders gross it up when they run your debt to income ratio, so it carries more weight than the same amount of base pay. On its face, $476.95 a month is roughly <span data-live="price" data-budget="476.95">$49,600</span> of additional buying power at current rates.</p>
+  <h3>Should you actually spend it on a house payment?</h3>
+  <p>That is a different question and the answer is usually no, or not all of it. BAS covers your food. It does not cover your family's food. Put the whole thing into a mortgage and you have moved your grocery money into a payment you cannot renegotiate next month.</p>
+  <p>What I see work: qualify on the full picture, buy on a number you can carry without touching BAS, and let the extra room be the reason you sleep at night. The checkbox above exists so you can see both versions of the math. Run it with BAS and run it without, then decide which one you want to sign for.</p>
+
+  <div class="note warn">
+    <span class="nic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
+    <p><strong>Residual income is the test that actually catches people.</strong> The VA does not only look at your debt to income ratio. It checks how much cash is left over after the payment, taxes, and your other debts. Oklahoma sits in the South region. A family of four on a loan above $80,000 needs $1,003 a month left over, plus a utility allowance of $0.14 per square foot. On a 1,600 square foot house that is another $224 off the top. Ask your lender to run your residual income before you go shopping. It is the number that decides borderline files.</p>
+  </div>
+</section>
+
+<section id="va" class="block">
+  <div class="kicker">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+    <h2>If you have a VA disability rating</h2>
+  </div>
+  <p>A rating changes three separate things about buying a house, and most people only know about one of them.</p>
+
+  <h3>The compensation counts as income</h3>
+  <p>VA disability compensation is tax free, it does not expire, and it does not depend on a job. Lenders treat it as some of the strongest qualifying income there is, and many will gross it up when they run your ratios because it is untaxed. A 70% rating with a spouse pays $1,961.45 a month in 2026. On its own, with the funding fee waived, that carries roughly a <span data-live="price" data-budget="1961.45" data-ff="0">$207,400</span> house at current rates.</p>
+  <p>One thing to be careful about. If you are still on active duty, you generally cannot draw full military pay and VA compensation at the same time. Receiving compensation means waiving military pay dollar for dollar. Most people using both numbers are separating or already out. Ask finance before you build a budget on both.</p>
+
+  <h3>The funding fee disappears</h3>
+  <p>Any service connected rating of 10% or higher waives the VA funding fee entirely. Not reduced. Gone. On a $175,000 purchase that is about $3,760 you do not borrow, which means a smaller loan and a smaller payment for thirty years. A Purple Heart recipient on active duty gets the same waiver.</p>
+  <p>If your rating comes through after you close, you can apply for a refund of the fee you already paid. People miss this one constantly. It is worth a phone call.</p>
+
+  <h3>At 100%, Oklahoma stops charging you property tax</h3>
+  <p>This is the one that moves the number the most, and it is specific to living here. Oklahoma exempts the full fair cash value of your homestead from property tax if you are certified at the 100% permanent service connected rate, or paid at the 100% rate through individual unemployability. There is no cap on the home's value and no income limit. The exemption also carries to an unremarried surviving spouse.</p>
+  <p>On a $200,000 house in Lawton that is about $185 a month that never comes out of your pocket. Over thirty years it is real money, and it is money that goes straight into what you can afford instead.</p>
+  <p>It is not automatic. You file Oklahoma Tax Commission Form 998 with the Comanche County Assessor and bring your rating letter from the VA. Do it once, keep it as long as you qualify.</p>
+
+  <div class="note">
+    <span class="nic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+    <p>Oklahoma also exempts military retirement pay from state income tax and gives 100% rated veterans a sales tax exemption. Neither one changes your mortgage payment, but both change what your money does once you live here. The Oklahoma Department of Veterans Affairs office in Lawton can walk you through what you qualify for.</p>
+  </div>
+</section>
+
+<section id="rent" class="block alt">
   <div class="kicker">
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V10l6-5 6 5v11"/><path d="M10 21v-6h4v6"/></svg></span>
     <h2>Renting versus buying on the same allowance</h2>
@@ -469,10 +472,10 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <p>The Census Bureau puts median gross rent in Lawton at about $967 a month, but that number blends in apartment complexes, and apartments are not really how this market works. Almost nobody here rents or buys multi-family. It is a single-family-home town on both sides of the transaction, and a single-family house rents for something closer to $1,200 to $1,300 a month.</p>
   <p>An E-5 with dependents draws $1,233 in BAH, which lines up close to that single-family rent, not the blended Census number. Buy instead of rent and that same $1,233 carries about a <span data-live="price" data-budget="1233">$128,300</span> house, and the payment is fixed for thirty years while rent is not.</p>
   <p>The thing that decides it is usually how long your tour runs and what you do with the house when you leave. Three years is tight for buying and selling. Three years and you keep it as a rental is a different conversation, and Fort Sill turns over enough tenants that the second one works more often than people expect.</p>
-  <p>Either way, run it with a number instead of a feeling. That is what the calculator up top is for.</p>
+  <p>Either way, run it with a number instead of a feeling. The calculator up top gives you the price. The <a href="/rent-vs-buy/">rent vs buy calculator</a> gives you the year buying pulls ahead.</p>
 </section>
 
-<section class="block alt">
+<section id="know" class="block">
   <div class="kicker">
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
     <h2>A few things worth knowing before you get here</h2>
@@ -506,15 +509,10 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 </main>
 
 
-<section class="moretools" aria-labelledby="mt-head">
-  <h2 id="mt-head" class="mt-head">More tools</h2>
-  <div class="mt-grid">
-    <a class="mt-card" href="/payment-toolkit.html"><b>Payment Calculator</b><span>Your full monthly payment, with VA, FHA and conventional side by side.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/va-loan-calculator.html"><b>VA Loan Calculator</b><span>Household income, VA residual income, and how much house it supports.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/buydown.html"><b>Buydown vs Price Cut</b><span>Spend seller help on a lower price or a lower rate. See which wins.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/buying-guide.html"><b>Buyer's Guide</b><span>How buying in Lawton actually goes, start to finish. Prints clean.</span><i>Open &rarr;</i></a>
-  </div>
-</section>
+<nav class="toolchips" aria-label="Other tools">
+  <p>Tools</p>
+  <div><a href="/bah/" aria-current="page">BAH Calculator</a><a href="/payment-toolkit.html">Payment Calculator</a><a href="/va-loan-calculator.html">VA Loan Calculator</a><a href="/rent-vs-buy/">Rent vs Buy</a><a href="/property-tax-calculator/">Property Tax Calculator</a><a href="/va-residual-income-calculator/">VA Residual Income</a><a href="/buydown.html">Buydown vs Price Cut</a><a href="/pcs-timeline/">PCS Timeline</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/guides/">All guides</a></div>
+</nav>
 <footer class="site">
   <div class="wrap">
     <p class="eiooo">Each Office Independently Owned and Operated.</p>

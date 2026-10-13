@@ -7,7 +7,7 @@ read _build/content/guides/fort-sill-bah-2027.html again in January: its text
 talks about the changeover and needs a human pass."""
 import os
 
-from common import (FOOT_BAH, MORETOOLS, ROOT, SITE, breadcrumb_ld, cta, esc, expand, faq_html, faq_ld,
+from common import (FOOT_BAH, ROOT, SITE, toolchips, breadcrumb_ld, cta, esc, expand, faq_html, faq_ld,
                     footer, head, header, hero, leadform)
 
 YEAR = 2026
@@ -244,15 +244,8 @@ def grade_page(label, w, wo, kind):
                 + header("bah", subj)
                 + hero(crumbs, "%d Fort Sill BAH" % YEAR, h1, intro, stamp, stats)
                 + '\n<main class="wrap">\n\n' + s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8
-                + cta("Want the version with your actual numbers in it?",
-                      "I am a buyer specialist with Pam &amp; Barry's Team at RE/MAX Professionals in Lawton. Send me "
-                      "your pay grade and your timeline and I will put together what is actually available in your "
-                      "range right now. The list costs nothing, and there is no obligation to work with me.",
-                      subj,
-                      'Want the whole payment picture including FHA, USDA and conventional? Use the '
-                      '<a href="/payment-toolkit.html">Buyer Payment Toolkit</a>. New to the area? Start with the '
-                      '<a href="/">Fort Sill guide</a>.')
-                + "\n</main>\n\n" + MORETOOLS
+                + toolchips("bah")
+                + "\n</main>\n\n"
                 + footer(FOOT_BAH, "Market data from Comanche County records and MLS statistics current as of "
                                    "October 2026.", subj))
         pages.append((url(label, deps).strip("/") + "/index.html", page, canon, title))

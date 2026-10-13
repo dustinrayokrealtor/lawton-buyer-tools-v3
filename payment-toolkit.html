@@ -204,6 +204,7 @@ footer b{color:var(--ink-2)}
 }
 </style>
 <link rel="stylesheet" href="assets/palette-v3.css?v=4">
+<link rel="stylesheet" href="assets/v5.css?v=1">
 
 <header class="site site4">
   <div class="hd4">
@@ -221,7 +222,7 @@ footer b{color:var(--ink-2)}
 </header>
 <nav class="toolnav" aria-label="Tools and guides">
   <div class="tn-in">
-    <a href="/">Fort Sill Guide</a><a href="/payment-toolkit.html" aria-current="page">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/bah/">BAH</a><a href="/buydown.html">Buydown</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/tools/">All Tools</a>
+    <a href="/">Fort Sill Guide</a><a href="/tools/">All Tools</a><a href="/bah/">BAH</a><a href="/payment-toolkit.html" aria-current="true">Payment</a><a href="/va-loan-calculator.html">VA Loan</a><a href="/rent-vs-buy/">Rent vs Buy</a><a href="/property-tax-calculator/">Property Tax</a><a href="/guides/">Guides</a>
   </div>
 </nav>
 <script>(function(){var c=document.querySelector(".toolnav [aria-current]");if(c){var r=c.parentNode;if(r.scrollWidth>r.clientWidth)r.scrollLeft=Math.max(0,c.offsetLeft-(r.clientWidth-c.offsetWidth)/2);}})();</script>
@@ -312,24 +313,6 @@ footer b{color:var(--ink-2)}
   <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
   <button type="button" id="btn-reset">Reset to Lawton median</button>
 </div>
-<form class="leadform listform" data-source="toolkit-listings" data-phone="optional" data-sync-price="price" data-scenario action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate style="margin-top:22px">
-  <h3 class="lf-head">Want to see what&rsquo;s for sale at this price?</h3>
-  <p class="lf-lede">Tell me where to send them and I&rsquo;ll go through what&rsquo;s listed in your range right now. I pick out the ones worth a look and send them to you myself. No automated alerts. You get a direct line to me, and you can call or text back any time.</p>
-  <input type="hidden" name="source" value="toolkit-listings">
-  <input type="hidden" name="kind" value="inquiry">
-  <input type="hidden" name="want" value="listings">
-  <div class="lf-grid">
-    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
-    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
-    <label class="lf-field"><span>Phone <i>(optional, if you'd rather get them by text)</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
-    <label class="lf-field"><span>Homes up to</span><input name="maxprice" type="number" min="20000" step="1000" inputmode="numeric"></label>
-  </div>
-  <label class="lf-field lf-full"><span>Anything I should know <i>(optional)</i></span><textarea name="notes" rows="2" placeholder="Beds, part of town, schools, a fenced yard, when you need to move"></textarea></label>
-  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
-  <div class="lf-err" aria-live="polite"></div>
-  <button type="submit" class="lf-go">Send me homes in my range</button>
-  <p class="lf-fine">It&rsquo;s just me on the other end, Dustin Ray, 580-351-4683. I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
-</form>
 
 <!-- ============ TABS ============ -->
 <div class="tabs" role="tablist" aria-label="Toolkit sections">
@@ -544,15 +527,31 @@ footer b{color:var(--ink-2)}
   </div>
 </section>
 
-<section class="moretools" aria-labelledby="mt-head">
-  <h2 id="mt-head" class="mt-head">More tools</h2>
-  <div class="mt-grid">
-    <a class="mt-card" href="/va-loan-calculator.html"><b>VA Loan Calculator</b><span>Household income, VA residual income, and how much house it supports.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/bah/"><b>BAH Calculator</b><span>What your 2026 Fort Sill housing allowance buys, by pay grade.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/buydown.html"><b>Buydown vs Price Cut</b><span>Spend seller help on a lower price or a lower rate. See which wins.</span><i>Open &rarr;</i></a>
-    <a class="mt-card" href="/buying-guide.html"><b>Buyer's Guide</b><span>How buying in Lawton actually goes, start to finish. Prints clean.</span><i>Open &rarr;</i></a>
+<div class="askwrap">
+<form class="leadform listform" data-source="toolkit-listings" data-phone="optional" data-sync-price="price" data-scenario action="https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec" method="post" novalidate>
+  <h3 class="lf-head">Want to see what&rsquo;s for sale at this price?</h3>
+  <p class="lf-lede">Tell me where to send them and I&rsquo;ll go through what&rsquo;s listed in your range right now. I pick out the ones worth a look and send them to you myself. No automated alerts. You get a direct line to me, and you can call or text back any time.</p>
+  <input type="hidden" name="source" value="toolkit-listings">
+  <input type="hidden" name="kind" value="inquiry">
+  <input type="hidden" name="want" value="listings">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Phone <i>(optional, if you'd rather get them by text)</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+    <label class="lf-field"><span>Homes up to</span><input name="maxprice" type="number" min="20000" step="1000" inputmode="numeric"></label>
   </div>
-</section>
+  <label class="lf-field lf-full"><span>Anything I should know <i>(optional)</i></span><textarea name="notes" rows="2" placeholder="Beds, part of town, schools, a fenced yard, when you need to move"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">Send me homes in my range</button>
+  <p class="lf-fine">It&rsquo;s just me on the other end, Dustin Ray, 580-351-4683. I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
+</form>
+</div>
+
+<nav class="toolchips" aria-label="Other tools">
+  <p>Tools</p>
+  <div><a href="/bah/">BAH Calculator</a><a href="/payment-toolkit.html" aria-current="page">Payment Calculator</a><a href="/va-loan-calculator.html">VA Loan Calculator</a><a href="/rent-vs-buy/">Rent vs Buy</a><a href="/property-tax-calculator/">Property Tax Calculator</a><a href="/va-residual-income-calculator/">VA Residual Income</a><a href="/buydown.html">Buydown vs Price Cut</a><a href="/pcs-timeline/">PCS Timeline</a><a href="/buying-guide.html">Buyer's Guide</a><a href="/guides/">All guides</a></div>
+</nav>
 <footer>
   <p><b>Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></p>
   <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>

@@ -6,6 +6,10 @@
 What it writes (everything else on the site is hand-edited and left alone):
   /bah/<grade>-with-dependents/ and -without-dependents/   from _build/bah.py
   /fort-sill/<page>/ and /guides/<page>/                    from _build/content/
+  /property-tax-calculator/, /va-residual-income-calculator/,
+  /rent-vs-buy/, /pcs-timeline/                             from _build/tools.py
+  /va-loan-calculator.html                                  from _build/vacalc.py
+  / and /tools/                                             from _build/hubs.py
   /guides/index.html                                        the hub
   /_queue/NN--<page>.html                                   articles waiting on the weekly publisher
   sitemap.xml                                               adds any URL that is missing
@@ -30,7 +34,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import articles  # noqa: E402
 import bah  # noqa: E402
-from common import (FOOT_AREA, JS_V, MORETOOLS, ROOT, SITE, breadcrumb_ld, cta, expand, footer,  # noqa: E402
+import hubs  # noqa: E402
+import tools  # noqa: E402
+import vacalc  # noqa: E402
+from common import (FOOT_AREA, JS_V, ROOT, SITE, toolchips, breadcrumb_ld, cta, expand, footer,  # noqa: E402
                     head, header, hero, strip_tags)
 
 TODAY = datetime.date.today().isoformat()
@@ -111,7 +118,7 @@ def hub(live):
     ld = [breadcrumb_ld([("Moving to Fort Sill", SITE + "/"), ("Guides", canon)])]
     subj = "Moving to Fort Sill"
     return (head(title, desc, canon, ld)
-            + header(None, subj)
+            + header("guides", subj)
             + hero([("Moving to Fort Sill", "/"), ("Guides", None)], "Lawton and Fort Sill", "Guides",
                    "Everything on this site that is not a calculator. Written by a buyer's agent who works this "
                    "market every day, with the local numbers left in.")
@@ -121,7 +128,8 @@ def hub(live):
                   "PCSing in and have questions about the process, the timeline, or a specific house, call or text. "
                   "It costs nothing to ask, and there is no obligation to work with me.", subj,
                   'Start with the <a href="/">Fort Sill guide</a> or the <a href="/bah/">BAH calculator</a>.')
-            + "\n</main>\n\n" + MORETOOLS
+            + toolchips()
+            + "\n</main>\n\n"
             + footer(FOOT_AREA, "Information current as of October 2026.", subj, scripts=("live",)))
 
 
@@ -181,6 +189,10 @@ def main():
         write(rel, page)
         urls.append((canon, "0.7", "monthly"))
         n += 1
+    for rel, page, canon in tools.build() + [vacalc.build()]:
+        write(rel, page)
+        urls.append((canon, "0.9", "monthly"))
+        n += 1
     live, queued = build_articles()
     for rel, page, canon, _a in live:
         write(rel, page)
@@ -195,6 +207,9 @@ def main():
             os.remove(os.path.join(qdir, fn))
     for name, text in queued:
         write("_queue/" + name, text)
+    for rel, page in hubs.build():
+        write(rel, page)
+        n += 1
     patch_bah_index()
     added = sitemap(urls)
     print("pages written: %d, hub: 1, queued: %d, sitemap urls added: %d" % (n, len(queued), added))

@@ -13,7 +13,8 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)                      # repo root
 SITE = "https://movingtoftsill.com"
-CSS_V = "1"                                       # assets/guide.css?v=
+CSS_V = "2"                                       # assets/guide.css?v=
+V5 = "1"                                          # assets/v5.css?v= and assets/tools.js?v=
 JS_V = "1"                                        # assets/guide-live.js?v=
 SITE_V = "4"                                      # site.css / palette / leadform version already on the site
 ENDPOINT = "https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec"
@@ -149,10 +150,32 @@ HORIZON = """  <svg class="horizon horizon--short" viewBox="0 0 1600 410" preser
   </g>
 </svg>"""
 
-NAV = [("/", "Fort Sill Guide", "guide"), ("/payment-toolkit.html", "Payment", "payment"),
-       ("/va-loan-calculator.html", "VA Loan", "va"), ("/bah/", "BAH", "bah"),
-       ("/buydown.html", "Buydown", "buydown"), ("/buying-guide.html", "Buyer's Guide", "buyers"),
-       ("/tools/", "All Tools", "tools")]
+# The tool bar. Same eight links, in this order, on every page of the site.
+NAV = [("/", "Fort Sill Guide", "guide"), ("/tools/", "All Tools", "tools"), ("/bah/", "BAH", "bah"),
+       ("/payment-toolkit.html", "Payment", "payment"), ("/va-loan-calculator.html", "VA Loan", "va"),
+       ("/rent-vs-buy/", "Rent vs Buy", "rentbuy"), ("/property-tax-calculator/", "Property Tax", "tax"),
+       ("/guides/", "Guides", "guides")]
+
+# Every tool on the site, for the tools page, the home page and the row at the foot of each page.
+# (key, href, short name, one line, kind)
+TOOLS = [
+    ("bah", "/bah/", "BAH Calculator", "What your Fort Sill housing allowance buys, by pay grade.", "Calculator"),
+    ("payment", "/payment-toolkit.html", "Payment Calculator", "The whole monthly payment, with VA, FHA and conventional side by side.", "Calculator"),
+    ("va", "/va-loan-calculator.html", "VA Loan Calculator", "Your whole household's income against the two tests a VA lender runs.", "Calculator"),
+    ("rentbuy", "/rent-vs-buy/", "Rent vs Buy", "How long you have to stay for buying to beat renting here.", "Calculator"),
+    ("tax", "/property-tax-calculator/", "Property Tax Calculator", "The tax on any price in any Comanche County school district.", "Calculator"),
+    ("residual", "/va-residual-income-calculator/", "VA Residual Income", "The test that decides close VA files, with the full chart.", "Calculator"),
+    ("buydown", "/buydown.html", "Buydown vs Price Cut", "Spend seller help on the price or the rate. See which wins.", "Calculator"),
+    ("pcs", "/pcs-timeline/", "PCS Timeline", "Put in your report date and get a dated to-do list.", "Planner"),
+    ("buyers", "/buying-guide.html", "Buyer's Guide", "How buying in Lawton goes, start to finish. Prints clean.", "Guide"),
+]
+
+
+def toolchips(current=None):
+    links = "".join('<a href="%s"%s>%s</a>' % (href, ' aria-current="page"' if key == current else "", name)
+                    for key, href, name, _line, _kind in TOOLS)
+    return ('<nav class="toolchips" aria-label="Other tools">\n  <p>Tools</p>\n  <div>%s<a href="/guides/">All guides</a></div>\n</nav>\n'
+            % links)
 
 GRADES = ["E-1 to E-4", "E-5", "E-6", "E-7", "E-8", "E-9", "W-1", "W-2", "W-3", "W-4", "W-5",
           "O-1E", "O-2E", "O-3E", "O-1", "O-2", "O-3", "O-4", "O-5", "O-6", "O-7",
@@ -197,19 +220,20 @@ def head(title, desc, canon, jsonld, og_title=None, robots="index, follow, max-i
 <link rel="stylesheet" href="/assets/site.css?v={sv}">
 <link rel="stylesheet" href="/assets/guide.css?v={cv}">
 <link rel="stylesheet" href="/assets/palette-v3.css?v={sv}">
+<link rel="stylesheet" href="/assets/v5.css?v={v5}">
 {blocks}
 </head>
 """.format(title=esc(title), desc=esc(desc), canon=canon, robots=robots, ogt=esc(og_title),
-           site=SITE, sv=SITE_V, cv=CSS_V, blocks=blocks)
+           site=SITE, sv=SITE_V, cv=CSS_V, v5=V5, blocks=blocks)
 
 
-def header(nav_key, mail_subject):
+def header(nav_key, mail_subject, body_class="page-article"):
     links = ""
     for href, label, key in NAV:
         cur = ' aria-current="true"' if key == nav_key else ""
         links += '<a href="%s"%s>%s</a>' % (href, cur, label)
     subj = mail_subject.replace(" ", "%20")
-    return """<body class="has-sticky page-guide">
+    return """<body class="has-sticky %s">
 
 <header class="site site4">
   <div class="hd4">
@@ -231,7 +255,7 @@ def header(nav_key, mail_subject):
   </div>
 </nav>
 <script>(function(){var c=document.querySelector(".toolnav [aria-current]");if(c){var r=c.parentNode;if(r.scrollWidth>r.clientWidth)r.scrollLeft=Math.max(0,c.offsetLeft-(r.clientWidth-c.offsetWidth)/2);}})();</script>
-""" % (PHONE_SVG, subj, links)
+""" % (body_class, PHONE_SVG, subj, links)
 
 
 def hero(crumbs, eyebrow, h1, intro, stamp=None, stats=None):
@@ -255,6 +279,32 @@ def hero(crumbs, eyebrow, h1, intro, stamp=None, stats=None):
 %s
 </div>
 """ % (c, eyebrow, h1, intro, stamp_html, st, HORIZON)
+
+
+def listform(source, head_text, lede, button, sync="price",
+             notes_hint="Beds, part of town, a fenced yard, when you need to move"):
+    """The short ask used under a calculator: name, email, optional phone, a price ceiling
+    that follows the calculator, and the calculator run sent along with it."""
+    return """<form class="leadform listform" data-source="{src}" data-phone="optional"{sync} data-scenario action="{ep}" method="post" novalidate>
+  <h3 class="lf-head">{h}</h3>
+  <p class="lf-lede">{lede}</p>
+  <input type="hidden" name="source" value="{src}">
+  <input type="hidden" name="kind" value="inquiry">
+  <input type="hidden" name="want" value="listings">
+  <div class="lf-grid">
+    <label class="lf-field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+    <label class="lf-field"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <label class="lf-field"><span>Phone <i>(optional)</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+    <label class="lf-field"><span>Homes up to</span><input name="maxprice" type="number" min="20000" step="1000" inputmode="numeric"></label>
+  </div>
+  <label class="lf-field lf-full"><span>Anything I should know <i>(optional)</i></span><textarea name="notes" rows="2" placeholder="{hint}"></textarea></label>
+  <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <div class="lf-err" aria-live="polite"></div>
+  <button type="submit" class="lf-go">{btn}</button>
+  <p class="lf-fine">It is just me on the other end, Dustin Ray, 580-351-4683. I send these myself. No automated alerts, no cost, no obligation, and I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
+</form>
+""".format(src=source, ep=ENDPOINT, h=head_text, lede=lede, btn=button, hint=notes_hint,
+           sync=' data-sync-price="%s"' % sync if sync else "")
 
 
 def leadform(source, head_text, lede, button, checked=("listings",), grade=None, notes_label="Anything else"):
@@ -340,12 +390,17 @@ FOOT_BAH = ("Every figure on this page is an estimate for planning purposes and 
             "determined by your lender.")
 
 
-def footer(disclaimer, stamp, mail_subject, scripts=("leadform", "live")):
+def footer(disclaimer, stamp, mail_subject, scripts=("leadform", "live"), inline=""):
     subj = mail_subject.replace(" ", "%20")
     s = ""
+    if "tools" in scripts:
+        s += '<script src="/assets/tools.js?v=%s"></script>\n' % V5
+    if inline:
+        s += "<script>\n%s\n</script>\n" % inline.strip()
     if "leadform" in scripts:
         s += '<script src="/assets/leadform.js?v=%s" defer></script>\n' % SITE_V
-    s += '<script src="/assets/guide-live.js?v=%s" defer></script>\n' % JS_V
+    if "live" in scripts:
+        s += '<script src="/assets/guide-live.js?v=%s" defer></script>\n' % JS_V
     s += '<script src="/assets/track.js" defer></script>\n'
     return """<footer class="site">
   <div class="wrap">

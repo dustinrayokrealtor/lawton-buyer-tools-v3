@@ -91,13 +91,24 @@ refreshed by hand when the MLS numbers move.
 
 The pay grade pages under `/bah/`, the area pages under `/fort-sill/`, the
 articles under `/guides/` and the `/guides/` hub are built by
-`python3 _build/gen.py`. Do not hand-edit those HTML files; the next build
-overwrites them. Edit the source and rebuild:
+`python3 _build/gen.py`. So are the home page, `/tools/`, the VA loan
+calculator, and the four stand-alone tools (`/property-tax-calculator/`,
+`/va-residual-income-calculator/`, `/rent-vs-buy/`, `/pcs-timeline/`). Do not
+hand-edit those HTML files; the next build overwrites them. Edit the source and
+rebuild:
 
 - **BAH rates:** the table at the top of `_build/bah.py`. Update it every
   January, rebuild, and update the same table in the script at the bottom of
   `bah/index.html` (the calculator). The table printed on `/bah/` is rebuilt
-  for you.
+  for you, and the pay grade quick-fill on the VA loan calculator follows.
+- **Property tax levies:** the `MILLS` table at the top of `_build/tools.py`.
+  The county publishes new levies each fall. Update the table and `LEVY_YEAR`.
+- **The tools:** `_build/tools.py` (property tax, residual income, rent vs
+  buy, PCS timeline) and `_build/vacalc.py` (VA loan calculator). The math they
+  share is in `assets/tools.js`, one copy, so every tool agrees with the others.
+- **Home page and /tools/:** `_build/hubs.py`. The tool tiles, the tool bar and
+  the row of tools at the foot of each page all come from the `TOOLS` and `NAV`
+  lists in `_build/common.py`. Add a tool there and it shows up everywhere.
 - **Articles:** one file each in `_build/content/`. A META block of settings
   on top, plain HTML below. `_build/articles.py` explains the keys.
 - **Look and chrome:** `_build/common.py` and `assets/guide.css`.
@@ -142,8 +153,11 @@ it is a screenshot of the site's own horizon graphic, so it stays on-brand.
 ## Design language
 
 Every page loads `assets/site.css` first, then its own `<style>` block for
-page-specific layout, then `assets/palette-v3.css` last so it can win on
-equal specificity. The shared file holds the design language, matched to
+page-specific layout, then `assets/palette-v3.css`, then `assets/v5.css` last.
+`v5.css` is the October 2026 tightening: slimmer header and hero bands, the
+two-column tool layout (inputs left, answer right), the tools row, and the
+home and tools page grids. Take its `<link>` off a page and that page goes
+back to the roomier layout. The shared file holds the design language, matched to
 pamandbarry.com so these tools read as part of the same business:
 
 | | Value |
