@@ -102,6 +102,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;background:var(--paper)
 caption{text-align:left;padding:14px 14px 12px;caption-side:top;border-bottom:1px solid var(--line)}
 th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line-2)}
 th{background:var(--navy);color:#fff;font-family:var(--font-ui);font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;border-bottom:0}
+thead th{color:#fff}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tr.grp td{background:var(--pale);font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--ink)}
 tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
@@ -353,12 +354,12 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
     <h2>The part nobody tells you before you PCS here</h2>
   </div>
-  <p>The median home sale in Comanche County is $199,900. A full payment on that runs about $1,797 a month.</p>
-  <p>An E-7 with dependents draws $1,587. That is roughly $200 a month short of the median.</p>
+  <p>The median home sale in Comanche County is <span data-live="median">$199,900</span>. A full payment on that runs about <span data-live="pay" data-price="median">$1,920</span> a month.</p>
+  <p>An E-7 with dependents draws $1,587. That is roughly <span data-live="gap" data-budget="1587">$333</span> a month short of the median.</p>
   <p>That does not mean you cannot buy. It means BAH alone shops a different part of the market than the headline number, and that is worth knowing before you land. Here is what it looks like on the ground.</p>
   <ul>
-    <li>Most enlisted grades with dependents land in the $130,000 to $190,000 band on BAH alone. There is real inventory in that band in Lawton.</li>
-    <li>A few hundred dollars of base pay on top moves you up faster than you would think. At current rates every extra $100 a month is roughly $11,000 more house.</li>
+    <li>Enlisted grades with dependents land between about <span data-live="price" data-budget="1203">$125,200</span> and <span data-live="price" data-budget="1842">$191,700</span> on BAH alone. There is real inventory in that band in Lawton.</li>
+    <li>A few hundred dollars of base pay on top moves you up faster than you would think. At current rates every extra $100 a month is roughly <span data-live="per100">$10,400</span> more house.</li>
     <li>Seller paid closing costs are common here. On a VA loan the seller can contribute up to 4% of the value, which is money you do not bring to the table.</li>
     <li>Active inventory is around 345 homes, about 3.4 months of supply. Homes sell at 98.4% of list in a median of 27 days. You have room to negotiate, and you do not have unlimited time to think about it.</li>
   </ul>
@@ -372,7 +373,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <p>BAS is $476.95 a month for enlisted and $328.48 for officers in 2026. Flat across every rank, tax free, its own line on your LES.</p>
   <p>Two separate questions get mixed up here, so take them one at a time.</p>
   <h3>Does BAS help you qualify?</h3>
-  <p>Yes. BAS is stable, documented military income and lenders count it the same way they count BAH. Because it is tax free, many lenders gross it up when they run your debt to income ratio, so it carries more weight than the same amount of base pay. On its face, $476.95 a month is roughly $53,000 of additional buying power at current rates.</p>
+  <p>Yes. BAS is stable, documented military income and lenders count it the same way they count BAH. Because it is tax free, many lenders gross it up when they run your debt to income ratio, so it carries more weight than the same amount of base pay. On its face, $476.95 a month is roughly <span data-live="price" data-budget="476.95">$49,600</span> of additional buying power at current rates.</p>
   <h3>Should you actually spend it on a house payment?</h3>
   <p>That is a different question and the answer is usually no, or not all of it. BAS covers your food. It does not cover your family's food. Put the whole thing into a mortgage and you have moved your grocery money into a payment you cannot renegotiate next month.</p>
   <p>What I see work: qualify on the full picture, buy on a number you can carry without touching BAS, and let the extra room be the reason you sleep at night. The checkbox above exists so you can see both versions of the math. Run it with BAS and run it without, then decide which one you want to sign for.</p>
@@ -391,7 +392,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <p>A rating changes three separate things about buying a house, and most people only know about one of them.</p>
 
   <h3>The compensation counts as income</h3>
-  <p>VA disability compensation is tax free, it does not expire, and it does not depend on a job. Lenders treat it as some of the strongest qualifying income there is, and many will gross it up when they run your ratios because it is untaxed. A 70% rating with a spouse pays $1,961.45 a month in 2026. On its own, with the funding fee waived, that carries roughly a $221,000 house at current rates.</p>
+  <p>VA disability compensation is tax free, it does not expire, and it does not depend on a job. Lenders treat it as some of the strongest qualifying income there is, and many will gross it up when they run your ratios because it is untaxed. A 70% rating with a spouse pays $1,961.45 a month in 2026. On its own, with the funding fee waived, that carries roughly a <span data-live="price" data-budget="1961.45" data-ff="0">$207,400</span> house at current rates.</p>
   <p>One thing to be careful about. If you are still on active duty, you generally cannot draw full military pay and VA compensation at the same time. Receiving compensation means waiving military pay dollar for dollar. Most people using both numbers are separating or already out. Ask finance before you build a budget on both.</p>
 
   <h3>The funding fee disappears</h3>
@@ -414,7 +415,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
     <h2>2026 Fort Sill BAH by pay grade, and what each one buys</h2>
   </div>
-  <p>Purchase prices below assume a VA loan at 6.5% with nothing down, a 2.15% funding fee financed into the loan, and Lawton tax and insurance. Rates move. Use the calculator above for your own numbers.</p>
+  <p>Purchase prices below assume a VA loan at <span data-live="rate">7.40%</span>, the Freddie Mac average as of <span data-live="ratedate">10/8/26</span>, with nothing down, a 2.15% funding fee financed into the loan, and Lawton tax and insurance. Rates move, and these numbers move with them. Each rate links to a page for that pay grade. Use the calculator above for your own numbers.</p>
 
   <div class="tscroll">
   <table>
@@ -430,30 +431,30 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
     </thead>
     <tbody>
       <tr class="grp"><td colspan="5">Enlisted</td></tr>
-      <tr><td>E-1 to E-4</td><td class="num">$1,203</td><td class="num">$133,900</td><td class="num">$969</td><td class="num">$107,800</td></tr>
-      <tr><td>E-5</td><td class="num">$1,233</td><td class="num">$137,200</td><td class="num">$1,092</td><td class="num">$121,500</td></tr>
-      <tr><td>E-6</td><td class="num">$1,494</td><td class="num">$166,300</td><td class="num">$1,170</td><td class="num">$130,200</td></tr>
-      <tr><td>E-7</td><td class="num">$1,587</td><td class="num">$176,600</td><td class="num">$1,209</td><td class="num">$134,500</td></tr>
-      <tr><td>E-8</td><td class="num">$1,692</td><td class="num">$188,300</td><td class="num">$1,290</td><td class="num">$143,500</td></tr>
-      <tr><td>E-9</td><td class="num">$1,842</td><td class="num">$205,000</td><td class="num">$1,383</td><td class="num">$153,900</td></tr>
+      <tr><td>E-1 to E-4</td><td class="num"><a href="/bah/e-1-to-e-4-with-dependents/">$1,203</a></td><td class="num"><span data-live="price" data-budget="1203">$125,200</span></td><td class="num"><a href="/bah/e-1-to-e-4-without-dependents/">$969</a></td><td class="num"><span data-live="price" data-budget="969">$100,800</span></td></tr>
+      <tr><td>E-5</td><td class="num"><a href="/bah/e-5-with-dependents/">$1,233</a></td><td class="num"><span data-live="price" data-budget="1233">$128,300</span></td><td class="num"><a href="/bah/e-5-without-dependents/">$1,092</a></td><td class="num"><span data-live="price" data-budget="1092">$113,600</span></td></tr>
+      <tr><td>E-6</td><td class="num"><a href="/bah/e-6-with-dependents/">$1,494</a></td><td class="num"><span data-live="price" data-budget="1494">$155,500</span></td><td class="num"><a href="/bah/e-6-without-dependents/">$1,170</a></td><td class="num"><span data-live="price" data-budget="1170">$121,800</span></td></tr>
+      <tr><td>E-7</td><td class="num"><a href="/bah/e-7-with-dependents/">$1,587</a></td><td class="num"><span data-live="price" data-budget="1587">$165,200</span></td><td class="num"><a href="/bah/e-7-without-dependents/">$1,209</a></td><td class="num"><span data-live="price" data-budget="1209">$125,800</span></td></tr>
+      <tr><td>E-8</td><td class="num"><a href="/bah/e-8-with-dependents/">$1,692</a></td><td class="num"><span data-live="price" data-budget="1692">$176,100</span></td><td class="num"><a href="/bah/e-8-without-dependents/">$1,290</a></td><td class="num"><span data-live="price" data-budget="1290">$134,300</span></td></tr>
+      <tr><td>E-9</td><td class="num"><a href="/bah/e-9-with-dependents/">$1,842</a></td><td class="num"><span data-live="price" data-budget="1842">$191,700</span></td><td class="num"><a href="/bah/e-9-without-dependents/">$1,383</a></td><td class="num"><span data-live="price" data-budget="1383">$143,900</span></td></tr>
       <tr class="grp"><td colspan="5">Warrant officer</td></tr>
-      <tr><td>W-1</td><td class="num">$1,509</td><td class="num">$167,900</td><td class="num">$1,206</td><td class="num">$134,200</td></tr>
-      <tr><td>W-2</td><td class="num">$1,632</td><td class="num">$181,600</td><td class="num">$1,287</td><td class="num">$143,200</td></tr>
-      <tr><td>W-3</td><td class="num">$1,761</td><td class="num">$196,000</td><td class="num">$1,386</td><td class="num">$154,200</td></tr>
-      <tr><td>W-4</td><td class="num">$1,872</td><td class="num">$208,300</td><td class="num">$1,509</td><td class="num">$167,900</td></tr>
-      <tr><td>W-5</td><td class="num">$2,013</td><td class="num">$224,000</td><td class="num">$1,611</td><td class="num">$179,300</td></tr>
+      <tr><td>W-1</td><td class="num"><a href="/bah/w-1-with-dependents/">$1,509</a></td><td class="num"><span data-live="price" data-budget="1509">$157,100</span></td><td class="num"><a href="/bah/w-1-without-dependents/">$1,206</a></td><td class="num"><span data-live="price" data-budget="1206">$125,500</span></td></tr>
+      <tr><td>W-2</td><td class="num"><a href="/bah/w-2-with-dependents/">$1,632</a></td><td class="num"><span data-live="price" data-budget="1632">$169,900</span></td><td class="num"><a href="/bah/w-2-without-dependents/">$1,287</a></td><td class="num"><span data-live="price" data-budget="1287">$134,000</span></td></tr>
+      <tr><td>W-3</td><td class="num"><a href="/bah/w-3-with-dependents/">$1,761</a></td><td class="num"><span data-live="price" data-budget="1761">$183,300</span></td><td class="num"><a href="/bah/w-3-without-dependents/">$1,386</a></td><td class="num"><span data-live="price" data-budget="1386">$144,300</span></td></tr>
+      <tr><td>W-4</td><td class="num"><a href="/bah/w-4-with-dependents/">$1,872</a></td><td class="num"><span data-live="price" data-budget="1872">$194,900</span></td><td class="num"><a href="/bah/w-4-without-dependents/">$1,509</a></td><td class="num"><span data-live="price" data-budget="1509">$157,100</span></td></tr>
+      <tr><td>W-5</td><td class="num"><a href="/bah/w-5-with-dependents/">$2,013</a></td><td class="num"><span data-live="price" data-budget="2013">$209,500</span></td><td class="num"><a href="/bah/w-5-without-dependents/">$1,611</a></td><td class="num"><span data-live="price" data-budget="1611">$167,700</span></td></tr>
       <tr class="grp"><td colspan="5">Officer, prior enlisted</td></tr>
-      <tr><td>O-1E</td><td class="num">$1,605</td><td class="num">$178,600</td><td class="num">$1,230</td><td class="num">$136,900</td></tr>
-      <tr><td>O-2E</td><td class="num">$1,740</td><td class="num">$193,600</td><td class="num">$1,344</td><td class="num">$149,600</td></tr>
-      <tr><td>O-3E</td><td class="num">$1,893</td><td class="num">$210,600</td><td class="num">$1,482</td><td class="num">$164,900</td></tr>
+      <tr><td>O-1E</td><td class="num"><a href="/bah/o-1e-with-dependents/">$1,605</a></td><td class="num"><span data-live="price" data-budget="1605">$167,100</span></td><td class="num"><a href="/bah/o-1e-without-dependents/">$1,230</a></td><td class="num"><span data-live="price" data-budget="1230">$128,000</span></td></tr>
+      <tr><td>O-2E</td><td class="num"><a href="/bah/o-2e-with-dependents/">$1,740</a></td><td class="num"><span data-live="price" data-budget="1740">$181,100</span></td><td class="num"><a href="/bah/o-2e-without-dependents/">$1,344</a></td><td class="num"><span data-live="price" data-budget="1344">$139,900</span></td></tr>
+      <tr><td>O-3E</td><td class="num"><a href="/bah/o-3e-with-dependents/">$1,893</a></td><td class="num"><span data-live="price" data-budget="1893">$197,000</span></td><td class="num"><a href="/bah/o-3e-without-dependents/">$1,482</a></td><td class="num"><span data-live="price" data-budget="1482">$154,300</span></td></tr>
       <tr class="grp"><td colspan="5">Officer</td></tr>
-      <tr><td>O-1</td><td class="num">$1,272</td><td class="num">$141,600</td><td class="num">$1,167</td><td class="num">$129,900</td></tr>
-      <tr><td>O-2</td><td class="num">$1,491</td><td class="num">$165,900</td><td class="num">$1,227</td><td class="num">$136,500</td></tr>
-      <tr><td>O-3</td><td class="num">$1,758</td><td class="num">$195,600</td><td class="num">$1,395</td><td class="num">$155,200</td></tr>
-      <tr><td>O-4</td><td class="num">$2,055</td><td class="num">$228,700</td><td class="num">$1,587</td><td class="num">$176,600</td></tr>
-      <tr><td>O-5</td><td class="num">$2,271</td><td class="num">$252,700</td><td class="num">$1,704</td><td class="num">$189,600</td></tr>
-      <tr><td>O-6</td><td class="num">$2,286</td><td class="num">$254,400</td><td class="num">$1,740</td><td class="num">$193,600</td></tr>
-      <tr><td>O-7</td><td class="num">$2,298</td><td class="num">$255,700</td><td class="num">$1,767</td><td class="num">$196,600</td></tr>
+      <tr><td>O-1</td><td class="num"><a href="/bah/o-1-with-dependents/">$1,272</a></td><td class="num"><span data-live="price" data-budget="1272">$132,400</span></td><td class="num"><a href="/bah/o-1-without-dependents/">$1,167</a></td><td class="num"><span data-live="price" data-budget="1167">$121,500</span></td></tr>
+      <tr><td>O-2</td><td class="num"><a href="/bah/o-2-with-dependents/">$1,491</a></td><td class="num"><span data-live="price" data-budget="1491">$155,200</span></td><td class="num"><a href="/bah/o-2-without-dependents/">$1,227</a></td><td class="num"><span data-live="price" data-budget="1227">$127,700</span></td></tr>
+      <tr><td>O-3</td><td class="num"><a href="/bah/o-3-with-dependents/">$1,758</a></td><td class="num"><span data-live="price" data-budget="1758">$183,000</span></td><td class="num"><a href="/bah/o-3-without-dependents/">$1,395</a></td><td class="num"><span data-live="price" data-budget="1395">$145,200</span></td></tr>
+      <tr><td>O-4</td><td class="num"><a href="/bah/o-4-with-dependents/">$2,055</a></td><td class="num"><span data-live="price" data-budget="2055">$213,900</span></td><td class="num"><a href="/bah/o-4-without-dependents/">$1,587</a></td><td class="num"><span data-live="price" data-budget="1587">$165,200</span></td></tr>
+      <tr><td>O-5</td><td class="num"><a href="/bah/o-5-with-dependents/">$2,271</a></td><td class="num"><span data-live="price" data-budget="2271">$236,400</span></td><td class="num"><a href="/bah/o-5-without-dependents/">$1,704</a></td><td class="num"><span data-live="price" data-budget="1704">$177,400</span></td></tr>
+      <tr><td>O-6</td><td class="num"><a href="/bah/o-6-with-dependents/">$2,286</a></td><td class="num"><span data-live="price" data-budget="2286">$238,000</span></td><td class="num"><a href="/bah/o-6-without-dependents/">$1,740</a></td><td class="num"><span data-live="price" data-budget="1740">$181,100</span></td></tr>
+      <tr><td>O-7</td><td class="num"><a href="/bah/o-7-with-dependents/">$2,298</a></td><td class="num"><span data-live="price" data-budget="2298">$239,200</span></td><td class="num"><a href="/bah/o-7-without-dependents/">$1,767</a></td><td class="num"><span data-live="price" data-budget="1767">$183,900</span></td></tr>
     </tbody>
   </table>
   </div>
@@ -465,8 +466,8 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V10l6-5 6 5v11"/><path d="M10 21v-6h4v6"/></svg></span>
     <h2>Renting versus buying on the same allowance</h2>
   </div>
-  <p>The Census Bureau puts median gross rent in Lawton at about $828 a month, but that number blends in apartment complexes, and apartments are not really how this market works. Almost nobody here rents or buys multi-family. It is a single-family-home town on both sides of the transaction, and a single-family house rents for something closer to $1,200 to $1,300 a month.</p>
-  <p>An E-5 with dependents draws $1,233 in BAH, which lines up close to that single-family rent, not the blended Census number. Buy instead of rent and that same $1,233 carries about a $137,000 house, and the payment is fixed for thirty years while rent is not.</p>
+  <p>The Census Bureau puts median gross rent in Lawton at about $967 a month, but that number blends in apartment complexes, and apartments are not really how this market works. Almost nobody here rents or buys multi-family. It is a single-family-home town on both sides of the transaction, and a single-family house rents for something closer to $1,200 to $1,300 a month.</p>
+  <p>An E-5 with dependents draws $1,233 in BAH, which lines up close to that single-family rent, not the blended Census number. Buy instead of rent and that same $1,233 carries about a <span data-live="price" data-budget="1233">$128,300</span> house, and the payment is fixed for thirty years while rent is not.</p>
   <p>The thing that decides it is usually how long your tour runs and what you do with the house when you leave. Three years is tight for buying and selling. Three years and you keep it as a rental is a different conversation, and Fort Sill turns over enough tenants that the second one works more often than people expect.</p>
   <p>Either way, run it with a number instead of a feeling. That is what the calculator up top is for.</p>
 </section>
@@ -744,6 +745,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 <script src="../assets/leadgate.js?v=4" defer></script>
 
 <script src="../assets/leadform.js?v=4" defer></script>
+<script src="../assets/guide-live.js?v=1" defer></script>
 <script src="../assets/track.js" defer></script>
 </body>
 </html>
