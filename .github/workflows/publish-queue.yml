@@ -1,0 +1,150 @@
+name: Publish pages
+
+# Two jobs in one, so new pages never need anything but a file dropped in a folder.
+#
+# 1. Anything pushed into /_publish-now/ is moved into place right away.
+#    The file name is the destination with "__" where the slashes go:
+#      _publish-now/fort-sill__elgin__index.html  ->  /fort-sill/elgin/index.html
+#    That lets a whole batch of pages go up in one flat upload from the
+#    GitHub website (which cannot create folders).
+#
+# 2. Every Monday morning the oldest article waiting in /_queue/ is published:
+#    moved to its real address, linked from /guides/, added to sitemap.xml.
+#    Queue files are written by _build/gen.py. Run it by hand any time from
+#    the Actions tab (Run workflow) and say how many to publish.
+#
+# Folders that start with an underscore are not served by GitHub Pages, so
+# nothing in /_publish-now/, /_queue/ or /_build/ is ever a live page.
+on:
+  schedule:
+    - cron: "40 13 * * 1"   # 8:40 am Central (7:40 am in winter)
+  push:
+    branches: [main]
+    paths: ["_publish-now/**"]
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "How many queued articles to publish now"
+        default: "1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Place new files and publish from the queue
+        env:
+          EVENT: ${{ github.event_name }}
+          COUNT: ${{ github.event.inputs.count }}
+        run: |
+          python3 - <<'PY'
+          import datetime, glob, html, json, os, re
+
+          SITE = "https://movingtoftsill.com"
+          today = os.environ.get("TODAY") or datetime.date.today().isoformat()
+          event = os.environ.get("EVENT", "")
+          notes = []
+
+          # ---- 1. move everything in /_publish-now/ into place
+          SRC = "_publish-now"
+          placed = 0
+          if os.path.isdir(SRC):
+              for name in sorted(os.listdir(SRC)):
+                  src = os.path.join(SRC, name)
+                  if name == "HOW-THIS-WORKS.md" or not os.path.isfile(src):
+                      continue
+                  dest = name.replace("__", "/")
+                  parts = dest.split("/")
+                  if dest.startswith("/") or ".." in parts or parts[0] in (".git", ".github", SRC):
+                      print("skipped (not allowed):", name)
+                      continue
+                  if os.path.dirname(dest):
+                      os.makedirs(os.path.dirname(dest), exist_ok=True)
+                  os.replace(src, dest)
+                  placed += 1
+                  print("placed", dest)
+          if placed:
+              notes.append("%d file%s placed" % (placed, "" if placed == 1 else "s"))
+
+          # ---- 2. publish from the queue (weekly, or by hand)
+          def add_to_sitemap(url):
+              xml = open("sitemap.xml", encoding="utf-8").read()
+              loc = "<loc>%s%s</loc>" % (SITE, url)
+              if loc in xml:
+                  return
+              entry = ("  <url>\n    %s\n    <lastmod>%s</lastmod>\n    <changefreq>monthly</changefreq>\n"
+                       "    <priority>0.8</priority>\n  </url>\n" % (loc, today))
+              open("sitemap.xml", "w", encoding="utf-8").write(xml.replace("</urlset>", entry + "</urlset>"))
+
+          def add_to_hub(info):
+              hub = "guides/index.html"
+              if not os.path.exists(hub):
+                  return
+              h = open(hub, encoding="utf-8").read()
+              if 'href="%s"' % info["url"] in h:
+                  return
+              m = re.search(r"^[ \t]*<!-- guides:new.*?-->[ \t]*\n", h, re.M | re.S)
+              if not m:
+                  print("hub marker not found; page published without a hub link")
+                  return
+              card = '    <li><a href="%s">%s<span>%s</span></a></li>\n' % (
+                  info["url"], html.escape(info["title"]), html.escape(info.get("blurb", "")))
+              open(hub, "w", encoding="utf-8").write(h[:m.start()] + card + h[m.start():])
+
+          if event in ("schedule", "workflow_dispatch"):
+              try:
+                  count = max(0, min(20, int(os.environ.get("COUNT") or 1)))
+              except ValueError:
+                  count = 1
+              done = 0
+              for fn in sorted(glob.glob("_queue/[0-9]*--*.html")):
+                  if done >= count:
+                      break
+                  text = open(fn, encoding="utf-8").read()
+                  first, _, rest = text.partition("\n")
+                  m = re.match(r"<!--QUEUE (\{.*\}) -->\s*$", first)
+                  if not m:
+                      print("skipped (no QUEUE line):", fn)
+                      continue
+                  info = json.loads(m.group(1))
+                  if info.get("notBefore") and today < info["notBefore"]:
+                      print("held until", info["notBefore"], fn)
+                      continue
+                  dest = info["path"]
+                  if dest.startswith("/") or ".." in dest.split("/") or dest.startswith("."):
+                      print("skipped (bad path):", fn)
+                      continue
+                  if not os.path.exists(dest):
+                      os.makedirs(os.path.dirname(dest), exist_ok=True)
+                      open(dest, "w", encoding="utf-8").write(rest.replace("%%PUBDATE%%", today))
+                      add_to_hub(info)
+                      add_to_sitemap(info["url"])
+                      notes.append(info["title"])
+                      done += 1
+                      print("published", info["url"])
+                  os.remove(fn)
+
+          with open(os.environ.get("GITHUB_ENV", os.devnull), "a") as f:
+              f.write("COMMIT_MSG=Publish: %s\n" % (", ".join(notes) or "nothing new"))
+          PY
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name "publish-bot"
+          git config user.email "publish-bot@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "$COMMIT_MSG"
+            git pull --rebase
+            git push
+          fi
