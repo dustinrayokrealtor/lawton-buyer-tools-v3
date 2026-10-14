@@ -6,14 +6,15 @@ import json
 
 import bah
 from common import MEDIAN, RATE, listform
-from tools import tool_page
+from tools import mark, tool_page
 
 
 def build():
-    grades = json.dumps([[label, w, wo, round(bah.BAS[k])] for label, w, wo, k in bah.BAH])
-    gopts = '<option value="">Not on active duty</option>' + "".join(
-        '<option value="%d"%s>%s</option>' % (i, " selected" if label == "E-6" else "", label)
-        for i, (label, _w, _wo, _k) in enumerate(bah.BAH))
+    # option values double as the link format: ?grade=E-6
+    grades = json.dumps({label.replace(" ", ""): [label, w, wo, round(bah.BAS[k])] for label, w, wo, k in bah.BAH})
+    gopts = '<option value="none">Not on active duty</option>' + "".join(
+        '<option value="%s"%s>%s</option>' % (label.replace(" ", ""), " selected" if label == "E-6" else "", label)
+        for label, _w, _wo, _k in bah.BAH)
     tool = """<div class="tcalc">
   <div class="tin">
     <h2>Who is on the loan</h2>
@@ -95,7 +96,7 @@ def build():
   var L = window.LBT, GR = __GR__, feeTouched = false;
   L.$("fee").addEventListener("change", function(){ feeTouched = true; });
   function fill(){
-    var g = GR[parseInt(L.$("grade").value, 10)];
+    var g = GR[L.$("grade").value];
     if (!g) { L.$("a-bah").value = 0; L.$("a-bas").value = 0; return; }      // not on active duty: no allowances
     L.$("a-bah").value = L.$("deps").value === "wo" ? g[2] : g[1];
     L.$("a-bas").value = g[3];
@@ -152,6 +153,7 @@ def build():
     };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();""".replace("__GR__", grades).replace("__RATE__", str(RATE)).replace("__PRICE__", str(int(MEDIAN)))
@@ -173,6 +175,15 @@ def build():
                     "Tell me where to send them and I will go through what is listed right now at or under your price. "
                     "I leave off the ones that likely will not pass a VA appraisal and send you the rest myself. You "
                     "get a direct line to me.", "Send me homes in my range")
+    tool = mark(tool, {
+        "grade": 'data-share="grade" data-share-key', "deps": 'data-share="dep" data-share-key',
+        "a-base": 'data-share="pay"', "a-bah": 'data-share="bah"', "a-bas": 'data-share="bas"',
+        "a-dis": 'data-share="dis"', "has-b": 'data-share="spouse"', "b-base": 'data-share="spay"',
+        "b-free": 'data-share="sfree"', "fam": 'data-share="fam"', "debts": 'data-share="debts"',
+        "care": 'data-share="care"', "price": 'data-share="price"', "downpct": 'data-share="down"',
+        "fee": 'data-share="fee"', "sqft": 'data-share="sqft"', "taxrate": 'data-share="tax"',
+        "insrate": 'data-share="ins"', "hoa": 'data-share="hoa"', "withhold": 'data-share="withheld"',
+        "growup": 'data-share="grossup"', "dticap": 'data-share="dti"', "region": 'data-share="region"'})
     return tool_page(
         "va-loan-calculator.html", "va", "va",
         "VA Loan Calculator for Fort Sill Buyers | BAH &amp; Income".replace("&amp;", "&"),

@@ -155,43 +155,43 @@
   <div class="tin">
     <h2>Who is on the loan</h2>
     <div class="flds">
-      <div class="fld"><label for="grade">Pay grade</label><select id="grade"><option value="">Not on active duty</option><option value="0">E-1 to E-4</option><option value="1">E-5</option><option value="2" selected>E-6</option><option value="3">E-7</option><option value="4">E-8</option><option value="5">E-9</option><option value="6">W-1</option><option value="7">W-2</option><option value="8">W-3</option><option value="9">W-4</option><option value="10">W-5</option><option value="11">O-1E</option><option value="12">O-2E</option><option value="13">O-3E</option><option value="14">O-1</option><option value="15">O-2</option><option value="16">O-3</option><option value="17">O-4</option><option value="18">O-5</option><option value="19">O-6</option><option value="20">O-7</option></select><span class="hint">Fills in 2026 Fort Sill BAH and BAS.</span></div>
-      <div class="fld"><label for="deps">Dependents</label><select id="deps"><option value="w" selected>With dependents</option><option value="wo">Without</option></select></div>
+      <div class="fld"><label for="grade">Pay grade</label><select id="grade" data-share="grade" data-share-key><option value="none">Not on active duty</option><option value="E-1toE-4">E-1 to E-4</option><option value="E-5">E-5</option><option value="E-6" selected>E-6</option><option value="E-7">E-7</option><option value="E-8">E-8</option><option value="E-9">E-9</option><option value="W-1">W-1</option><option value="W-2">W-2</option><option value="W-3">W-3</option><option value="W-4">W-4</option><option value="W-5">W-5</option><option value="O-1E">O-1E</option><option value="O-2E">O-2E</option><option value="O-3E">O-3E</option><option value="O-1">O-1</option><option value="O-2">O-2</option><option value="O-3">O-3</option><option value="O-4">O-4</option><option value="O-5">O-5</option><option value="O-6">O-6</option><option value="O-7">O-7</option></select><span class="hint">Fills in 2026 Fort Sill BAH and BAS.</span></div>
+      <div class="fld"><label for="deps">Dependents</label><select id="deps" data-share="dep" data-share-key><option value="w" selected>With dependents</option><option value="wo">Without</option></select></div>
     </div>
     <div class="flds">
-      <div class="fld"><label for="a-base">Taxable pay</label><input type="number" id="a-base" value="4300" min="0" max="40000" step="50" inputmode="numeric"><span class="hint">Base pay, wages or retirement. Monthly, before taxes.</span></div>
-      <div class="fld"><label for="a-bah">BAH</label><input type="number" id="a-bah" value="1494" min="0" max="8000" step="1" inputmode="numeric"><span class="hint">Tax-free.</span></div>
-      <div class="fld"><label for="a-bas">BAS</label><input type="number" id="a-bas" value="477" min="0" max="1000" step="1" inputmode="numeric"><span class="hint">Tax-free.</span></div>
-      <div class="fld"><label for="a-dis">VA disability</label><input type="number" id="a-dis" value="0" min="0" max="12000" step="1" inputmode="numeric"><span class="hint">Tax-free. Any amount waives the funding fee.</span></div>
+      <div class="fld"><label for="a-base">Taxable pay</label><input type="number" id="a-base" data-share="pay" value="4300" min="0" max="40000" step="50" inputmode="numeric"><span class="hint">Base pay, wages or retirement. Monthly, before taxes.</span></div>
+      <div class="fld"><label for="a-bah">BAH</label><input type="number" id="a-bah" data-share="bah" value="1494" min="0" max="8000" step="1" inputmode="numeric"><span class="hint">Tax-free.</span></div>
+      <div class="fld"><label for="a-bas">BAS</label><input type="number" id="a-bas" data-share="bas" value="477" min="0" max="1000" step="1" inputmode="numeric"><span class="hint">Tax-free.</span></div>
+      <div class="fld"><label for="a-dis">VA disability</label><input type="number" id="a-dis" data-share="dis" value="0" min="0" max="12000" step="1" inputmode="numeric"><span class="hint">Tax-free. Any amount waives the funding fee.</span></div>
     </div>
-    <label class="chk"><input type="checkbox" id="has-b"><span>Add a spouse or co-borrower</span></label>
+    <label class="chk"><input type="checkbox" id="has-b" data-share="spouse"><span>Add a spouse or co-borrower</span></label>
     <div class="flds" id="b-wrap" hidden>
-      <div class="fld"><label for="b-base">Their taxable pay</label><input type="number" id="b-base" value="0" min="0" max="40000" step="50" inputmode="numeric"><span class="hint">Monthly, before taxes.</span></div>
-      <div class="fld"><label for="b-free">Their tax-free income</label><input type="number" id="b-free" value="0" min="0" max="15000" step="10" inputmode="numeric"><span class="hint">BAH, BAS, VA disability.</span></div>
+      <div class="fld"><label for="b-base">Their taxable pay</label><input type="number" id="b-base" data-share="spay" value="0" min="0" max="40000" step="50" inputmode="numeric"><span class="hint">Monthly, before taxes.</span></div>
+      <div class="fld"><label for="b-free">Their tax-free income</label><input type="number" id="b-free" data-share="sfree" value="0" min="0" max="15000" step="10" inputmode="numeric"><span class="hint">BAH, BAS, VA disability.</span></div>
     </div>
     <p class="grp">Your household</p>
     <div class="flds">
-      <div class="fld"><label for="fam">Family size</label><select id="fam"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select><span class="hint">Everyone in the house.</span></div>
-      <div class="fld"><label for="debts">Monthly debts</label><input type="number" id="debts" value="450" min="0" max="20000" step="10" inputmode="numeric"><span class="hint">Car, cards, student loans, child support.</span></div>
-      <div class="fld"><label for="care">Child care</label><input type="number" id="care" value="0" min="0" max="6000" step="10" inputmode="numeric"></div>
+      <div class="fld"><label for="fam">Family size</label><select id="fam" data-share="fam"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select><span class="hint">Everyone in the house.</span></div>
+      <div class="fld"><label for="debts">Monthly debts</label><input type="number" id="debts" data-share="debts" value="450" min="0" max="20000" step="10" inputmode="numeric"><span class="hint">Car, cards, student loans, child support.</span></div>
+      <div class="fld"><label for="care">Child care</label><input type="number" id="care" data-share="care" value="0" min="0" max="6000" step="10" inputmode="numeric"></div>
     </div>
     <p class="grp">The house</p>
     <div class="flds">
-      <div class="fld"><label for="price">Price you are looking at</label><input type="number" id="price" data-median value="199900" min="20000" max="3000000" step="1000" inputmode="numeric"></div>
+      <div class="fld"><label for="price">Price you are looking at</label><input type="number" id="price" data-share="price" data-median value="199900" min="20000" max="3000000" step="1000" inputmode="numeric"></div>
       <div class="fld"><label for="rate">Interest rate %</label><input type="number" id="rate" value="7.4" min="1" max="15" step="0.125" inputmode="decimal"><span class="hint" data-rate-note>Freddie Mac average</span></div>
-      <div class="fld"><label for="downpct">Down payment %</label><input type="number" id="downpct" value="0" min="0" max="50" step="1" inputmode="numeric"><span class="hint">With full entitlement a VA loan needs none.</span></div>
-      <div class="fld"><label for="fee">VA funding fee</label><select id="fee"><option value="first">First use</option><option value="again">Used before</option><option value="exempt">Exempt</option></select><span class="hint" id="feehint">2.15% of the loan, financed.</span></div>
-      <div class="fld"><label for="sqft">Square feet</label><input type="number" id="sqft" value="1600" min="400" max="8000" step="50" inputmode="numeric"><span class="hint">For the VA's upkeep and utilities figure.</span></div>
+      <div class="fld"><label for="downpct">Down payment %</label><input type="number" id="downpct" data-share="down" value="0" min="0" max="50" step="1" inputmode="numeric"><span class="hint">With full entitlement a VA loan needs none.</span></div>
+      <div class="fld"><label for="fee">VA funding fee</label><select id="fee" data-share="fee"><option value="first">First use</option><option value="again">Used before</option><option value="exempt">Exempt</option></select><span class="hint" id="feehint">2.15% of the loan, financed.</span></div>
+      <div class="fld"><label for="sqft">Square feet</label><input type="number" id="sqft" data-share="sqft" value="1600" min="400" max="8000" step="50" inputmode="numeric"><span class="hint">For the VA's upkeep and utilities figure.</span></div>
     </div>
     <details class="more"><summary>Assumptions you can change</summary><div>
       <div class="flds">
-        <div class="fld"><label for="taxrate">Property tax %</label><input type="number" id="taxrate" value="1.11" min="0" max="5" step="0.01" inputmode="decimal"><span class="hint">Of value, per year. Lawton median.</span></div>
-        <div class="fld"><label for="insrate">Insurance per $1,000</label><input type="number" id="insrate" value="19.28" min="0" max="80" step="0.01" inputmode="decimal"><span class="hint">Per year. Lawton average.</span></div>
-        <div class="fld"><label for="hoa">HOA per month</label><input type="number" id="hoa" value="0" min="0" max="2000" step="5" inputmode="numeric"></div>
-        <div class="fld"><label for="withhold">Taxes withheld %</label><input type="number" id="withhold" value="20" min="0" max="45" step="1" inputmode="numeric"><span class="hint">Of taxable pay. Your LES has the real figure.</span></div>
-        <div class="fld"><label for="growup">Tax-free gross-up %</label><input type="number" id="growup" value="25" min="0" max="25" step="1" inputmode="numeric"><span class="hint">Lenders use 15 to 25.</span></div>
-        <div class="fld"><label for="dticap">Debt-to-income limit %</label><input type="number" id="dticap" value="41" min="20" max="65" step="1" inputmode="numeric"><span class="hint">The VA guideline is 41.</span></div>
-        <div class="fld"><label for="region">Region</label><select id="region"><option value="south" selected>South (Oklahoma)</option><option value="mw">Midwest</option><option value="ne">Northeast</option><option value="west">West</option></select></div>
+        <div class="fld"><label for="taxrate">Property tax %</label><input type="number" id="taxrate" data-share="tax" value="1.11" min="0" max="5" step="0.01" inputmode="decimal"><span class="hint">Of value, per year. Lawton median.</span></div>
+        <div class="fld"><label for="insrate">Insurance per $1,000</label><input type="number" id="insrate" data-share="ins" value="19.28" min="0" max="80" step="0.01" inputmode="decimal"><span class="hint">Per year. Lawton average.</span></div>
+        <div class="fld"><label for="hoa">HOA per month</label><input type="number" id="hoa" data-share="hoa" value="0" min="0" max="2000" step="5" inputmode="numeric"></div>
+        <div class="fld"><label for="withhold">Taxes withheld %</label><input type="number" id="withhold" data-share="withheld" value="20" min="0" max="45" step="1" inputmode="numeric"><span class="hint">Of taxable pay. Your LES has the real figure.</span></div>
+        <div class="fld"><label for="growup">Tax-free gross-up %</label><input type="number" id="growup" data-share="grossup" value="25" min="0" max="25" step="1" inputmode="numeric"><span class="hint">Lenders use 15 to 25.</span></div>
+        <div class="fld"><label for="dticap">Debt-to-income limit %</label><input type="number" id="dticap" data-share="dti" value="41" min="20" max="65" step="1" inputmode="numeric"><span class="hint">The VA guideline is 41.</span></div>
+        <div class="fld"><label for="region">Region</label><select id="region" data-share="region"><option value="south" selected>South (Oklahoma)</option><option value="mw">Midwest</option><option value="ne">Northeast</option><option value="west">West</option></select></div>
       </div>
     </div></details>
   </div>
@@ -214,7 +214,7 @@
       <div><span>VA minimum, family of <i id="o-fam" style="font-style:normal">4</i></span><b id="o-req">$0</b></div>
     </div>
     <div class="verdict" id="o-verdict"></div>
-    <div class="acts"><button type="button" class="tbtn" id="btn-print">Print or save as PDF</button><a class="tbtn" href="/payment-toolkit.html">Compare loan types</a></div>
+    <div class="acts"><button type="button" class="tbtn" id="btn-share">Copy link with these numbers</button><button type="button" class="tbtn" id="btn-print">Print or save as PDF</button><a class="tbtn" href="/payment-toolkit.html">Compare loan types</a></div>
   </div>
 </div>
 </div>
@@ -278,13 +278,14 @@
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=VA%20loan%20question"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="/assets/share.js?v=1"></script>
 <script src="/assets/tools.js?v=1"></script>
 <script>
 (function(){
-  var L = window.LBT, GR = [["E-1 to E-4", 1203, 969, 477], ["E-5", 1233, 1092, 477], ["E-6", 1494, 1170, 477], ["E-7", 1587, 1209, 477], ["E-8", 1692, 1290, 477], ["E-9", 1842, 1383, 477], ["W-1", 1509, 1206, 328], ["W-2", 1632, 1287, 328], ["W-3", 1761, 1386, 328], ["W-4", 1872, 1509, 328], ["W-5", 2013, 1611, 328], ["O-1E", 1605, 1230, 328], ["O-2E", 1740, 1344, 328], ["O-3E", 1893, 1482, 328], ["O-1", 1272, 1167, 328], ["O-2", 1491, 1227, 328], ["O-3", 1758, 1395, 328], ["O-4", 2055, 1587, 328], ["O-5", 2271, 1704, 328], ["O-6", 2286, 1740, 328], ["O-7", 2298, 1767, 328]], feeTouched = false;
+  var L = window.LBT, GR = {"E-1toE-4": ["E-1 to E-4", 1203, 969, 477], "E-5": ["E-5", 1233, 1092, 477], "E-6": ["E-6", 1494, 1170, 477], "E-7": ["E-7", 1587, 1209, 477], "E-8": ["E-8", 1692, 1290, 477], "E-9": ["E-9", 1842, 1383, 477], "W-1": ["W-1", 1509, 1206, 328], "W-2": ["W-2", 1632, 1287, 328], "W-3": ["W-3", 1761, 1386, 328], "W-4": ["W-4", 1872, 1509, 328], "W-5": ["W-5", 2013, 1611, 328], "O-1E": ["O-1E", 1605, 1230, 328], "O-2E": ["O-2E", 1740, 1344, 328], "O-3E": ["O-3E", 1893, 1482, 328], "O-1": ["O-1", 1272, 1167, 328], "O-2": ["O-2", 1491, 1227, 328], "O-3": ["O-3", 1758, 1395, 328], "O-4": ["O-4", 2055, 1587, 328], "O-5": ["O-5", 2271, 1704, 328], "O-6": ["O-6", 2286, 1740, 328], "O-7": ["O-7", 2298, 1767, 328]}, feeTouched = false;
   L.$("fee").addEventListener("change", function(){ feeTouched = true; });
   function fill(){
-    var g = GR[parseInt(L.$("grade").value, 10)];
+    var g = GR[L.$("grade").value];
     if (!g) { L.$("a-bah").value = 0; L.$("a-bas").value = 0; return; }      // not on active duty: no allowances
     L.$("a-bah").value = L.$("deps").value === "wo" ? g[2] : g[1];
     L.$("a-bas").value = g[3];
@@ -341,6 +342,7 @@
     };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();

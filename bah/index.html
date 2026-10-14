@@ -223,11 +223,11 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
     <div class="fields">
       <div>
         <label for="grade">Pay grade</label>
-        <select id="grade"></select>
+        <select id="grade" data-share="grade" data-share-key data-share-text></select>
       </div>
       <div>
         <label for="dep">Dependents</label>
-        <select id="dep">
+        <select id="dep" data-share="dep" data-share-key>
           <option value="w">With dependents</option>
           <option value="wo">Without dependents</option>
         </select>
@@ -238,7 +238,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
       </div>
       <div>
         <label for="ff">VA funding fee</label>
-        <select id="ff">
+        <select id="ff" data-share="fee">
           <option value="2.15">First use, nothing down (2.15%)</option>
           <option value="3.3">Used it before (3.3%)</option>
           <option value="0">Exempt (0%)</option>
@@ -248,19 +248,19 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 
     <div class="checks">
       <label class="chk" for="usebah">
-        <input type="checkbox" id="usebah" checked>
+        <input type="checkbox" id="usebah" checked data-share="bah">
         <span>I draw BAH
           <span class="sub">Uncheck this if you are retired or separated.</span>
         </span>
       </label>
       <label class="chk" for="usebas">
-        <input type="checkbox" id="usebas">
+        <input type="checkbox" id="usebas" data-share="bas">
         <span>Add my BAS to the payment
           <span class="sub" id="bastext">Adds $476.95 a month. Read the section below before you count on it.</span>
         </span>
       </label>
       <label class="chk" for="usedis">
-        <input type="checkbox" id="usedis">
+        <input type="checkbox" id="usedis" data-share="dis">
         <span>I draw VA disability compensation
           <span class="sub">Tax free, permanent, and lenders count it as income.</span>
         </span>
@@ -268,7 +268,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
       <div class="subfields" id="disrow" hidden>
         <div>
           <label for="disrate">Disability rating</label>
-          <select id="disrate">
+          <select id="disrate" data-share="rating">
             <option value="10">10%</option>
             <option value="20">20%</option>
             <option value="30">30%</option>
@@ -283,7 +283,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
         </div>
         <div>
           <label for="disdep">Dependents on file with the VA</label>
-          <select id="disdep">
+          <select id="disdep" data-share="vadeps">
             <option value="alone">No dependents</option>
             <option value="spouse" selected>Spouse</option>
             <option value="spouse1">Spouse and one child</option>
@@ -291,10 +291,10 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
         </div>
       </div>
       <label class="chk" for="useextra" style="align-items:center">
-        <input type="checkbox" id="useextra">
+        <input type="checkbox" id="useextra" data-share="other">
         <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           Add other monthly income
-          <input type="number" id="extra" value="200" step="50" min="0" max="8000" style="width:110px" inputmode="numeric">
+          <input type="number" id="extra" data-share="otheramt" value="200" step="50" min="0" max="8000" style="width:110px" inputmode="numeric">
           <span class="sub" style="display:inline">per month</span>
         </span>
       </label>
@@ -320,6 +320,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
       <div class="exempt" id="exempt" hidden></div>
 
       <div class="sendrow">
+        <button type="button" class="hbtn alt" id="btn-share">Copy link with these numbers</button>
         <button type="button" class="hbtn alt" id="btn-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Print or save as PDF</button>
         <span class="sendnote">Want the houses actually in this range right now? Use the form below and I&rsquo;ll send them.</span>
       </div>
@@ -530,6 +531,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Fort%20Sill%20BAH%20question"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="../assets/share.js?v=1"></script>
 <script>
 (function(){
   "use strict";
@@ -737,6 +739,7 @@ tbody tr:not(.grp):nth-of-type(even){background:var(--mist)}
 
   $("yr").textContent = new Date().getFullYear();
   render();
+  if (window.LBTShare) LBTShare.init();
 })();
 </script>
 <script src="../assets/market.js?v=4" defer></script>

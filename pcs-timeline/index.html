@@ -155,25 +155,25 @@
   <div class="tin">
     <h2>Your move</h2>
     <div class="flds">
-      <div class="fld"><label for="report">Report date</label><input type="date" id="report"><span class="hint">The date on your orders.</span></div>
+      <div class="fld"><label for="report">Report date</label><input type="date" id="report" data-share="report" data-share-key><span class="hint">The date on your orders.</span></div>
       <div class="fld" style="min-width:230px"><span class="l">Where you plan to live</span>
         <div class="seg" role="radiogroup" aria-label="Where you plan to live">
-          <label><input type="radio" name="live" value="buy" checked><span>Buy</span></label>
-          <label><input type="radio" name="live" value="rent"><span>Rent</span></label>
-          <label><input type="radio" name="live" value="post"><span>On post</span></label>
+          <label><input type="radio" name="live" data-share="live" value="buy" checked><span>Buy</span></label>
+          <label><input type="radio" name="live" data-share="live" value="rent"><span>Rent</span></label>
+          <label><input type="radio" name="live" data-share="live" value="post"><span>On post</span></label>
         </div>
       </div>
     </div>
-    <label class="chk"><input type="checkbox" id="kids"><span>Kids in school</span></label>
-    <label class="chk"><input type="checkbox" id="pets"><span>Pets</span></label>
-    <label class="chk"><input type="checkbox" id="ppm"><span>Moving some or all of it myself (PPM)</span></label>
+    <label class="chk"><input type="checkbox" id="kids" data-share="kids"><span>Kids in school</span></label>
+    <label class="chk"><input type="checkbox" id="pets" data-share="pets"><span>Pets</span></label>
+    <label class="chk"><input type="checkbox" id="ppm" data-share="ppm"><span>Moving some or all of it myself (PPM)</span></label>
   </div>
   <div class="tout" aria-live="polite">
     <span class="lab">Days until you report</span>
     <div class="big" id="o-days">120</div>
     <div class="sub" id="o-sub"></div>
     <div class="verdict" id="o-next"></div>
-    <div class="acts"><button type="button" class="tbtn" id="btn-print">Print the list</button><button type="button" class="tbtn" id="btn-ics">Add to my calendar</button></div>
+    <div class="acts"><button type="button" class="tbtn" id="btn-share">Copy link with these numbers</button><button type="button" class="tbtn" id="btn-print">Print the list</button><button type="button" class="tbtn" id="btn-ics">Add to my calendar</button></div>
   </div>
 </div>
 </div>
@@ -256,6 +256,7 @@
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Moving%20to%20Fort%20Sill"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="/assets/share.js?v=1"></script>
 <script src="/assets/tools.js?v=1"></script>
 <script>
 (function(){
@@ -314,6 +315,7 @@
   }
   L.watch(document, run);
   L.$("btn-ics").addEventListener("click", ics);
+  if (window.LBTShare) LBTShare.init();
   run();
 })();
 </script>

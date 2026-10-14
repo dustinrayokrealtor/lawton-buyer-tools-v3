@@ -261,7 +261,7 @@ footer b{color:var(--ink-2)}
 <section class="controls" aria-label="Loan inputs">
   <div class="ctl">
     <label for="price">Purchase price</label>
-    <input type="number" id="price" value="199500" min="20000" max="2000000" step="500" inputmode="numeric">
+    <input type="number" id="price" data-share="price" value="199500" min="20000" max="2000000" step="500" inputmode="numeric">
     <span class="hint">Lawton median is $199,500</span>
   </div>
   <div class="ctl">
@@ -272,20 +272,20 @@ footer b{color:var(--ink-2)}
   <div class="ctl" style="grid-column:span 2">
     <label for="loantype">Loan type</label>
     <div class="seg" id="loantype" role="group" aria-label="Loan type">
-      <button type="button" data-loan="va" aria-pressed="true">VA</button>
-      <button type="button" data-loan="fha" aria-pressed="false">FHA</button>
-      <button type="button" data-loan="conv" aria-pressed="false">Conventional</button>
+      <button type="button" data-loan="va" aria-pressed="true" data-share="loan" data-share-value="va">VA</button>
+      <button type="button" data-loan="fha" aria-pressed="false" data-share="loan" data-share-value="fha">FHA</button>
+      <button type="button" data-loan="conv" aria-pressed="false" data-share="loan" data-share-value="conv">Conventional</button>
     </div>
     <span class="hint" id="loanhint">Zero down, no monthly mortgage insurance</span>
   </div>
   <div class="ctl">
     <label for="downpct">Down payment %</label>
-    <input type="number" id="downpct" value="0" min="0" max="100" step="0.5" inputmode="decimal">
+    <input type="number" id="downpct" data-share="down" value="0" min="0" max="100" step="0.5" inputmode="decimal">
     <span class="hint" id="downhint">$0 out of pocket</span>
   </div>
   <div class="ctl">
     <label for="term">Term (years)</label>
-    <select id="term">
+    <select id="term" data-share="term">
       <option value="30" selected>30 year fixed</option>
       <option value="20">20 year fixed</option>
       <option value="15">15 year fixed</option>
@@ -311,6 +311,7 @@ footer b{color:var(--ink-2)}
 
 <div class="actions">
   <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
+  <button type="button" id="btn-share">Copy link with these numbers</button>
   <button type="button" id="btn-reset">Reset to Lawton median</button>
 </div>
 
@@ -355,7 +356,7 @@ footer b{color:var(--ink-2)}
   <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
     <div class="ctl">
       <label for="bah">Monthly BAH</label>
-      <input type="number" id="bah" value="1233" min="200" max="6000" step="1" inputmode="numeric">
+      <input type="number" id="bah" data-share="bah" value="1233" min="200" max="6000" step="1" inputmode="numeric">
       <span class="hint">Fort Sill 2026, with dependents</span>
     </div>
     <div class="ctl">
@@ -397,7 +398,7 @@ footer b{color:var(--ink-2)}
   <div class="controls" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
     <div class="ctl">
       <label for="concession">Dollars on the table</label>
-      <input type="number" id="concession" value="6000" min="0" max="100000" step="250" inputmode="numeric">
+      <input type="number" id="concession" data-share="help" value="6000" min="0" max="100000" step="250" inputmode="numeric">
       <span class="hint">What you think you can get</span>
     </div>
     <div class="ctl">
@@ -560,6 +561,7 @@ footer b{color:var(--ink-2)}
 
 </div>
 
+<script src="assets/share.js?v=1"></script>
 <script>
 (function(){
   "use strict";
@@ -960,6 +962,7 @@ footer b{color:var(--ink-2)}
 
   load();
   renderAll();
+  if (window.LBTShare) LBTShare.init();
 })();
 </script>
 <script src="assets/leadgate.js?v=4" defer></script>

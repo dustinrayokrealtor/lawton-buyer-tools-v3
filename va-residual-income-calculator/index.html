@@ -155,26 +155,26 @@
   <div class="tin">
     <h2>Your household</h2>
     <div class="flds">
-      <div class="fld"><label for="fam">Family size</label><select id="fam"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select><span class="hint">Everyone in the house, borrowers included.</span></div>
-      <div class="fld"><label for="region">Region</label><select id="region"><option value="south" selected>South (Oklahoma)</option><option value="mw">Midwest</option><option value="ne">Northeast</option><option value="west">West</option></select></div>
+      <div class="fld"><label for="fam">Family size</label><select id="fam" data-share="fam" data-share-key><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select><span class="hint">Everyone in the house, borrowers included.</span></div>
+      <div class="fld"><label for="region">Region</label><select id="region" data-share="region"><option value="south" selected>South (Oklahoma)</option><option value="mw">Midwest</option><option value="ne">Northeast</option><option value="west">West</option></select></div>
     </div>
     <p class="grp">Money in, each month</p>
     <div class="flds">
-      <div class="fld"><label for="taxable">Taxable pay</label><input type="number" id="taxable" value="4300" min="0" step="50" inputmode="numeric"><span class="hint">Base pay, wages, retirement. Before taxes.</span></div>
-      <div class="fld"><label for="taxfree">Tax-free income</label><input type="number" id="taxfree" value="1971" min="0" step="10" inputmode="numeric"><span class="hint">BAH, BAS, VA disability.</span></div>
-      <div class="fld"><label for="taxes">Taxes taken out</label><input type="number" id="taxes" value="860" min="0" step="10" inputmode="numeric"><span class="hint" id="taxhint">Estimated at 20% of taxable pay. Use your LES.</span></div>
+      <div class="fld"><label for="taxable">Taxable pay</label><input type="number" id="taxable" data-share="pay" data-share-key value="4300" min="0" step="50" inputmode="numeric"><span class="hint">Base pay, wages, retirement. Before taxes.</span></div>
+      <div class="fld"><label for="taxfree">Tax-free income</label><input type="number" id="taxfree" data-share="taxfree" data-share-key value="1971" min="0" step="10" inputmode="numeric"><span class="hint">BAH, BAS, VA disability.</span></div>
+      <div class="fld"><label for="taxes">Taxes taken out</label><input type="number" id="taxes" data-share="taxes" value="860" min="0" step="10" inputmode="numeric"><span class="hint" id="taxhint">Estimated at 20% of taxable pay. Use your LES.</span></div>
     </div>
     <p class="grp">The house</p>
     <div class="flds">
-      <div class="fld"><label for="price">Purchase price</label><input type="number" id="price" data-median value="199900" min="20000" step="1000" inputmode="numeric"></div>
+      <div class="fld"><label for="price">Purchase price</label><input type="number" id="price" data-share="price" data-median value="199900" min="20000" step="1000" inputmode="numeric"></div>
       <div class="fld"><label for="rate">Interest rate %</label><input type="number" id="rate" value="7.4" min="1" max="15" step="0.125" inputmode="decimal"><span class="hint" data-rate-note>Freddie Mac average</span></div>
-      <div class="fld"><label for="fee">VA funding fee</label><select id="fee"><option value="first">First use (2.15%)</option><option value="again">Used before (3.3%)</option><option value="exempt">Exempt</option></select></div>
-      <div class="fld"><label for="sqft">Square feet</label><input type="number" id="sqft" value="1600" min="400" max="8000" step="50" inputmode="numeric"><span class="hint">The VA counts 14 cents a foot for upkeep and utilities.</span></div>
+      <div class="fld"><label for="fee">VA funding fee</label><select id="fee" data-share="fee"><option value="first">First use (2.15%)</option><option value="again">Used before (3.3%)</option><option value="exempt">Exempt</option></select></div>
+      <div class="fld"><label for="sqft">Square feet</label><input type="number" id="sqft" data-share="sqft" value="1600" min="400" max="8000" step="50" inputmode="numeric"><span class="hint">The VA counts 14 cents a foot for upkeep and utilities.</span></div>
     </div>
     <p class="grp">Money out, each month</p>
     <div class="flds">
-      <div class="fld"><label for="debts">Other debts</label><input type="number" id="debts" value="450" min="0" step="10" inputmode="numeric"><span class="hint">Car, cards, student loans, child support.</span></div>
-      <div class="fld"><label for="care">Child care</label><input type="number" id="care" value="0" min="0" step="10" inputmode="numeric"></div>
+      <div class="fld"><label for="debts">Other debts</label><input type="number" id="debts" data-share="debts" value="450" min="0" step="10" inputmode="numeric"><span class="hint">Car, cards, student loans, child support.</span></div>
+      <div class="fld"><label for="care">Child care</label><input type="number" id="care" data-share="care" value="0" min="0" step="10" inputmode="numeric"></div>
     </div>
   </div>
   <div class="tout" aria-live="polite">
@@ -191,7 +191,7 @@
       <div><span>Debt-to-income ratio</span><b id="o-dti">0%</b></div>
     </div>
     <div class="verdict" id="o-verdict"></div>
-    <div class="acts"><button type="button" class="tbtn" id="btn-print">Print</button><a class="tbtn" href="/va-loan-calculator.html">Full VA loan calculator</a></div>
+    <div class="acts"><button type="button" class="tbtn" id="btn-share">Copy link with these numbers</button><button type="button" class="tbtn" id="btn-print">Print</button><a class="tbtn" href="/va-loan-calculator.html">Full VA loan calculator</a></div>
   </div>
 </div>
 </div>
@@ -287,6 +287,7 @@
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=VA%20loan%20question"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="/assets/share.js?v=1"></script>
 <script src="/assets/tools.js?v=1"></script>
 <script>
 (function(){
@@ -319,6 +320,7 @@
     window.LEAD_SUMMARY = function(){ return "Residual income: " + L.usd(res) + " (VA minimum " + L.usd(req) + ", family of " + fam + ")\nPrice: " + L.usd(p.price) + ", payment " + L.usd(p.total) + "\nDTI: " + dti.toFixed(1) + "%"; };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();

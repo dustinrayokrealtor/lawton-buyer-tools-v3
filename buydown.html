@@ -232,12 +232,12 @@ details[open] summary::after{content:"\2212"}
 <section class="controls" aria-label="Deal inputs">
   <div class="ctl">
     <label for="price">Purchase price</label>
-    <input id="price" type="number" min="20000" step="500" value="199500" inputmode="numeric">
+    <input id="price" data-share="price" type="number" min="20000" step="500" value="199500" inputmode="numeric">
     <span class="hint">Lawton median is $199,500</span>
   </div>
   <div class="ctl">
     <label for="prog">Loan program</label>
-    <select id="prog">
+    <select id="prog" data-share="program">
       <option value="VA">VA</option>
       <option value="FHA">FHA</option>
       <option value="CONV" selected>Conventional</option>
@@ -247,22 +247,22 @@ details[open] summary::after{content:"\2212"}
   </div>
   <div class="ctl">
     <label for="down">Down payment %</label>
-    <input id="down" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal">
+    <input id="down" data-share="down" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal">
     <span class="hint">Percent of price</span>
   </div>
   <div class="ctl">
     <label for="rate">Quoted rate %</label>
-    <input id="rate" type="number" min="1" max="15" step="0.005" value="6.76" inputmode="decimal">
+    <input id="rate" data-share="rate" type="number" min="1" max="15" step="0.005" value="6.76" inputmode="decimal">
     <span class="hint">Before any buydown</span>
   </div>
   <div class="ctl">
     <label for="conc">Seller help available</label>
-    <input id="conc" type="number" min="0" step="250" value="5985" inputmode="numeric">
+    <input id="conc" data-share="help" type="number" min="0" step="250" value="5985" inputmode="numeric">
     <span class="hint" id="concHint">Dollars</span>
   </div>
   <div class="ctl">
     <label for="stay">You keep this loan</label>
-    <select id="stay">
+    <select id="stay" data-share="years">
       <option value="2">2 years</option>
       <option value="3">3 years</option>
       <option value="5" selected>5 years</option>
@@ -317,6 +317,7 @@ details[open] summary::after{content:"\2212"}
   </div>
   <div class="actions" style="margin-top:4px">
     <button type="button" class="primary" id="btn-print">Print or save as PDF</button>
+    <button type="button" id="btn-share">Copy link with these numbers</button>
     <button type="button" id="btn-reset">Reset to Lawton median</button>
   </div>
   <div class="printonly muted"><b>Prepared by Dustin Ray, Buyer Specialist. 580-351-4683. dustin@homes-lawton.com</b></div>
@@ -440,6 +441,7 @@ details[open] summary::after{content:"\2212"}
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Rate%20buydown%20question"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="assets/share.js?v=1"></script>
 <script>
 (function(){
   "use strict";
@@ -686,6 +688,7 @@ details[open] summary::after{content:"\2212"}
   });
 
   render();
+  if (window.LBTShare) LBTShare.init();
 })();
 </script>
 <script src="assets/leadgate.js?v=4" defer></script>

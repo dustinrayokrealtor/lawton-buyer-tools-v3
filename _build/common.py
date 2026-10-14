@@ -14,7 +14,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)                      # repo root
 SITE = "https://movingtoftsill.com"
 CSS_V = "2"                                       # assets/guide.css?v=
-V5 = "1"                                          # assets/v5.css?v= and assets/tools.js?v=
+V5 = "1"
+SHARE_V = "1"                                    # assets/share.js?v=                                          # assets/v5.css?v= and assets/tools.js?v=
 JS_V = "1"                                        # assets/guide-live.js?v=
 SITE_V = "4"                                      # site.css / palette / leadform version already on the site
 ENDPOINT = "https://script.google.com/macros/s/AKfycbwSkkgNvZqNTFDnO9jp5sIiXGEer16rfLo08lX2XEH41uk5IcsiAI7GPcQ3n-Jxdi2d/exec"
@@ -394,6 +395,7 @@ def footer(disclaimer, stamp, mail_subject, scripts=("leadform", "live"), inline
     subj = mail_subject.replace(" ", "%20")
     s = ""
     if "tools" in scripts:
+        s += '<script src="/assets/share.js?v=%s"></script>\n' % SHARE_V
         s += '<script src="/assets/tools.js?v=%s"></script>\n' % V5
     if inline:
         s += "<script>\n%s\n</script>\n" % inline.strip()

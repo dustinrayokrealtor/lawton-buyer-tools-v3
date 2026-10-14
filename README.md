@@ -106,6 +106,13 @@ rebuild:
 - **The tools:** `_build/tools.py` (property tax, residual income, rent vs
   buy, PCS timeline) and `_build/vacalc.py` (VA loan calculator). The math they
   share is in `assets/tools.js`, one copy, so every tool agrees with the others.
+- **Shareable links:** `assets/share.js`. Any field marked `data-share="name"`
+  can be set from the address bar, so `/bah/?grade=E-6&dep=w` opens the BAH
+  calculator on E-6 with dependents. The "Copy link with these numbers" button
+  on each calculator builds the link from what is on screen. Only fields the
+  visitor touched (plus a few key ones) go in a link, never the live rate.
+  Keep the property tax area keys in `MILLS` the same from year to year so old
+  links keep working.
 - **Home page and /tools/:** `_build/hubs.py`. The tool tiles, the tool bar and
   the row of tools at the foot of each page all come from the `TOOLS` and `NAV`
   lists in `_build/common.py`. Add a tool there and it shows up everywhere.

@@ -118,7 +118,7 @@ def home():
     <div>
       <p>You have probably heard some things about Lawton. Somebody at your last duty station had an opinion, or you went down a thread about it at two in the morning.</p>
       <p>Here is the straight answer. Lawton is a real city and it has real growing pains. It is not a suburb and it does not pretend to be. What it also has is a military community that has been here since 1869 and a support system built around it, which is not something you find in most places this size.</p>
-      <p>I am not going to tell you a neighborhood is safe or unsafe. That is not my call to make, and any agent who answers that question is guessing with your money. What I will do is point you at the same sources for every town so you can read the numbers yourself. Resale and appreciation are different. That is market data, and I will show you the actual numbers on any addresses you are comparing.</p>
+      <p>I am not going to tell you a neighborhood is safe or unsafe. That is not my call to make. What I will do is point you at the same sources for every town so you can read the numbers yourself. Resale and appreciation are different. That is market data, and I will show you the actual numbers on any addresses you are comparing.</p>
     </div>
     <div class="note">
       <div class="ntext">

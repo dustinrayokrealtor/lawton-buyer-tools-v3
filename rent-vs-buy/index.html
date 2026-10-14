@@ -155,22 +155,22 @@
   <div class="tin">
     <h2>Renting</h2>
     <div class="flds">
-      <div class="fld"><label for="rent">Monthly rent</label><input type="number" id="rent" value="1250" min="300" max="6000" step="25" inputmode="numeric"><span class="hint">A single-family house here runs $1,200 to $1,300.</span></div>
-      <div class="fld"><label for="years">Years you will be here</label><select id="years"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+      <div class="fld"><label for="rent">Monthly rent</label><input type="number" id="rent" data-share="rent" data-share-key value="1250" min="300" max="6000" step="25" inputmode="numeric"><span class="hint">A single-family house here runs $1,200 to $1,300.</span></div>
+      <div class="fld"><label for="years">Years you will be here</label><select id="years" data-share="years" data-share-key><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
     </div>
     <p class="grp">Buying</p>
     <div class="flds">
-      <div class="fld"><label for="price">Purchase price</label><input type="number" id="price" value="175000" min="40000" max="2000000" step="1000" inputmode="numeric"></div>
+      <div class="fld"><label for="price">Purchase price</label><input type="number" id="price" data-share="price" data-share-key value="175000" min="40000" max="2000000" step="1000" inputmode="numeric"></div>
       <div class="fld"><label for="rate">Interest rate %</label><input type="number" id="rate" value="7.4" min="1" max="15" step="0.125" inputmode="decimal"><span class="hint" data-rate-note>Freddie Mac average</span></div>
-      <div class="fld"><label for="fee">VA funding fee</label><select id="fee"><option value="first">First use (2.15%)</option><option value="again">Used before (3.3%)</option><option value="exempt">Exempt</option></select></div>
-      <div class="fld"><label for="closing">Closing costs you pay</label><input type="number" id="closing" value="0" min="0" step="100" inputmode="numeric"><span class="hint">Zero if the seller covers them, which is common here.</span></div>
+      <div class="fld"><label for="fee">VA funding fee</label><select id="fee" data-share="fee"><option value="first">First use (2.15%)</option><option value="again">Used before (3.3%)</option><option value="exempt">Exempt</option></select></div>
+      <div class="fld"><label for="closing">Closing costs you pay</label><input type="number" id="closing" data-share="closing" value="0" min="0" step="100" inputmode="numeric"><span class="hint">Zero if the seller covers them, which is common here.</span></div>
     </div>
     <details class="more"><summary>Assumptions you can change</summary><div>
       <div class="flds">
-        <div class="fld"><label for="apprec">Home value growth % a year</label><input type="number" id="apprec" value="3" min="-5" max="15" step="0.5" inputmode="decimal"></div>
-        <div class="fld"><label for="rentup">Rent growth % a year</label><input type="number" id="rentup" value="3" min="0" max="15" step="0.5" inputmode="decimal"></div>
-        <div class="fld"><label for="sell">Cost to sell %</label><input type="number" id="sell" value="6" min="0" max="12" step="0.5" inputmode="decimal"><span class="hint">Of the sale price.</span></div>
-        <div class="fld"><label for="maint">Upkeep % of price a year</label><input type="number" id="maint" value="1" min="0" max="5" step="0.25" inputmode="decimal"></div>
+        <div class="fld"><label for="apprec">Home value growth % a year</label><input type="number" id="apprec" data-share="growth" value="3" min="-5" max="15" step="0.5" inputmode="decimal"></div>
+        <div class="fld"><label for="rentup">Rent growth % a year</label><input type="number" id="rentup" data-share="rentup" value="3" min="0" max="15" step="0.5" inputmode="decimal"></div>
+        <div class="fld"><label for="sell">Cost to sell %</label><input type="number" id="sell" data-share="sell" value="6" min="0" max="12" step="0.5" inputmode="decimal"><span class="hint">Of the sale price.</span></div>
+        <div class="fld"><label for="maint">Upkeep % of price a year</label><input type="number" id="maint" data-share="upkeep" value="1" min="0" max="5" step="0.25" inputmode="decimal"></div>
       </div>
     </div></details>
   </div>
@@ -185,7 +185,7 @@
       <div class="tot"><span>Buying comes out ahead</span><b id="o-be">never</b></div>
     </div>
     <div class="verdict" id="o-keep"></div>
-    <div class="acts"><button type="button" class="tbtn" id="btn-print">Print</button><a class="tbtn" href="/bah/">What your BAH buys</a></div>
+    <div class="acts"><button type="button" class="tbtn" id="btn-share">Copy link with these numbers</button><button type="button" class="tbtn" id="btn-print">Print</button><a class="tbtn" href="/bah/">What your BAH buys</a></div>
   </div>
 </div>
 </div>
@@ -258,6 +258,7 @@
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=Moving%20to%20Fort%20Sill"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
+<script src="/assets/share.js?v=1"></script>
 <script src="/assets/tools.js?v=1"></script>
 <script>
 (function(){
@@ -294,6 +295,7 @@
     window.LEAD_SUMMARY = function(){ return "Rent vs buy: " + years + " years, rent " + L.usd(rent) + ", price " + L.usd(price) + ", payment " + L.usd(p.total) + "\nBuying ahead: " + L.$("o-be").textContent; };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();

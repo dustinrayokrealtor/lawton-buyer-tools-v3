@@ -12,25 +12,25 @@ from common import (FOOT_AREA, RATE, MEDIAN, SITE, breadcrumb_ld, faq_html, faq_
 
 LEVY_YEAR = 2025
 ASSESS_RATIO = 0.1125
-# (label, mills)
+# (key used in links, label, mills). Keep the keys the same from year to year so old links still work.
 MILLS = [
-    ("Lawton, inside city limits (Lawton schools)", 107.89),
-    ("Lawton, outside city limits (Lawton schools)", 97.85),
-    ("Lawton city, Cache schools", 116.43),
-    ("Lawton city, Geronimo schools", 107.62),
-    ("Lawton city, Bishop school", 110.37),
-    ("Lawton city, Flower Mound school", 102.02),
-    ("Cache", 106.39),
-    ("Elgin", 101.17),
-    ("Geronimo", 97.58),
-    ("Fletcher", 79.03),
-    ("Medicine Park, Lawton schools", 97.85),
-    ("Medicine Park, Elgin schools", 101.17),
-    ("Bishop, outside city limits", 100.33),
-    ("Flower Mound, outside city limits", 91.98),
-    ("Indiahoma", 82.72),
-    ("Sterling", 81.21),
-    ("Chattanooga", 93.41),
+    ("lawton", "Lawton, inside city limits (Lawton schools)", 107.89),
+    ("lawton-rural", "Lawton, outside city limits (Lawton schools)", 97.85),
+    ("lawton-cache-schools", "Lawton city, Cache schools", 116.43),
+    ("lawton-geronimo-schools", "Lawton city, Geronimo schools", 107.62),
+    ("lawton-bishop", "Lawton city, Bishop school", 110.37),
+    ("lawton-flower-mound", "Lawton city, Flower Mound school", 102.02),
+    ("cache", "Cache", 106.39),
+    ("elgin", "Elgin", 101.17),
+    ("geronimo", "Geronimo", 97.58),
+    ("fletcher", "Fletcher", 79.03),
+    ("medicine-park", "Medicine Park, Lawton schools", 97.85),
+    ("medicine-park-elgin-schools", "Medicine Park, Elgin schools", 101.17),
+    ("bishop-rural", "Bishop, outside city limits", 100.33),
+    ("flower-mound-rural", "Flower Mound, outside city limits", 91.98),
+    ("indiahoma", "Indiahoma", 82.72),
+    ("sterling", "Sterling", 81.21),
+    ("chattanooga", "Chattanooga", 93.41),
 ]
 
 FOOT_TOOL = ("Every figure on this page is an estimate for planning. It is not a loan offer, a commitment to lend, a tax "
@@ -59,6 +59,8 @@ def tool_page(path, key, nav, title, desc, h1, eyebrow, intro, tool_html, body_h
         main += '<section class="block">\n%s</section>\n' % form
     if faqs:
         main += faq_html(faqs)
+    tool_html = tool_html.replace('<div class="acts">',
+                                  '<div class="acts"><button type="button" class="tbtn" id="btn-share">Copy link with these numbers</button>', 1)
     page = (head(title, desc, canon, ld)
             + header(nav, subject, body_class)
             + hero([("Moving to Fort Sill", "/"), ("Tools", "/tools/"), (crumb or h1, None)], eyebrow, h1, intro)
@@ -71,6 +73,17 @@ def tool_page(path, key, nav, title, desc, h1, eyebrow, intro, tool_html, body_h
     return rel, page, canon
 
 
+def mark(html, spec):
+    """Tag the inputs a shared link can set. spec: {"id" or "name=group": 'data-share="p" ...'}"""
+    for key, attrs in spec.items():
+        old = 'name="%s"' % key[5:] if key.startswith("name=") else 'id="%s"' % key
+        assert old in html, old
+        if not key.startswith("name="):
+            assert html.count(old) == 1, old
+        html = html.replace(old, old + " " + attrs)
+    return html
+
+
 def money(n):
     return "${:,}".format(int(round(n)))
 
@@ -79,13 +92,13 @@ def money(n):
 def property_tax():
     price0 = int(MEDIAN)
     rows = ""
-    for label, mills in MILLS:
+    for _key, label, mills in MILLS:
         tax = price0 * ASSESS_RATIO * mills / 1000
         rows += ('      <tr data-mills="%s"><td>%s</td><td class="num">%s</td><td class="num" data-c="yr">%s</td>'
                  '<td class="num" data-c="mo">%s</td></tr>\n' % (mills, label, mills, money(tax), money(tax / 12)))
-    opts = "".join('<option value="%s"%s>%s</option>' % (m, " selected" if i == 0 else "", l)
-                   for i, (l, m) in enumerate(MILLS))
-    t0 = price0 * ASSESS_RATIO * MILLS[0][1] / 1000
+    opts = "".join('<option value="%s" data-mills="%s"%s>%s</option>' % (k, m, " selected" if i == 0 else "", l)
+                   for i, (k, l, m) in enumerate(MILLS))
+    t0 = price0 * ASSESS_RATIO * MILLS[0][2] / 1000
     tool = """<div class="tcalc">
   <div class="tin">
     <h2>The house</h2>
@@ -115,7 +128,7 @@ def property_tax():
   </div>
 </div>
 """.format(price=price0, opts=opts, mo=money(t0 / 12), yr=money(t0), pricefmt=money(price0),
-           assessed=money(price0 * ASSESS_RATIO), mills=MILLS[0][1], year=LEVY_YEAR,
+           assessed=money(price0 * ASSESS_RATIO), mills=MILLS[0][2], year=LEVY_YEAR,
            eff="%.2f" % (t0 / price0 * 100))
     body = """<section class="block">
   <h2>The same house in every district</h2>
@@ -146,7 +159,7 @@ def property_tax():
     return Math.max(assessed, 0) * mills / 1000;
   }
   function run(){
-    var price = L.val("price", __PRICE__, 0, 5000000), mills = parseFloat(L.$("area").value), e = ex();
+    var price = L.val("price", __PRICE__, 0, 5000000), area = L.$("area"), mills = parseFloat(area.options[area.selectedIndex].getAttribute("data-mills")), e = ex();
     var t = tax(price, mills, e);
     L.setText("o-mo", L.usd(t / 12));
     L.setText("o-sub", L.usd(t) + " a year on a " + L.usd(price) + " house");
@@ -165,6 +178,7 @@ def property_tax():
     window.LEAD_SUMMARY = function(){ return "Property tax estimate: " + L.usd(t) + " a year on " + L.usd(price) + ", " + L.$("area").options[L.$("area").selectedIndex].text; };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();""".replace("__RATIO__", str(ASSESS_RATIO)).replace("__PRICE__", str(price0))
@@ -183,6 +197,8 @@ def property_tax():
                     "Send me an address or a price range. I will send what is listed and what the tax should run on "
                     "each one after you buy it.", "Send it to me",
                     notes_hint="An address, a part of town, when you need to move")
+    tool = mark(tool, {"price": 'data-share="price" data-share-key', "area": 'data-share="area" data-share-key',
+                       "name=ex": 'data-share="ex"'})
     return tool_page(
         "property-tax-calculator", "tax", "tax",
         "Lawton Property Tax Calculator | Comanche County, OK",
@@ -295,6 +311,7 @@ def residual():
     window.LEAD_SUMMARY = function(){ return "Residual income: " + L.usd(res) + " (VA minimum " + L.usd(req) + ", family of " + fam + ")\\nPrice: " + L.usd(p.price) + ", payment " + L.usd(p.total) + "\\nDTI: " + dti.toFixed(1) + "%"; };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();""".replace("__PRICE__", str(int(MEDIAN))).replace("__RATE__", str(RATE))
@@ -314,6 +331,10 @@ def residual():
     form = listform("t-residual", "Want to see houses that fit this number?",
                     "Tell me your range and I will send what is listed. I leave off the ones that likely will not get "
                     "through a VA appraisal and send you the rest myself.", "Send me the list")
+    tool = mark(tool, {"fam": 'data-share="fam" data-share-key', "region": 'data-share="region"',
+                       "taxable": 'data-share="pay" data-share-key', "taxfree": 'data-share="taxfree" data-share-key',
+                       "taxes": 'data-share="taxes"', "price": 'data-share="price"', "fee": 'data-share="fee"',
+                       "sqft": 'data-share="sqft"', "debts": 'data-share="debts"', "care": 'data-share="care"'})
     return tool_page(
         "va-residual-income-calculator", "residual", "va",
         "VA Residual Income Calculator and 2026 Chart",
@@ -416,6 +437,7 @@ def rent_vs_buy():
     window.LEAD_SUMMARY = function(){ return "Rent vs buy: " + years + " years, rent " + L.usd(rent) + ", price " + L.usd(price) + ", payment " + L.usd(p.total) + "\\nBuying ahead: " + L.$("o-be").textContent; };
   }
   L.watch(document, run);
+  if (window.LBTShare) LBTShare.init();
   L.market(run);
   run();
 })();""".replace("__RATE__", str(RATE))
@@ -435,6 +457,10 @@ def rent_vs_buy():
     form = listform("t-rent-vs-buy", "Want to see it with real houses?",
                     "Tell me your range. I will send what is for sale, and what similar houses are renting for, so "
                     "you can compare the two with real numbers.", "Send it to me")
+    tool = mark(tool, {"rent": 'data-share="rent" data-share-key', "years": 'data-share="years" data-share-key',
+                       "price": 'data-share="price" data-share-key', "fee": 'data-share="fee"',
+                       "closing": 'data-share="closing"', "apprec": 'data-share="growth"', "rentup": 'data-share="rentup"',
+                       "sell": 'data-share="sell"', "maint": 'data-share="upkeep"'})
     return tool_page(
         "rent-vs-buy", "rentbuy", "rentbuy",
         "Rent vs Buy at Fort Sill Calculator | Lawton, OK",
@@ -588,6 +614,7 @@ def pcs_timeline():
   }
   L.watch(document, run);
   L.$("btn-ics").addEventListener("click", ics);
+  if (window.LBTShare) LBTShare.init();
   run();
 })();""".replace("__STEPS__", steps)
     faqs = [
@@ -604,6 +631,8 @@ def pcs_timeline():
                     "Tell me when you report and what you want to spend. I will send what is for sale in your range "
                     "and walk the good ones on video until you get to town.", "Send me the list",
                     checked=("listings",))
+    tool = mark(tool, {"report": 'data-share="report" data-share-key', "name=live": 'data-share="live"',
+                       "kids": 'data-share="kids"', "pets": 'data-share="pets"', "ppm": 'data-share="ppm"'})
     return tool_page(
         "pcs-timeline", "pcs", "guide",
         "Fort Sill PCS Timeline: A Dated Checklist From Your Report Date",

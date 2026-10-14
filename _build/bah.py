@@ -79,6 +79,12 @@ def who(label, deps, cap=True):
     return s[0].upper() + s[1:] if cap else s
 
 
+def calc_link(label, deps):
+    """The BAH calculator opened on this grade (see assets/share.js)."""
+    grade = "E-4" if label == "E-1 to E-4" else label
+    return "/bah/?grade=%s&amp;dep=%s" % (grade, "w" if deps else "wo")
+
+
 def grade_page(label, w, wo, kind):
     pages = []
     for deps in (True, False):
@@ -138,9 +144,9 @@ def grade_page(label, w, wo, kind):
       <div class="brow"><span>Homeowners insurance</span><span>{{pay %s part=ins}}</span></div>
       <div class="brow tot"><span>Total monthly payment</span><span>%s</span></div>
     </div>
-    <p class="rnote">The rate is the Freddie Mac weekly average as of {{ratedate}}, and this number moves with it. <a href="/bah/">Run your own numbers</a> with BAS, disability pay, or a second income.</p>
+    <p class="rnote">The rate is the Freddie Mac weekly average as of {{ratedate}}, and this number moves with it. <a href="%s">Run your own numbers</a> with BAS, disability pay, or a second income.</p>
   </div>
-""" % (money(bah), b, b, b, b, b, money(bah)))
+""" % (money(bah), b, b, b, b, b, money(bah), calc_link(label, deps)))
         s2 += ("  <p>Property tax is figured at 1.11% of value a year and insurance at $19.28 per $1,000 of coverage. "
                "Those are Lawton numbers. A house you just bought can run a little higher on tax, closer to 1.2% "
                "inside Lawton city limits.</p>\n")
