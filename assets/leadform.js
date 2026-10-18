@@ -220,7 +220,7 @@
       if (gone) return;
       form.removeAttribute("data-busy");
       if (btn) { btn.disabled = false; btn.textContent = label; }
-      setErr(form, "That didn't go through. Try again, or call or text me at 580-351-4683.");
+      setErr(form, "That didn't go through. Try again, or call or text me at 580-896-4746.");
     }
 
     var req;

@@ -199,10 +199,10 @@ function handleCapture(e) {
           "<p>Hey " + esc(first1) + ",</p>" +
           "<p>Got your info from movingtoftsill.com. I'll get back to you personally." +
           (lines.length ? " " + esc(lines.join(" ")) : "") + "</p>" +
-          "<p>If you want to talk it through sooner, call or text me at 580-351-4683.</p>" +
+          "<p>If you want to talk it through sooner, call or text me at 580-896-4746.</p>" +
           "<p>I appreciate you,</p>" +
           "<p><b>Dustin Ray</b><br>Buyer Specialist, Pam &amp; Barry's Team, RE/MAX Professionals<br>" +
-          "580-351-4683 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
+          "580-896-4746 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
           "<a href='https://movingtoftsill.com/'>movingtoftsill.com</a></p>" +
           "<p style='font-size:12px;color:#595959'>Each Office Independently Owned and Operated.</p>" +
           "</div>"
@@ -218,10 +218,10 @@ function handleCapture(e) {
           "<div style='font:15px/1.6 Arial,sans-serif;color:#222;max-width:60ch'>" +
           "<p>Hey " + esc(first) + ",</p>" +
           "<p>Here's the copy of what you ran on my site. I've attached it as a PDF so you have it.</p>" +
-          "<p>I'll take a look at your numbers and follow up with what's actually listed in that range right now. If you want to talk it through sooner, call or text me at 580-351-4683.</p>" +
+          "<p>I'll take a look at your numbers and follow up with what's actually listed in that range right now. If you want to talk it through sooner, call or text me at 580-896-4746.</p>" +
           "<p>I appreciate you,</p>" +
           "<p><b>Dustin Ray</b><br>Buyer Specialist, Pam &amp; Barry's Team, RE/MAX Professionals<br>" +
-          "580-351-4683 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
+          "580-896-4746 &middot; <a href='mailto:dustin@homes-lawton.com'>dustin@homes-lawton.com</a><br>" +
           "<a href='https://movingtoftsill.com/'>movingtoftsill.com</a></p>" +
           "<p style='font-size:12px;color:#595959'>Each Office Independently Owned and Operated. These figures are estimates for planning and are not a loan estimate, a pre-approval, or a commitment to lend.</p>" +
           "</div>",

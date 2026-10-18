@@ -205,7 +205,7 @@ def toolshub():
 <section class="block">
   <h2>Planners and guides</h2>
   %s
-  <p class="tnote">Want to talk it through? Call or text me at <a href="tel:5803514683">580-351-4683</a>. If I do not pick up I am probably at a showing, and I will get right back to you.</p>
+  <p class="tnote">Want to talk it through? Call or text me at <a href="tel:5808964746">580-896-4746</a>. If I do not pick up I am probably at a showing, and I will get right back to you.</p>
 </section>
 
 </main>

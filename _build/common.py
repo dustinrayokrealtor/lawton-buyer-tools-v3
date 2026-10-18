@@ -245,7 +245,7 @@ def header(nav_key, mail_subject, body_class="page-article"):
     </div>
     <div class="hd4-me">
       <span>Dustin Ray, Buyer Specialist</span>
-      <a class="hd4-call" href="tel:5803514683">%s580-351-4683</a>
+      <a class="hd4-call" href="tel:5808964746">%s580-896-4746</a>
       <a class="hd4-mail" href="mailto:dustin@homes-lawton.com?subject=%s">dustin@homes-lawton.com</a>
     </div>
   </div>
@@ -302,7 +302,7 @@ def listform(source, head_text, lede, button, sync="price",
   <div class="lf-hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
   <div class="lf-err" aria-live="polite"></div>
   <button type="submit" class="lf-go">{btn}</button>
-  <p class="lf-fine">It is just me on the other end, Dustin Ray, 580-351-4683. I send these myself. No automated alerts, no cost, no obligation, and I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
+  <p class="lf-fine">It is just me on the other end, Dustin Ray, 580-896-4746. I send these myself. No automated alerts, no cost, no obligation, and I never share your info. If you add a phone number, you&rsquo;re OK with me texting you about homes in your range.</p>
 </form>
 """.format(src=source, ep=ENDPOINT, h=head_text, lede=lede, btn=button, hint=notes_hint,
            sync=' data-sync-price="%s"' % sync if sync else "")
@@ -350,9 +350,9 @@ def cta(h2, lede, mail_subject, foot):
     <h2>%s</h2>
     <p class="ctalede">%s</p>
     <div class="btnrow">
-      <a class="btn" href="tel:5803514683">
+      <a class="btn" href="tel:5808964746">
         %s
-        Call or text 580-351-4683
+        Call or text 580-896-4746
       </a>
       <a class="btn alt" href="mailto:dustin@homes-lawton.com?subject=%s">
         %s
@@ -408,7 +408,7 @@ def footer(disclaimer, stamp, mail_subject, scripts=("leadform", "live"), inline
   <div class="wrap">
     <p class="eiooo">Each Office Independently Owned and Operated.</p>
     <p>Pam &amp; Barry's Team RE/MAX Professionals &middot; <a href="tel:+15802488800">(580) 248-8800</a> &middot; <a href="https://www.pamandbarry.com/">pamandbarry.com</a> &middot; <a href="mailto:info@homes-lawton.com">info@homes-lawton.com</a></p>
-    <p>Dustin Ray, Buyer Specialist, Pam &amp; Barry's Team RE/MAX Professionals. Oklahoma real estate license #213324. Office on NW Elm Ave, Lawton, Oklahoma. 580-351-4683. dustin@homes-lawton.com</p>
+    <p>Dustin Ray, Buyer Specialist, Pam &amp; Barry's Team RE/MAX Professionals. Oklahoma real estate license #213324. Office on NW Elm Ave, Lawton, Oklahoma. 580-896-4746. dustin@homes-lawton.com</p>
     <p>%s</p>
     <p>This page is not affiliated with, endorsed by, or sponsored by the United States Army, the Department of Defense, the Department of Veterans Affairs, or any government agency.</p>
     <p>We are pledged to the letter and spirit of U.S. policy for the achievement of equal housing opportunity throughout the nation. We encourage and support an affirmative advertising and marketing program in which there are no barriers to obtaining housing because of race, color, religion, sex, handicap, familial status, or national origin.</p>
@@ -417,7 +417,7 @@ def footer(disclaimer, stamp, mail_subject, scripts=("leadform", "live"), inline
 </footer>
 
 <div class="stickybar">
-  <a href="tel:5803514683">%s</a>
+  <a href="tel:5808964746">%s</a>
   <a class="alt" href="mailto:dustin@homes-lawton.com?subject=%s"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Email</a>
 </div>
 
